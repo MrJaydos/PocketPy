@@ -30,6 +30,15 @@ const Editor = forwardRef(function Editor({ initialDoc = '', onChange }, ref) {
         keymap.of([...defaultKeymap, ...historyKeymap]),
         python(),
         oneDark,
+        // Tell the OS keyboard this is a code field. On iOS this suppresses the
+        // QuickType/AutoFill accessory bar (which otherwise overlaps our symbol
+        // toolbar) and stops autocorrect from mangling code.
+        EditorView.contentAttributes.of({
+          autocapitalize: 'off',
+          autocorrect: 'off',
+          autocomplete: 'off',
+          spellcheck: 'false',
+        }),
         // Python is whitespace-sensitive; use 4 spaces everywhere.
         indentUnit.of('    '),
         EditorState.tabSize.of(4),
