@@ -17,7 +17,7 @@ import { indentUnit } from '@codemirror/language';
 import { python } from '@codemirror/lang-python';
 import { oneDark } from '@codemirror/theme-one-dark';
 
-const Editor = forwardRef(function Editor({ initialDoc = '', onChange }, ref) {
+const Editor = forwardRef(function Editor({ initialDoc = '', onChange, onFocusChange }, ref) {
   const hostRef = useRef(null);
   const viewRef = useRef(null);
 
@@ -48,6 +48,12 @@ const Editor = forwardRef(function Editor({ initialDoc = '', onChange }, ref) {
           if (update.docChanged) {
             onChange?.(update.state.doc.toString());
           }
+        }),
+        // Report focus/blur so the parent can show the pinned symbol toolbar only
+        // while the editor is being used (and hide it otherwise).
+        EditorView.domEventHandlers({
+          focus: () => onFocusChange?.(true),
+          blur: () => onFocusChange?.(false),
         }),
       ],
     });

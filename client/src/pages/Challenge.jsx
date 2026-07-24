@@ -18,6 +18,7 @@ import Hints from '../components/Hints.jsx';
 import SolutionPanel from '../components/SolutionPanel.jsx';
 import { usePyodide } from '../pyodide/usePyodide.js';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
+import { useVisualViewportInset } from '../hooks/useVisualViewportInset.js';
 import { api } from '../api/client.js';
 import { useAuth } from '../state/auth.jsx';
 import { useToast } from '../state/toast.jsx';
@@ -33,6 +34,7 @@ export default function Challenge() {
   const { handleUnauthorized } = useAuth();
   const showToast = useToast();
   const isDesktop = useMediaQuery('(min-width: 900px)');
+  const keyboardInset = useVisualViewportInset();
   const { ready, busy, run, submit, cancel } = usePyodide();
 
   const editorRef = useRef(null);
@@ -42,6 +44,7 @@ export default function Challenge() {
   const [challenge, setChallenge] = useState(null);
   const [loadError, setLoadError] = useState('');
   const [activeTab, setActiveTab] = useState('description');
+  const [editorFocused, setEditorFocused] = useState(false);
 
   // Execution state. `mode` says which result the Output pane should show.
   const [mode, setMode] = useState('run'); // 'run' | 'tests'
@@ -221,8 +224,18 @@ export default function Challenge() {
 
   const codePane = (
     <div className="stack">
-      <Editor ref={editorRef} initialDoc={codeRef.current} onChange={onCodeChange} />
-      <SymbolToolbar editor={editorRef} />
+      <Editor
+        ref={editorRef}
+        initialDoc={codeRef.current}
+        onChange={onCodeChange}
+        onFocusChange={setEditorFocused}
+      />
+      <SymbolToolbar
+        editor={editorRef}
+        pinned={!isDesktop}
+        visible={editorFocused}
+        bottomInset={keyboardInset}
+      />
       <div className="row">
         {busy ? (
           <button className="btn-danger" onClick={cancel}>
