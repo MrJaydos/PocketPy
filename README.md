@@ -36,7 +36,7 @@ npm run dev:client          # terminal 2 — Vite dev server on :5173 (proxies /
 
 ## Deployment
 
-Deploys on **Coolify** via the **Docker Compose** build pack (`docker-compose.yml`
+Deploys on **Coolify** via the **Docker Compose** build pack (`docker-compose.yaml`
 builds the `Dockerfile`, and Coolify handles the domain, secrets, and the persistent
 `/data` volume). Full steps — including the Cloudflare tunnel notes — are in
 [DEPLOY.md](./DEPLOY.md).

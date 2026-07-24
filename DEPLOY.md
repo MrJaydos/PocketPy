@@ -19,13 +19,13 @@ In production the server **refuses to start** without `APP_PASSWORD` and
 
 ## Coolify setup (Docker Compose build pack)
 
-This repo deploys via **`docker-compose.yml`**, which builds the image from the
+This repo deploys via **`docker-compose.yaml`**, which builds the image from the
 `Dockerfile` and wires everything up using Coolify's compose conventions. Most of the
 config is in the compose file, so there's very little to click.
 
 1. **New Resource → Application → from your Git repo** → set **Build Pack = "Docker
-   Compose"**. Coolify auto-detects `docker-compose.yml` at the repo root (if asked,
-   Base Directory = `/`, Compose file = `/docker-compose.yml`). Pushing to `main`
+   Compose"**. Coolify auto-detects `docker-compose.yaml` at the repo root (if asked,
+   Base Directory = `/`, Compose file = `/docker-compose.yaml`). Pushing to `main`
    triggers a rebuild + redeploy.
 2. **Environment variables** (Coolify reads these from the compose file and shows
    editable fields):
@@ -58,7 +58,7 @@ config is in the compose file, so there's very little to click.
 
 ## Local testing
 
-The committed `docker-compose.yml` uses Coolify's magic variables (`SERVICE_FQDN_…`,
+The committed `docker-compose.yaml` uses Coolify's magic variables (`SERVICE_FQDN_…`,
 `SERVICE_PASSWORD_64_…`) and `expose` rather than a published host port, so it's meant
 for Coolify, not a plain local `docker compose up`. For local development just run the
 app directly (no Docker needed):
