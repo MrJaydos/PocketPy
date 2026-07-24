@@ -1,0 +1,33 @@
+id: server-shout-backwards
+title: Shout Backwards (server-graded)
+topic: mixed
+tags: [strings, server]
+difficulty: 2
+order: 60
+runner: server
+description: |
+  ## Runs on the server 🖥️
+
+  This challenge is graded by the **server-side runner** instead of in your
+  browser — so its tests are genuinely hidden (they never reach your device) and
+  it runs on real CPython.
+
+  Write a function `shout_backwards(text)` that returns `text` reversed **and**
+  in upper case.
+
+  For example, `shout_backwards("hello")` returns `"OLLEH"`.
+starter_code: |
+  def shout_backwards(text):
+      # Reverse the text and shout it (upper case).
+      pass
+tests: |
+  check(shout_backwards("hello") == "OLLEH", "reversed and upper-cased")
+  check(shout_backwards("abc") == "CBA", "abc -> CBA")
+  check(shout_backwards("") == "", "empty stays empty")
+  check(shout_backwards("Wow") == "WOW", "mixed case becomes upper")
+hints:
+  - 'A slice `text[::-1]` reverses a string.'
+  - '`.upper()` makes it upper case — you can chain them.'
+solution: |
+  def shout_backwards(text):
+      return text[::-1].upper()

@@ -46,6 +46,14 @@ services:
     expose:
       - '3000'
 
+    # `default` keeps the app on the stack network Coolify's proxy routes to (so the
+    # domain/tunnel keeps working); `runner_net` is the private, no-egress network it
+    # shares with the runner so it can reach http://runner:8000. If the site ever
+    # stops resolving after this change, removing this `networks:` block reverts it.
+    networks:
+      - default
+      - runner_net
+
     volumes:
       # Named volume — Coolify persists it across deploys, keeping your progress.
       - pypocket-data:/data
@@ -68,12 +76,8 @@ services:
   # NOT exposed (no ports, no SERVICE_FQDN), and sits on an `internal` network with
   # no internet egress, so untrusted code can't phone home or be reached via the
   # tunnel. Hardened: non-root, read-only rootfs (+ tmpfs /tmp), memory/CPU/pids
-  # caps, all capabilities dropped, no privilege escalation.
-  #
-  # NOTE (staged rollout): the `pypocket` app service above is intentionally NOT yet
-  # joined to `runner_net` — that change is made in a follow-up so it can be verified
-  # separately (adding `networks:` to the app can disturb Coolify's proxy attachment).
-  # Until then this service simply runs, isolated and unused.
+  # caps, all capabilities dropped, no privilege escalation. The app reaches it by
+  # service name on the shared `runner_net` below.
   runner:
     build:
       context: ./runner

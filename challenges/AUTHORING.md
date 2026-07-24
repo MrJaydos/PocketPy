@@ -22,7 +22,10 @@ topic: strings                # REQUIRED. Groups challenges; match a known topic
 tags: [strings, loops]        # optional
 difficulty: 3                 # REQUIRED, 1..5
 order: 30                     # sort order within the topic (low = earlier)
-runner: pyodide               # optional; 'pyodide' (default). 'server' is Phase 2.
+runner: pyodide               # optional; 'pyodide' (default) runs in the browser.
+                              # 'server' runs in the sandboxed runner container: the
+                              # tests stay hidden (never sent to the browser) and are
+                              # graded server-side. Same YAML fields either way.
 description: |                 # REQUIRED, Markdown
   Write a function `shift(text, n)` that ...
 starter_code: |               # code pre-filled in the editor
