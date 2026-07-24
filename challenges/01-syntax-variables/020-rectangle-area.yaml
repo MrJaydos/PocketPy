@@ -1,0 +1,28 @@
+id: syntax-rectangle-area
+title: Rectangle Area
+topic: syntax-variables
+tags: [numbers, functions]
+difficulty: 1
+order: 20
+runner: pyodide
+description: |
+  ## Variables and arithmetic
+
+  Write a function `area(width, height)` that returns the area of a rectangle —
+  its width multiplied by its height.
+
+  For example, `area(3, 4)` should return `12`.
+starter_code: |
+  def area(width, height):
+      # Multiply the two sides and return the result.
+      pass
+tests: |
+  check(area(3, 4) == 12, "3 x 4 = 12")
+  check(area(5, 5) == 25, "5 x 5 = 25")
+  check(area(0, 9) == 0, "a side of 0 gives area 0")
+hints:
+  - The multiplication operator in Python is `*`.
+  - Return the result with `return width * height`.
+solution: |
+  def area(width, height):
+      return width * height

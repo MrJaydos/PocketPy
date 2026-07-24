@@ -1,0 +1,28 @@
+# Local end-to-end test of the production image. Build and run with:
+#
+#   APP_PASSWORD=yourpass SESSION_SECRET=$(openssl rand -hex 32) docker compose up --build
+#
+# then open http://localhost:3000. This mirrors how Coolify runs the container,
+# including the persistent /data volume for the SQLite database.
+
+services:
+  pypocket:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      # Provide these via a .env file or your shell. The defaults are for local
+      # testing ONLY — never expose these to the internet.
+      APP_PASSWORD: ${APP_PASSWORD:-changeme}
+      SESSION_SECRET: ${SESSION_SECRET:-local-only-insecure-session-secret-change-me}
+      DB_PATH: /data/app.db
+      APP_TZ: ${APP_TZ:-UTC}
+    volumes:
+      # Named volume so your progress/streak data survives container rebuilds.
+      - pypocket-data:/data
+    restart: unless-stopped
+
+volumes:
+  pypocket-data:

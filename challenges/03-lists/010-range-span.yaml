@@ -1,0 +1,28 @@
+id: lists-range-span
+title: Biggest Gap
+topic: lists
+tags: [lists, min, max]
+difficulty: 2
+order: 10
+runner: pyodide
+description: |
+  ## Working with lists
+
+  Write a function `span(numbers)` that returns the difference between the
+  largest and smallest number in a non-empty list.
+
+  For example, `span([3, 9, 1, 7])` is `9 - 1`, which is `8`.
+starter_code: |
+  def span(numbers):
+      # Return the largest value minus the smallest value.
+      pass
+tests: |
+  check(span([3, 9, 1, 7]) == 8, "max 9 minus min 1 is 8")
+  check(span([5]) == 0, "a single element has a span of 0")
+  check(span([-4, -1, -10]) == 9, "works with negatives")
+hints:
+  - Python has built-in `max()` and `min()` functions that take a list.
+  - Subtract the smallest from the largest and return it.
+solution: |
+  def span(numbers):
+      return max(numbers) - min(numbers)

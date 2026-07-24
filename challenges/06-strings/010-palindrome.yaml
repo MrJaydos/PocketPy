@@ -1,0 +1,30 @@
+id: strings-is-palindrome
+title: Palindrome Check
+topic: strings
+tags: [strings, slicing]
+difficulty: 2
+order: 10
+runner: pyodide
+description: |
+  ## String slicing
+
+  Write a function `is_palindrome(text)` that returns `True` if `text` reads the
+  same forwards and backwards, ignoring case, and `False` otherwise.
+
+  For example, `is_palindrome("Racecar")` is `True`.
+starter_code: |
+  def is_palindrome(text):
+      # Compare the text with its reverse (ignore case).
+      pass
+tests: |
+  check(is_palindrome("racecar") is True, "racecar is a palindrome")
+  check(is_palindrome("Racecar") is True, "case is ignored")
+  check(is_palindrome("hello") is False, "hello is not a palindrome")
+  check(is_palindrome("") is True, "empty string counts as a palindrome")
+hints:
+  - Lower-case the text first with `.lower()` so capitals don't matter.
+  - 'A slice `text[::-1]` gives the string reversed.'
+solution: |
+  def is_palindrome(text):
+      cleaned = text.lower()
+      return cleaned == cleaned[::-1]

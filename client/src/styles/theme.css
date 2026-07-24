@@ -1,0 +1,434 @@
+/*
+ * PyPocket global styles.
+ *
+ * One stylesheet, plain CSS, mobile-first. We keep everything here (rather than
+ * per-component CSS modules) so it's easy to read the whole design in one place
+ * while learning. Colours are CSS variables so dark/light is a single switch.
+ *
+ * Dark is the default. If the user's OS prefers light, the media query flips the
+ * variables. Layout is designed at ~380px wide first; the desktop tweaks live in
+ * a single min-width media query near the bottom.
+ */
+
+:root {
+  /* Dark theme (default) */
+  --bg: #0f172a;          /* slate-900 */
+  --bg-elevated: #1e293b; /* slate-800 */
+  --bg-input: #0b1220;
+  --border: #334155;      /* slate-700 */
+  --text: #e2e8f0;        /* slate-200 */
+  --text-muted: #94a3b8;  /* slate-400 */
+  --accent: #38bdf8;      /* sky-400 */
+  --accent-strong: #0ea5e9;
+  --success: #4ade80;     /* green-400 */
+  --danger: #f87171;      /* red-400 */
+  --warning: #fbbf24;     /* amber-400 */
+
+  --radius: 12px;
+  --tap: 44px; /* minimum touch target */
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f8fafc;
+    --bg-elevated: #ffffff;
+    --bg-input: #ffffff;
+    --border: #cbd5e1;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --accent: #0284c7;
+    --accent-strong: #0369a1;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+    color-scheme: light;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px; /* 16px avoids iOS zoom-on-focus for inputs */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Respect the phone's safe areas (notch / home indicator). */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-top: env(safe-area-inset-top);
+}
+
+a {
+  color: var(--accent);
+}
+
+/* ---------- Buttons ---------- */
+button {
+  font: inherit;
+  min-height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  color: var(--text);
+  cursor: pointer;
+  touch-action: manipulation; /* removes 300ms tap delay */
+}
+button:active {
+  transform: translateY(1px);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #001018;
+  font-weight: 600;
+}
+.btn-danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.btn-ghost {
+  background: transparent;
+}
+
+/* ---------- Form controls ---------- */
+input[type='password'],
+input[type='text'] {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0 14px;
+  background: var(--bg-input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* ---------- Layout helpers ---------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.app-header h1 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 14px;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.spacer {
+  flex: 1;
+}
+.muted {
+  color: var(--text-muted);
+}
+.card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+/* ---------- Login ---------- */
+.login-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  width: 100%;
+  max-width: 360px;
+}
+.login-card h1 {
+  margin: 0 0 4px;
+}
+.error-text {
+  color: var(--danger);
+  min-height: 1.4em;
+}
+
+/* ---------- Challenge list ---------- */
+.topic-group h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin: 18px 0 8px;
+}
+.challenge-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.challenge-item .title {
+  flex: 1;
+  min-width: 0;
+}
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  flex: none;
+}
+.status-dot.solved {
+  background: var(--success);
+}
+.status-dot.attempted {
+  background: var(--warning);
+}
+.difficulty {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+/* ---------- Tabs (mobile challenge view) ---------- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.tabs button {
+  flex: 1;
+  min-height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: var(--text-muted);
+}
+.tabs button[aria-selected='true'] {
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---------- Editor + toolbar ---------- */
+.editor-shell {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.cm-editor {
+  min-height: 40vh;
+  font-size: 15px;
+}
+.cm-editor .cm-scroller {
+  font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+.symbol-toolbar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  -webkit-overflow-scrolling: touch;
+}
+.symbol-toolbar button {
+  min-width: var(--tap);
+  min-height: 40px;
+  padding: 0 10px;
+  font-family: ui-monospace, monospace;
+  flex: none;
+}
+
+/* ---------- Output + test results ---------- */
+.output-panel {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 120px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  overflow-x: auto;
+}
+.output-panel .stderr {
+  color: var(--danger);
+}
+.test-result {
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  margin-bottom: 6px;
+}
+.test-result .icon {
+  flex: none;
+}
+.test-result.pass .icon {
+  color: var(--success);
+}
+.test-result.fail .icon {
+  color: var(--danger);
+}
+
+/* ---------- Hints / solution ---------- */
+.hint {
+  border-left: 3px solid var(--warning);
+  padding: 8px 12px;
+  background: var(--bg-elevated);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 8px;
+}
+.solution-code {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  overflow-x: auto;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+}
+
+/* ---------- Dashboard ---------- */
+.streak-flame {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.streak-flame .emoji {
+  font-size: 2.4rem;
+}
+.topic-bar {
+  margin-bottom: 12px;
+}
+.topic-bar .label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.topic-bar .track {
+  height: 10px;
+  background: var(--bg-elevated);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.topic-bar .fill {
+  height: 100%;
+  background: var(--accent-strong);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ---------- Markdown description ---------- */
+.markdown h2 {
+  font-size: 1.15rem;
+  margin: 0.4em 0;
+}
+.markdown code {
+  background: var(--bg-input);
+  padding: 1px 5px;
+  border-radius: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9em;
+}
+.markdown pre {
+  background: var(--bg-input);
+  padding: 12px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.markdown blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 0.6em 0;
+  padding: 2px 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 18px;
+  z-index: 50;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Desktop enhancements ---------- */
+@media (min-width: 900px) {
+  .challenge-panes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  /* On desktop we show panes side by side, so the mobile tab bar is hidden. */
+  .tabs {
+    display: none;
+  }
+  .pane {
+    display: block !important;
+  }
+}
+
+/* Utility to visually hide but keep for screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

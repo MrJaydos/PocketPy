@@ -1,0 +1,53 @@
+id: classes-counter
+title: A Counter Class
+topic: classes
+tags: [classes, objects, state]
+difficulty: 3
+order: 10
+runner: pyodide
+description: |
+  ## Your first class
+
+  Write a class `Counter` that counts upwards.
+
+  - It starts at `0`.
+  - Calling `.increment()` adds `1` to the count.
+  - The current count is stored in an attribute called `count`.
+
+  For example:
+
+  ```python
+  c = Counter()
+  c.increment()
+  c.increment()
+  c.count  # -> 2
+  ```
+starter_code: |
+  class Counter:
+      def __init__(self):
+          # Set up the starting count.
+          pass
+
+      def increment(self):
+          # Add one to the count.
+          pass
+tests: |
+  c = Counter()
+  check(c.count == 0, "starts at 0")
+  c.increment()
+  check(c.count == 1, "one increment -> 1")
+  c.increment()
+  c.increment()
+  check(c.count == 3, "three increments -> 3")
+  d = Counter()
+  check(d.count == 0, "a new Counter is independent")
+hints:
+  - 'In `__init__`, set `self.count = 0` to give each object its own count.'
+  - 'Inside `increment`, do `self.count += 1`.'
+solution: |
+  class Counter:
+      def __init__(self):
+          self.count = 0
+
+      def increment(self):
+          self.count += 1

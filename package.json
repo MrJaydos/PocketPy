@@ -1,0 +1,22 @@
+{
+  "name": "pypocket",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-hosted, mobile-first Python practice app (Phase 1).",
+  "type": "module",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev:server": "npm --workspace server run dev",
+    "dev:client": "npm --workspace client run dev",
+    "build:client": "npm --workspace client run build",
+    "test": "npm --workspace server test",
+    "validate:challenges": "node tools/validate-challenges.mjs",
+    "start": "npm --workspace server start"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

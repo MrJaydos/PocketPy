@@ -1,0 +1,41 @@
+id: mixed-caesar-cipher
+title: Caesar Cipher
+topic: mixed
+tags: [strings, loops, modulo]
+difficulty: 4
+order: 10
+runner: pyodide
+description: |
+  ## A classic cipher
+
+  Write a function `shift(text, n)` that returns `text` with each **lowercase
+  letter** moved `n` places forward in the alphabet, wrapping around from `z`
+  back to `a`. Leave any non-lowercase characters (spaces, punctuation)
+  unchanged.
+
+  For example, `shift("abc", 1)` returns `"bcd"`, and `shift("xyz", 3)` wraps to
+  `"abc"`.
+starter_code: |
+  def shift(text, n):
+      # Move each lowercase letter n places forward, wrapping z -> a.
+      pass
+tests: |
+  check(shift("abc", 1) == "bcd", "simple shift by 1")
+  check(shift("xyz", 3) == "abc", "wraps past z")
+  check(shift("hello world", 0) == "hello world", "shift of 0 changes nothing")
+  check(shift("a b c", 1) == "b c d", "spaces are left alone")
+  check(shift("abc", 26) == "abc", "a full turn returns to the start")
+hints:
+  - '`ord(ch)` gives a character''s code; `ord("a")` is the base for lowercase.'
+  - Turn the letter into a 0–25 position, add n, then take that modulo 26.
+  - 'Rebuild the letter with `chr(ord("a") + position)`.'
+solution: |
+  def shift(text, n):
+      result = ""
+      for ch in text:
+          if "a" <= ch <= "z":
+              position = (ord(ch) - ord("a") + n) % 26
+              result += chr(ord("a") + position)
+          else:
+              result += ch
+      return result

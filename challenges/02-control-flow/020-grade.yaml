@@ -1,0 +1,44 @@
+id: control-flow-letter-grade
+title: Letter Grade
+topic: control-flow
+tags: [conditionals, comparisons]
+difficulty: 2
+order: 20
+runner: pyodide
+description: |
+  ## if / elif / else
+
+  Write a function `grade(score)` that returns a letter grade for a test score
+  from 0–100:
+
+  - `90` and above → `"A"`
+  - `80`–`89` → `"B"`
+  - `70`–`79` → `"C"`
+  - `60`–`69` → `"D"`
+  - below `60` → `"F"`
+starter_code: |
+  def grade(score):
+      # Return the letter grade for the given score.
+      pass
+tests: |
+  check(grade(95) == "A", "95 -> A")
+  check(grade(90) == "A", "90 is the A boundary")
+  check(grade(85) == "B", "85 -> B")
+  check(grade(72) == "C", "72 -> C")
+  check(grade(60) == "D", "60 is the D boundary")
+  check(grade(40) == "F", "40 -> F")
+hints:
+  - Check the highest band first, then work downwards with `elif`.
+  - 'Comparisons like `score >= 90` give True or False you can branch on.'
+solution: |
+  def grade(score):
+      if score >= 90:
+          return "A"
+      elif score >= 80:
+          return "B"
+      elif score >= 70:
+          return "C"
+      elif score >= 60:
+          return "D"
+      else:
+          return "F"

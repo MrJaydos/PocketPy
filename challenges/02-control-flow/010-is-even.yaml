@@ -1,0 +1,29 @@
+id: control-flow-is-even
+title: Odd or Even
+topic: control-flow
+tags: [conditionals, modulo]
+difficulty: 1
+order: 10
+runner: pyodide
+description: |
+  ## Even numbers
+
+  Write a function `is_even(n)` that returns `True` when `n` is even and `False`
+  when it is odd.
+
+  A number is even when dividing it by 2 leaves no remainder.
+starter_code: |
+  def is_even(n):
+      # Return True if n is even, otherwise False.
+      pass
+tests: |
+  check(is_even(2) is True, "2 is even")
+  check(is_even(3) is False, "3 is odd")
+  check(is_even(0) is True, "0 is even")
+  check(is_even(-4) is True, "-4 is even")
+hints:
+  - The modulo operator `%` gives the remainder. `n % 2` is 0 for even numbers.
+  - A comparison like `n % 2 == 0` already evaluates to True or False — you can return it directly.
+solution: |
+  def is_even(n):
+      return n % 2 == 0

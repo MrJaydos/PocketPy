@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PyPocket">
+  <!-- Full-bleed background so this works as a maskable icon (safe zone is the
+       centre 80%; the glyph below stays well inside it). -->
+  <rect width="512" height="512" fill="#0f172a"/>
+  <rect x="56" y="56" width="400" height="400" rx="72" fill="#1e293b"/>
+  <!-- A terminal-style prompt glyph: >_ in the accent colour. -->
+  <g fill="none" stroke="#38bdf8" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="176,196 240,256 176,316"/>
+    <line x1="268" y1="320" x2="340" y2="320"/>
+  </g>
+</svg>

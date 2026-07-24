@@ -1,0 +1,35 @@
+id: files-save-and-load
+title: Save and Load
+topic: files
+tags: [files, io]
+difficulty: 3
+order: 10
+runner: pyodide
+description: |
+  ## Reading and writing files
+
+  Pyodide gives you a real (in-memory) filesystem, so normal Python file code
+  works here.
+
+  Write a function `save_and_load(path, text)` that writes `text` to the file at
+  `path`, then reads the file back and returns its contents.
+
+  > Files are handy for saving data between runs of a program.
+starter_code: |
+  def save_and_load(path, text):
+      # Write text to the file, then read it back and return it.
+      pass
+tests: |
+  check(save_and_load("/tmp/a.txt", "hello") == "hello", "round-trips text")
+  check(save_and_load("/tmp/b.txt", "line1\nline2") == "line1\nline2", "keeps newlines")
+  check(save_and_load("/tmp/c.txt", "") == "", "empty content is fine")
+hints:
+  - 'Open for writing with `open(path, "w")` and call `.write(text)`.'
+  - 'Using `with open(...) as f:` closes the file for you automatically.'
+  - 'Open again with mode `"r"` and `return f.read()`.'
+solution: |
+  def save_and_load(path, text):
+      with open(path, "w") as f:
+          f.write(text)
+      with open(path, "r") as f:
+          return f.read()

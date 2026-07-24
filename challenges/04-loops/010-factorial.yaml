@@ -1,0 +1,33 @@
+id: loops-factorial
+title: Factorial
+topic: loops
+tags: [loops, accumulator]
+difficulty: 2
+order: 10
+runner: pyodide
+description: |
+  ## Building up a result in a loop
+
+  Write a function `factorial(n)` that returns `n!` — the product of all whole
+  numbers from `1` to `n`.
+
+  For example, `factorial(4)` is `1 * 2 * 3 * 4 = 24`. By definition
+  `factorial(0)` is `1`.
+starter_code: |
+  def factorial(n):
+      # Multiply the numbers 1..n together.
+      pass
+tests: |
+  check(factorial(0) == 1, "0! is 1")
+  check(factorial(1) == 1, "1! is 1")
+  check(factorial(4) == 24, "4! is 24")
+  check(factorial(6) == 720, "6! is 720")
+hints:
+  - Start with a result of `1`, then multiply it by each number in a loop.
+  - '`range(1, n + 1)` gives the numbers 1 through n.'
+solution: |
+  def factorial(n):
+      result = 1
+      for i in range(1, n + 1):
+          result *= i
+      return result

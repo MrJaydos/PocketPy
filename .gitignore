@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+client/dist/
+client/dev-dist/
+
+# Self-hosted Pyodide runtime (copied from the pyodide npm package at build time)
+client/public/pyodide/
+
+# Local data / secrets
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+data/
+.env
+.env.local
+
+# Editor / OS cruft
+.DS_Store
+Thumbs.db
+*.log

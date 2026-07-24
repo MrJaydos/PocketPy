@@ -1,0 +1,16 @@
+# Keep the build context small and avoid copying host-built artefacts into the image.
+node_modules
+**/node_modules
+client/dist
+client/dev-dist
+client/public/pyodide
+data
+*.db
+*.db-*
+.env
+.env.local
+.git
+.gitignore
+*.log
+npm-debug.log*
+.DS_Store

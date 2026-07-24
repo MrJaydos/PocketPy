@@ -1,0 +1,32 @@
+id: dictionaries-word-count
+title: Word Counter
+topic: dictionaries
+tags: [dictionaries, strings, loops]
+difficulty: 3
+order: 10
+runner: pyodide
+description: |
+  ## Counting with a dictionary
+
+  Write a function `word_count(sentence)` that returns a dictionary mapping each
+  word to how many times it appears. Split the sentence on spaces.
+
+  For example, `word_count("the cat the dog")` returns
+  `{"the": 2, "cat": 1, "dog": 1}`.
+starter_code: |
+  def word_count(sentence):
+      # Count how many times each word appears.
+      pass
+tests: |
+  check(word_count("the cat the dog") == {"the": 2, "cat": 1, "dog": 1}, "counts repeats")
+  check(word_count("hi") == {"hi": 1}, "single word")
+  check(word_count("") == {}, "empty sentence -> empty dict")
+hints:
+  - '`sentence.split()` breaks the sentence into a list of words.'
+  - For each word, use `counts.get(word, 0) + 1` to add to its running total.
+solution: |
+  def word_count(sentence):
+      counts = {}
+      for word in sentence.split():
+          counts[word] = counts.get(word, 0) + 1
+      return counts

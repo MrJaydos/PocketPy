@@ -1,0 +1,30 @@
+id: syntax-greet
+title: Say Hello
+topic: syntax-variables
+tags: [strings, functions]
+difficulty: 1
+order: 10
+runner: pyodide
+description: |
+  ## Your first function
+
+  Write a function `greet(name)` that returns the string `Hello, <name>!`.
+
+  For example, `greet("Ada")` should return `"Hello, Ada!"`.
+
+  > Tip: use an f-string, like `f"Hello, {name}!"`.
+starter_code: |
+  def greet(name):
+      # Return a greeting string.
+      pass
+tests: |
+  check(greet("Ada") == "Hello, Ada!", 'greet("Ada") returns "Hello, Ada!"')
+  check(greet("Bo") == "Hello, Bo!", 'greet("Bo") returns "Hello, Bo!"')
+  check(greet("") == "Hello, !", "handles an empty name")
+hints:
+  # Note: hints containing a colon-space must be quoted, or YAML reads them as a map.
+  - 'An f-string lets you drop a variable straight into text: f"Hi {name}".'
+  - Remember to `return` the string, not `print` it — the tests check the return value.
+solution: |
+  def greet(name):
+      return f"Hello, {name}!"
