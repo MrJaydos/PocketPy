@@ -22,6 +22,24 @@ import { progressRoutes } from './routes/progress.js';
 import { healthRoutes } from './routes/health.js';
 
 /**
+ * Decide the Cache-Control header for a static file by its path.
+ *  - /assets/*  : content-hashed by Vite, so cache aggressively and immutably.
+ *  - /pyodide/* : large, versioned runtime; cache a day (the service worker also
+ *                 runtime-caches it), but let it revalidate so a version bump lands.
+ *  - everything else (index.html, sw.js, *.webmanifest, workbox-*): must revalidate
+ *    every time, otherwise a deployed update won't reach a device that has the old
+ *    files cached.
+ * @param {string} filePath Absolute path of the file being served.
+ * @returns {string}
+ */
+function cacheControlFor(filePath) {
+  const p = filePath.replace(/\\/g, '/'); // normalise Windows separators
+  if (p.includes('/assets/')) return 'public, max-age=31536000, immutable';
+  if (p.includes('/pyodide/')) return 'public, max-age=86400, must-revalidate';
+  return 'no-cache';
+}
+
+/**
  * @param {Object} [overrides]
  * @param {typeof defaultConfig} [overrides.config]  Swap config (tests use temp paths/secrets).
  * @param {import('better-sqlite3').Database} [overrides.db]  Provide a db (tests use in-memory).
@@ -108,10 +126,22 @@ export async function buildApp(overrides = {}) {
       root: clientDist,
       // Serve index.html for "/" (default). Deep links like /challenge/foo don't map
       // to a file, so they fall through to the SPA fallback below.
+      //
+      // Turn off the plugin's built-in Cache-Control (which otherwise forces
+      // "public, max-age=0" on everything) so our own per-file policy wins:
+      // fingerprinted build assets are cached forever (their filename changes when the
+      // content does), but the files that decide whether a new deploy is picked up —
+      // index.html, the service worker, the manifest — must be revalidated every
+      // request, or a phone keeps running the old app.
+      cacheControl: false,
+      setHeaders: (res, filePath) => {
+        res.setHeader('Cache-Control', cacheControlFor(filePath));
+      },
     });
 
     // SPA fallback: any non-API GET that didn't match a file returns index.html so
-    // client-side routing (e.g. /challenge/foo) works on a hard refresh.
+    // client-side routing (e.g. /challenge/foo) works on a hard refresh. sendFile goes
+    // through the same static config above, so index.html gets "no-cache" too.
     fastify.setNotFoundHandler((request, reply) => {
       if (request.method === 'GET' && !request.url.startsWith('/api')) {
         return reply.sendFile('index.html');
