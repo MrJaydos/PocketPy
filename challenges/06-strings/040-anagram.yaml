@@ -1,0 +1,30 @@
+id: strings-is-anagram
+title: Anagram Check
+topic: strings
+tags: [strings, sorting]
+difficulty: 3
+order: 40
+runner: pyodide
+description: |
+  ## Same letters, different order
+
+  Write a function `is_anagram(a, b)` that returns `True` if `a` and `b` are
+  anagrams — they contain exactly the same letters in any order. Ignore case,
+  but for this challenge you can assume there are no spaces.
+
+  For example, `is_anagram("listen", "silent")` is `True`.
+starter_code: |
+  def is_anagram(a, b):
+      # True if a and b contain the same letters (ignoring case).
+      pass
+tests: |
+  check(is_anagram("listen", "silent") is True, "listen / silent")
+  check(is_anagram("Elvis", "lives") is True, "case is ignored")
+  check(is_anagram("hello", "world") is False, "different letters")
+  check(is_anagram("abc", "abcd") is False, "different lengths")
+hints:
+  - Lower-case both strings so case doesn't matter.
+  - Two words are anagrams when their sorted letters match — `sorted(word)`.
+solution: |
+  def is_anagram(a, b):
+      return sorted(a.lower()) == sorted(b.lower())

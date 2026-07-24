@@ -1,0 +1,28 @@
+id: syntax-celsius-to-fahrenheit
+title: Celsius to Fahrenheit
+topic: syntax-variables
+tags: [numbers, functions]
+difficulty: 2
+order: 50
+runner: pyodide
+description: |
+  ## A real formula
+
+  Write a function `to_fahrenheit(celsius)` that converts a temperature in
+  Celsius to Fahrenheit, using the formula `F = C * 9/5 + 32`.
+
+  For example, `to_fahrenheit(100)` is `212.0`.
+starter_code: |
+  def to_fahrenheit(celsius):
+      # Apply the formula F = C * 9/5 + 32.
+      pass
+tests: |
+  check(to_fahrenheit(0) == 32.0, "0C is 32F (freezing)")
+  check(to_fahrenheit(100) == 212.0, "100C is 212F (boiling)")
+  check(to_fahrenheit(37) == 98.6, "37C is 98.6F (body temp)")
+hints:
+  - Multiply by 9, divide by 5, then add 32.
+  - Be careful with operator order — Python does * and / before +.
+solution: |
+  def to_fahrenheit(celsius):
+      return celsius * 9 / 5 + 32

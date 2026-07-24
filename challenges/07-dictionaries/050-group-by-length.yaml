@@ -1,0 +1,39 @@
+id: dictionaries-group-by-length
+title: Group Words by Length
+topic: dictionaries
+tags: [dictionaries, lists, grouping]
+difficulty: 4
+order: 50
+runner: pyodide
+description: |
+  ## Building lists inside a dictionary
+
+  Write a function `group_by_length(words)` that returns a dictionary mapping a
+  word length to the list of words with that length, in their original order.
+
+  For example, `group_by_length(["hi", "yo", "hey"])` returns
+  `{2: ["hi", "yo"], 3: ["hey"]}`.
+starter_code: |
+  def group_by_length(words):
+      # Map each length to the list of words of that length.
+      pass
+tests: |
+  check(
+      group_by_length(["hi", "yo", "hey"]) == {2: ["hi", "yo"], 3: ["hey"]},
+      "groups by length, keeps order",
+  )
+  check(group_by_length([]) == {}, "empty input -> empty dict")
+  check(
+      group_by_length(["a", "bb", "cc", "d"]) == {1: ["a", "d"], 2: ["bb", "cc"]},
+      "multiple words per length",
+  )
+hints:
+  - For each word, its length is `len(word)`.
+  - If that length isn't a key yet, start it with an empty list, then append the word.
+  - '`result.setdefault(length, [])` is a handy way to do that in one step.'
+solution: |
+  def group_by_length(words):
+      result = {}
+      for word in words:
+          result.setdefault(len(word), []).append(word)
+      return result

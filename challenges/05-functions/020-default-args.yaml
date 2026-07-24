@@ -1,0 +1,29 @@
+id: functions-default-greeting
+title: Default Arguments
+topic: functions
+tags: [functions, default-arguments]
+difficulty: 2
+order: 20
+runner: pyodide
+description: |
+  ## Optional parameters
+
+  Write a function `greet(name, greeting="Hello")` where `greeting` is optional
+  and defaults to `"Hello"`. It returns `"<greeting>, <name>!"`.
+
+  So `greet("Ada")` returns `"Hello, Ada!"`, and `greet("Ada", "Hi")` returns
+  `"Hi, Ada!"`.
+starter_code: |
+  def greet(name, greeting="Hello"):
+      # Return "<greeting>, <name>!"
+      pass
+tests: |
+  check(greet("Ada") == "Hello, Ada!", "uses the default greeting")
+  check(greet("Ada", "Hi") == "Hi, Ada!", "uses the provided greeting")
+  check(greet("Bo", "Hey") == "Hey, Bo!", "another custom greeting")
+hints:
+  - The parameter with `=` in the definition is optional; callers can leave it out.
+  - Build the result with an f-string.
+solution: |
+  def greet(name, greeting="Hello"):
+      return f"{greeting}, {name}!"

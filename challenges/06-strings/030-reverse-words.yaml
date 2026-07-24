@@ -1,0 +1,30 @@
+id: strings-reverse-words
+title: Reverse the Words
+topic: strings
+tags: [strings, lists]
+difficulty: 2
+order: 30
+runner: pyodide
+description: |
+  ## Splitting and joining
+
+  Write a function `reverse_words(sentence)` that returns the sentence with its
+  words in reverse order (the letters within each word stay the same).
+
+  For example, `reverse_words("hello there world")` returns
+  `"world there hello"`.
+starter_code: |
+  def reverse_words(sentence):
+      # Reverse the order of the words.
+      pass
+tests: |
+  check(reverse_words("hello there world") == "world there hello", "three words")
+  check(reverse_words("one") == "one", "single word")
+  check(reverse_words("a b c") == "c b a", "short words")
+hints:
+  - '`sentence.split()` turns the sentence into a list of words.'
+  - Reverse the list, then join it back with spaces using `" ".join(...)`.
+solution: |
+  def reverse_words(sentence):
+      words = sentence.split()
+      return " ".join(words[::-1])

@@ -1,0 +1,36 @@
+id: functions-apply-twice
+title: Apply Twice
+topic: functions
+tags: [functions, higher-order]
+difficulty: 3
+order: 30
+runner: pyodide
+description: |
+  ## Functions that take functions
+
+  In Python, functions are values you can pass around. Write a function
+  `apply_twice(func, x)` that calls `func` on `x`, then calls `func` again on
+  the result, and returns it.
+
+  For example, if `add_one(n)` returns `n + 1`, then `apply_twice(add_one, 5)`
+  is `7`.
+starter_code: |
+  def apply_twice(func, x):
+      # Call func on x, then call func on that result.
+      pass
+tests: |
+  def add_one(n):
+      return n + 1
+
+  def double(n):
+      return n * 2
+
+  check(apply_twice(add_one, 5) == 7, "add_one twice: 5 -> 6 -> 7")
+  check(apply_twice(double, 3) == 12, "double twice: 3 -> 6 -> 12")
+  check(apply_twice(str.upper, "ab") == "AB", "works with any one-arg function")
+hints:
+  - '`func(x)` calls the function that was passed in.'
+  - Feed the result of the first call into a second call.
+solution: |
+  def apply_twice(func, x):
+      return func(func(x))

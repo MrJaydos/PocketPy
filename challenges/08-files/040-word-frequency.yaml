@@ -1,0 +1,40 @@
+id: files-word-frequency
+title: Word Frequency from a File
+topic: files
+tags: [files, dictionaries, strings]
+difficulty: 4
+order: 40
+runner: pyodide
+description: |
+  ## Bringing it together
+
+  Write a function `word_frequency(path, text)` that writes `text` to `path`,
+  then reads the file back and returns a dictionary counting how many times each
+  word appears. Split on whitespace.
+
+  For example, `word_frequency("/tmp/w.txt", "the cat the dog")` returns
+  `{"the": 2, "cat": 1, "dog": 1}`.
+starter_code: |
+  def word_frequency(path, text):
+      # Write text to the file, read it back, and count the words.
+      pass
+tests: |
+  check(
+      word_frequency("/tmp/wf1.txt", "the cat the dog") == {"the": 2, "cat": 1, "dog": 1},
+      "counts repeated words",
+  )
+  check(word_frequency("/tmp/wf2.txt", "hi") == {"hi": 1}, "single word")
+  check(word_frequency("/tmp/wf3.txt", "") == {}, "empty text -> empty dict")
+hints:
+  - Write the text, then read it all back with `f.read()`.
+  - '`.split()` breaks the text into words; count them with a dictionary and `.get()`.'
+solution: |
+  def word_frequency(path, text):
+      with open(path, "w") as f:
+          f.write(text)
+      with open(path, "r") as f:
+          contents = f.read()
+      counts = {}
+      for word in contents.split():
+          counts[word] = counts.get(word, 0) + 1
+      return counts

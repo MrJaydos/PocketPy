@@ -1,0 +1,41 @@
+id: mixed-roman-to-int
+title: Roman Numerals
+topic: mixed
+tags: [strings, dictionaries]
+difficulty: 4
+order: 40
+runner: pyodide
+description: |
+  ## Reading Roman numerals
+
+  Write a function `roman_to_int(s)` that converts a Roman numeral string to an
+  integer. The values are `I=1, V=5, X=10, L=50, C=100, D=500, M=1000`.
+
+  Normally you add the values, but when a smaller value comes **before** a larger
+  one it is subtracted — so `IV` is 4 and `IX` is 9.
+
+  For example, `roman_to_int("XIV")` is `14`.
+starter_code: |
+  def roman_to_int(s):
+      # Convert the Roman numeral string to an integer.
+      pass
+tests: |
+  check(roman_to_int("III") == 3, "III is 3")
+  check(roman_to_int("IV") == 4, "IV is 4 (subtractive)")
+  check(roman_to_int("IX") == 9, "IX is 9")
+  check(roman_to_int("XIV") == 14, "XIV is 14")
+  check(roman_to_int("MCMXCIV") == 1994, "MCMXCIV is 1994")
+hints:
+  - Make a dictionary mapping each letter to its value.
+  - Go left to right; if a value is smaller than the one after it, subtract it, otherwise add it.
+solution: |
+  def roman_to_int(s):
+      values = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+      total = 0
+      for i in range(len(s)):
+          value = values[s[i]]
+          if i + 1 < len(s) and value < values[s[i + 1]]:
+              total -= value
+          else:
+              total += value
+      return total

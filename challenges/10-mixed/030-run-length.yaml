@@ -1,0 +1,44 @@
+id: mixed-run-length-encode
+title: Run-Length Encoding
+topic: mixed
+tags: [strings, loops]
+difficulty: 4
+order: 30
+runner: pyodide
+description: |
+  ## Compressing repeats
+
+  Write a function `encode(text)` that compresses runs of the same character
+  into the character followed by its count. Single characters also get a count
+  of 1.
+
+  For example, `encode("aaabbc")` returns `"a3b2c1"`, and `encode("abc")`
+  returns `"a1b1c1"`.
+starter_code: |
+  def encode(text):
+      # Compress runs of characters, e.g. "aaabbc" -> "a3b2c1".
+      pass
+tests: |
+  check(encode("aaabbc") == "a3b2c1", "runs are counted")
+  check(encode("abc") == "a1b1c1", "singles get a 1")
+  check(encode("") == "", "empty text -> empty string")
+  check(encode("aaaa") == "a4", "one long run")
+hints:
+  - Walk through the text tracking the current character and how many times it has repeated.
+  - When the character changes (or you reach the end), append the character and its count.
+solution: |
+  def encode(text):
+      if not text:
+          return ""
+      result = ""
+      current = text[0]
+      count = 1
+      for ch in text[1:]:
+          if ch == current:
+              count += 1
+          else:
+              result += current + str(count)
+              current = ch
+              count = 1
+      result += current + str(count)
+      return result

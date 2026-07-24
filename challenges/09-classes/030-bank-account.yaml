@@ -1,0 +1,58 @@
+id: classes-bank-account
+title: Bank Account
+topic: classes
+tags: [classes, state]
+difficulty: 3
+order: 30
+runner: pyodide
+description: |
+  ## Objects that hold state
+
+  Write a class `BankAccount` that starts with a balance of `0` and supports:
+
+  - `.deposit(amount)` adds to the balance
+  - `.withdraw(amount)` subtracts from the balance, but only if there are enough
+    funds; otherwise it does nothing
+  - `.balance` is the current balance (an attribute)
+
+  ```python
+  acc = BankAccount()
+  acc.deposit(100)
+  acc.withdraw(30)
+  acc.balance   # -> 70
+  ```
+starter_code: |
+  class BankAccount:
+      def __init__(self):
+          # Start with a zero balance.
+          pass
+
+      def deposit(self, amount):
+          pass
+
+      def withdraw(self, amount):
+          # Only withdraw if there's enough balance.
+          pass
+tests: |
+  acc = BankAccount()
+  check(acc.balance == 0, "starts at 0")
+  acc.deposit(100)
+  check(acc.balance == 100, "after depositing 100")
+  acc.withdraw(30)
+  check(acc.balance == 70, "after withdrawing 30")
+  acc.withdraw(1000)
+  check(acc.balance == 70, "overdraw is ignored")
+hints:
+  - 'Keep the money in `self.balance`, starting at 0.'
+  - In `withdraw`, only subtract when `amount <= self.balance`.
+solution: |
+  class BankAccount:
+      def __init__(self):
+          self.balance = 0
+
+      def deposit(self, amount):
+          self.balance += amount
+
+      def withdraw(self, amount):
+          if amount <= self.balance:
+              self.balance -= amount

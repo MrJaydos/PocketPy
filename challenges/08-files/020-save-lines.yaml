@@ -1,0 +1,33 @@
+id: files-save-lines-and-count
+title: Save Lines and Count
+topic: files
+tags: [files, io, lists]
+difficulty: 2
+order: 20
+runner: pyodide
+description: |
+  ## Writing several lines
+
+  Write a function `save_lines(path, lines)` that writes each string in `lines`
+  to the file at `path`, one per line, then reads the file back and returns the
+  number of lines it contains.
+
+  For example, `save_lines("/tmp/a.txt", ["one", "two", "three"])` is `3`.
+starter_code: |
+  def save_lines(path, lines):
+      # Write each item on its own line, then count the lines in the file.
+      pass
+tests: |
+  check(save_lines("/tmp/lines1.txt", ["one", "two", "three"]) == 3, "three lines")
+  check(save_lines("/tmp/lines2.txt", ["solo"]) == 1, "one line")
+  check(save_lines("/tmp/lines3.txt", []) == 0, "no lines")
+hints:
+  - 'Write with `open(path, "w")`; add a newline after each item (`line + "\n"`).'
+  - 'To count, read the file back and use `f.readlines()` — its length is the line count.'
+solution: |
+  def save_lines(path, lines):
+      with open(path, "w") as f:
+          for line in lines:
+              f.write(line + "\n")
+      with open(path, "r") as f:
+          return len(f.readlines())

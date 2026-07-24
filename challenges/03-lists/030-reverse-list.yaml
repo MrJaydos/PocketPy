@@ -1,0 +1,31 @@
+id: lists-reverse
+title: Reverse a List
+topic: lists
+tags: [lists, slicing]
+difficulty: 2
+order: 30
+runner: pyodide
+description: |
+  ## Building a new list
+
+  Write a function `reverse_list(items)` that returns a **new** list with the
+  items in reverse order. The original list should be left unchanged.
+
+  For example, `reverse_list([1, 2, 3])` returns `[3, 2, 1]`.
+starter_code: |
+  def reverse_list(items):
+      # Return a new list with the items reversed.
+      pass
+tests: |
+  check(reverse_list([1, 2, 3]) == [3, 2, 1], "reverses order")
+  check(reverse_list([]) == [], "empty stays empty")
+  check(reverse_list(["a"]) == ["a"], "single item")
+  original = [1, 2, 3]
+  reverse_list(original)
+  check(original == [1, 2, 3], "original list is not modified")
+hints:
+  - 'A slice with a step of -1 reverses a list: `items[::-1]`.'
+  - Slicing creates a new list, so the original is untouched.
+solution: |
+  def reverse_list(items):
+      return items[::-1]

@@ -1,0 +1,32 @@
+id: loops-sum-to-n
+title: Sum to N
+topic: loops
+tags: [loops, accumulator]
+difficulty: 1
+order: 20
+runner: pyodide
+description: |
+  ## Adding up a range
+
+  Write a function `sum_to(n)` that returns the sum of all whole numbers from
+  `1` up to and including `n`.
+
+  For example, `sum_to(5)` is `1 + 2 + 3 + 4 + 5 = 15`.
+starter_code: |
+  def sum_to(n):
+      # Add up 1, 2, 3, ... n.
+      pass
+tests: |
+  check(sum_to(5) == 15, "1..5 sums to 15")
+  check(sum_to(1) == 1, "just 1")
+  check(sum_to(10) == 55, "1..10 sums to 55")
+  check(sum_to(0) == 0, "nothing to add -> 0")
+hints:
+  - Start a total at 0 and add each number in a loop.
+  - '`range(1, n + 1)` gives 1 through n.'
+solution: |
+  def sum_to(n):
+      total = 0
+      for i in range(1, n + 1):
+          total += i
+      return total

@@ -1,0 +1,31 @@
+id: lists-second-largest
+title: Second Largest
+topic: lists
+tags: [lists, sorting]
+difficulty: 3
+order: 50
+runner: pyodide
+description: |
+  ## A trickier lookup
+
+  Write a function `second_largest(numbers)` that returns the second-largest
+  **distinct** value in a list of at least two distinct numbers.
+
+  For example, `second_largest([4, 1, 7, 7, 3])` is `4` (the largest distinct
+  value is 7, the next is 4).
+starter_code: |
+  def second_largest(numbers):
+      # Return the second-largest distinct value.
+      pass
+tests: |
+  check(second_largest([4, 1, 7, 7, 3]) == 4, "ignores the duplicate 7s")
+  check(second_largest([1, 2]) == 1, "just two values")
+  check(second_largest([5, 5, 3]) == 3, "5 is largest, 3 is next")
+  check(second_largest([-1, -5, -3]) == -3, "works with negatives")
+hints:
+  - Remove duplicates first — a set does this, e.g. `set(numbers)`.
+  - Sort the distinct values and take the second from the end.
+solution: |
+  def second_largest(numbers):
+      distinct = sorted(set(numbers))
+      return distinct[-2]

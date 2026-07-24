@@ -1,0 +1,38 @@
+id: strings-first-unique
+title: First Unique Character
+topic: strings
+tags: [strings, counting]
+difficulty: 4
+order: 50
+runner: pyodide
+description: |
+  ## Finding the first loner
+
+  Write a function `first_unique(text)` that returns the first character that
+  appears exactly once in `text`. If every character repeats (or the text is
+  empty), return an empty string `""`.
+
+  For example, `first_unique("aabbc")` is `"c"`, and `first_unique("swiss")` is
+  `"w"`.
+starter_code: |
+  def first_unique(text):
+      # Return the first character that appears exactly once, or "".
+      pass
+tests: |
+  check(first_unique("aabbc") == "c", "c is the only single")
+  check(first_unique("swiss") == "w", "w appears once, before the single i")
+  check(first_unique("aabb") == "", "everything repeats -> empty string")
+  check(first_unique("") == "", "empty text -> empty string")
+  check(first_unique("abcabd") == "c", "c is the first that isn't repeated")
+hints:
+  - First count how many times each character appears (a dictionary helps).
+  - Then loop through the text in order and return the first char with a count of 1.
+solution: |
+  def first_unique(text):
+      counts = {}
+      for ch in text:
+          counts[ch] = counts.get(ch, 0) + 1
+      for ch in text:
+          if counts[ch] == 1:
+              return ch
+      return ""

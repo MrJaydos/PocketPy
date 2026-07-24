@@ -1,0 +1,33 @@
+id: loops-count-vowels
+title: Count Vowels
+topic: loops
+tags: [loops, strings]
+difficulty: 2
+order: 30
+runner: pyodide
+description: |
+  ## Looping over a string
+
+  Write a function `count_vowels(text)` that returns how many vowels
+  (`a`, `e`, `i`, `o`, `u`) are in `text`. Count both upper and lower case.
+
+  For example, `count_vowels("Hello")` is `2`.
+starter_code: |
+  def count_vowels(text):
+      # Count the vowels in text (upper and lower case).
+      pass
+tests: |
+  check(count_vowels("Hello") == 2, "e and o")
+  check(count_vowels("xyz") == 0, "no vowels")
+  check(count_vowels("AEIOU") == 5, "upper-case vowels count too")
+  check(count_vowels("") == 0, "empty string")
+hints:
+  - Loop over each character in the string.
+  - Lower-case the character and check if it's in the string "aeiou".
+solution: |
+  def count_vowels(text):
+      count = 0
+      for ch in text:
+          if ch.lower() in "aeiou":
+              count += 1
+      return count

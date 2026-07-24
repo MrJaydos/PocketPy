@@ -1,0 +1,29 @@
+id: strings-count-char
+title: Count a Character
+topic: strings
+tags: [strings]
+difficulty: 1
+order: 20
+runner: pyodide
+description: |
+  ## Counting occurrences
+
+  Write a function `count_char(text, ch)` that returns how many times the
+  character `ch` appears in `text`.
+
+  For example, `count_char("banana", "a")` is `3`.
+starter_code: |
+  def count_char(text, ch):
+      # Count how many times ch appears in text.
+      pass
+tests: |
+  check(count_char("banana", "a") == 3, "three a's")
+  check(count_char("banana", "n") == 2, "two n's")
+  check(count_char("banana", "z") == 0, "no z's")
+  check(count_char("", "a") == 0, "empty text")
+hints:
+  - Strings have a handy `.count()` method, e.g. `text.count(ch)`.
+  - Or loop over the characters and add 1 each time you find a match.
+solution: |
+  def count_char(text, ch):
+      return text.count(ch)

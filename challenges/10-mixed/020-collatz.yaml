@@ -1,0 +1,38 @@
+id: mixed-collatz-steps
+title: Collatz Steps
+topic: mixed
+tags: [loops, numbers]
+difficulty: 3
+order: 20
+runner: pyodide
+description: |
+  ## The 3n + 1 problem
+
+  Starting from a positive number `n`, repeat this rule: if `n` is even, halve
+  it; if it's odd, replace it with `3 * n + 1`. Eventually you always reach 1.
+
+  Write a function `collatz_steps(n)` that returns how many steps it takes to
+  reach 1. For example, from `6`: `6 → 3 → 10 → 5 → 16 → 8 → 4 → 2 → 1`, which is
+  `8` steps. `collatz_steps(1)` is `0`.
+starter_code: |
+  def collatz_steps(n):
+      # Count the steps to reach 1.
+      pass
+tests: |
+  check(collatz_steps(1) == 0, "already at 1")
+  check(collatz_steps(2) == 1, "2 -> 1 is one step")
+  check(collatz_steps(6) == 8, "6 takes 8 steps")
+  check(collatz_steps(27) == 111, "27 famously takes 111 steps")
+hints:
+  - Loop while `n` is not 1, counting each step.
+  - '`n % 2 == 0` means even (halve with `n // 2`); otherwise use `3 * n + 1`.'
+solution: |
+  def collatz_steps(n):
+      steps = 0
+      while n != 1:
+          if n % 2 == 0:
+              n = n // 2
+          else:
+              n = 3 * n + 1
+          steps += 1
+      return steps

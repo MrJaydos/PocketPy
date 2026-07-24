@@ -1,0 +1,39 @@
+id: functions-compose
+title: Compose Functions
+topic: functions
+tags: [functions, higher-order, closures]
+difficulty: 4
+order: 50
+runner: pyodide
+description: |
+  ## Chaining two functions
+
+  Write a function `compose(f, g)` that returns a new function `h` such that
+  `h(x)` equals `f(g(x))` — it runs `g` first, then feeds the result into `f`.
+
+  For example, if `double(n)` returns `n * 2` and `add_one(n)` returns `n + 1`,
+  then `compose(double, add_one)(5)` is `double(add_one(5))` = `12`.
+starter_code: |
+  def compose(f, g):
+      # Return a function h where h(x) == f(g(x)).
+      pass
+tests: |
+  def double(n):
+      return n * 2
+
+  def add_one(n):
+      return n + 1
+
+  h = compose(double, add_one)
+  check(h(5) == 12, "double(add_one(5)) = double(6) = 12")
+  check(h(0) == 2, "double(add_one(0)) = double(1) = 2")
+  k = compose(add_one, double)
+  check(k(5) == 11, "order matters: add_one(double(5)) = 11")
+hints:
+  - Define an inner function that takes `x` and returns `f(g(x))`.
+  - Return the inner function without calling it.
+solution: |
+  def compose(f, g):
+      def h(x):
+          return f(g(x))
+      return h

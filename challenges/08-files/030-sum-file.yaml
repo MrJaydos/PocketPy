@@ -1,0 +1,38 @@
+id: files-sum-numbers
+title: Sum Numbers in a File
+topic: files
+tags: [files, io, loops]
+difficulty: 3
+order: 30
+runner: pyodide
+description: |
+  ## Reading data back in
+
+  Write a function `sum_file(path, numbers)` that writes each number in
+  `numbers` to `path` on its own line, then reads the file back, converts each
+  line to an integer, and returns their total.
+
+  For example, `sum_file("/tmp/n.txt", [1, 2, 3])` is `6`.
+starter_code: |
+  def sum_file(path, numbers):
+      # Write the numbers to the file, then read them back and sum them.
+      pass
+tests: |
+  check(sum_file("/tmp/nums1.txt", [1, 2, 3]) == 6, "1 + 2 + 3")
+  check(sum_file("/tmp/nums2.txt", [10, 20, 30]) == 60, "10 + 20 + 30")
+  check(sum_file("/tmp/nums3.txt", []) == 0, "no numbers -> 0")
+hints:
+  - 'Numbers must be turned into strings to write them: `str(n)`.'
+  - 'When reading back, `int(line)` converts a line to a number; `.strip()` removes the newline.'
+solution: |
+  def sum_file(path, numbers):
+      with open(path, "w") as f:
+          for n in numbers:
+              f.write(str(n) + "\n")
+      total = 0
+      with open(path, "r") as f:
+          for line in f:
+              line = line.strip()
+              if line:
+                  total += int(line)
+      return total

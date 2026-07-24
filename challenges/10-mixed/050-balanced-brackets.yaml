@@ -1,0 +1,43 @@
+id: mixed-balanced-brackets
+title: Balanced Brackets
+topic: mixed
+tags: [strings, stack]
+difficulty: 5
+order: 50
+runner: pyodide
+description: |
+  ## Matching brackets
+
+  Write a function `is_balanced(s)` that returns `True` if every opening bracket
+  in `s` has a matching closing bracket of the same type, correctly nested. The
+  brackets are `()`, `[]`, and `{}`. Ignore any other characters.
+
+  For example, `is_balanced("(a[b]{c})")` is `True`, but `is_balanced("(]")` is
+  `False`.
+starter_code: |
+  def is_balanced(s):
+      # Return True if all brackets are matched and correctly nested.
+      pass
+tests: |
+  check(is_balanced("()") is True, "simple pair")
+  check(is_balanced("(a[b]{c})") is True, "nested and mixed with other chars")
+  check(is_balanced("(]") is False, "mismatched types")
+  check(is_balanced("([)]") is False, "wrong nesting order")
+  check(is_balanced("(((") is False, "unclosed brackets")
+  check(is_balanced("") is True, "empty string is balanced")
+hints:
+  - Use a list as a stack. Push each opening bracket onto it.
+  - On a closing bracket, the top of the stack must be the matching opener — otherwise it's unbalanced.
+  - At the end, the stack must be empty.
+solution: |
+  def is_balanced(s):
+      pairs = {")": "(", "]": "[", "}": "{"}
+      openers = set(pairs.values())
+      stack = []
+      for ch in s:
+          if ch in openers:
+              stack.append(ch)
+          elif ch in pairs:
+              if not stack or stack.pop() != pairs[ch]:
+                  return False
+      return len(stack) == 0

@@ -1,0 +1,48 @@
+id: classes-vector
+title: 2D Vector
+topic: classes
+tags: [classes, methods]
+difficulty: 4
+order: 50
+runner: pyodide
+description: |
+  ## Objects that combine
+
+  Write a class `Vector2D` created with an `x` and a `y` (stored as attributes
+  `.x` and `.y`), with a method `.add(other)` that returns a **new** `Vector2D`
+  whose components are the sums.
+
+  ```python
+  a = Vector2D(1, 2)
+  b = Vector2D(3, 4)
+  c = a.add(b)
+  c.x, c.y   # -> (4, 6)
+  ```
+starter_code: |
+  class Vector2D:
+      def __init__(self, x, y):
+          # Store x and y.
+          pass
+
+      def add(self, other):
+          # Return a NEW Vector2D with the summed components.
+          pass
+tests: |
+  a = Vector2D(1, 2)
+  b = Vector2D(3, 4)
+  c = a.add(b)
+  check(c.x == 4 and c.y == 6, "components add: (4, 6)")
+  check(a.x == 1 and a.y == 2, "the original vector a is unchanged")
+  z = Vector2D(0, 0).add(Vector2D(-5, 7))
+  check(z.x == -5 and z.y == 7, "works with zero and negatives")
+hints:
+  - 'Store the components as `self.x` and `self.y`.'
+  - In `add`, build and return `Vector2D(self.x + other.x, self.y + other.y)`.
+solution: |
+  class Vector2D:
+      def __init__(self, x, y):
+          self.x = x
+          self.y = y
+
+      def add(self, other):
+          return Vector2D(self.x + other.x, self.y + other.y)

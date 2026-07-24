@@ -1,0 +1,28 @@
+id: syntax-to-seconds
+title: Total Seconds
+topic: syntax-variables
+tags: [numbers, functions]
+difficulty: 1
+order: 30
+runner: pyodide
+description: |
+  ## Arithmetic with variables
+
+  Write a function `to_seconds(hours, minutes, seconds)` that returns the total
+  number of seconds.
+
+  For example, `to_seconds(1, 1, 1)` is `3661`.
+starter_code: |
+  def to_seconds(hours, minutes, seconds):
+      # There are 3600 seconds in an hour and 60 in a minute.
+      pass
+tests: |
+  check(to_seconds(0, 0, 0) == 0, "all zero -> 0")
+  check(to_seconds(1, 0, 0) == 3600, "one hour -> 3600")
+  check(to_seconds(0, 2, 0) == 120, "two minutes -> 120")
+  check(to_seconds(1, 1, 1) == 3661, "1h 1m 1s -> 3661")
+hints:
+  - Multiply hours by 3600 and minutes by 60, then add the seconds.
+solution: |
+  def to_seconds(hours, minutes, seconds):
+      return hours * 3600 + minutes * 60 + seconds

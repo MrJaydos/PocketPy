@@ -1,0 +1,35 @@
+id: control-flow-leap-year
+title: Leap Year
+topic: control-flow
+tags: [conditionals, modulo]
+difficulty: 3
+order: 50
+runner: pyodide
+description: |
+  ## Combining conditions
+
+  Write a function `is_leap_year(year)` that returns `True` if `year` is a leap
+  year and `False` otherwise.
+
+  A year is a leap year if it is divisible by 4, **except** century years, which
+  must be divisible by 400. So 2000 is a leap year, but 1900 is not.
+starter_code: |
+  def is_leap_year(year):
+      # Divisible by 4, but century years must be divisible by 400.
+      pass
+tests: |
+  check(is_leap_year(2024) is True, "2024 is a leap year")
+  check(is_leap_year(2023) is False, "2023 is not")
+  check(is_leap_year(2000) is True, "2000 (divisible by 400) is")
+  check(is_leap_year(1900) is False, "1900 (century, not by 400) is not")
+hints:
+  - A year divisible by 400 is always a leap year.
+  - A year divisible by 100 but not 400 is never a leap year.
+  - Otherwise, it is a leap year exactly when it is divisible by 4.
+solution: |
+  def is_leap_year(year):
+      if year % 400 == 0:
+          return True
+      if year % 100 == 0:
+          return False
+      return year % 4 == 0

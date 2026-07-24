@@ -1,0 +1,28 @@
+id: control-flow-max-of-three
+title: Largest of Three
+topic: control-flow
+tags: [conditionals, comparisons]
+difficulty: 2
+order: 30
+runner: pyodide
+description: |
+  ## Comparing values
+
+  Write a function `largest(a, b, c)` that returns the biggest of three numbers.
+
+  For example, `largest(3, 7, 5)` is `7`.
+starter_code: |
+  def largest(a, b, c):
+      # Return the largest of the three.
+      pass
+tests: |
+  check(largest(3, 7, 5) == 7, "middle argument is biggest")
+  check(largest(9, 1, 2) == 9, "first argument is biggest")
+  check(largest(1, 2, 9) == 9, "last argument is biggest")
+  check(largest(4, 4, 4) == 4, "all equal")
+  check(largest(-3, -1, -2) == -1, "works with negatives")
+hints:
+  - You can compare with `if`/`elif`, or use the built-in `max(a, b, c)`.
+solution: |
+  def largest(a, b, c):
+      return max(a, b, c)

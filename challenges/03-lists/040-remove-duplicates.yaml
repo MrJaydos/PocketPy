@@ -1,0 +1,33 @@
+id: lists-remove-duplicates
+title: Remove Duplicates
+topic: lists
+tags: [lists, loops]
+difficulty: 3
+order: 40
+runner: pyodide
+description: |
+  ## Keeping the first of each
+
+  Write a function `unique(items)` that returns a new list with duplicates
+  removed, keeping the **first** occurrence of each item and its original order.
+
+  For example, `unique([1, 2, 2, 3, 1])` returns `[1, 2, 3]`.
+starter_code: |
+  def unique(items):
+      # Return items without duplicates, preserving order.
+      pass
+tests: |
+  check(unique([1, 2, 2, 3, 1]) == [1, 2, 3], "keeps first occurrences in order")
+  check(unique([]) == [], "empty list")
+  check(unique([5, 5, 5]) == [5], "all the same")
+  check(unique(["a", "b", "a", "c"]) == ["a", "b", "c"], "works with strings")
+hints:
+  - Keep a list of items you've already seen.
+  - Loop through the input; only append an item if it isn't already in your result.
+solution: |
+  def unique(items):
+      result = []
+      for item in items:
+          if item not in result:
+              result.append(item)
+      return result

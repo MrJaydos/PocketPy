@@ -1,0 +1,34 @@
+id: dictionaries-max-value-key
+title: Highest-Scoring Key
+topic: dictionaries
+tags: [dictionaries, max]
+difficulty: 3
+order: 40
+runner: pyodide
+description: |
+  ## Finding the top entry
+
+  Write a function `top_key(scores)` that returns the key with the largest value
+  in a non-empty dictionary. You can assume there is a single clear winner.
+
+  For example, `top_key({"ada": 10, "bo": 25, "cy": 7})` is `"bo"`.
+starter_code: |
+  def top_key(scores):
+      # Return the key whose value is the largest.
+      pass
+tests: |
+  check(top_key({"ada": 10, "bo": 25, "cy": 7}) == "bo", "bo has the highest score")
+  check(top_key({"only": 5}) == "only", "single entry")
+  check(top_key({"a": 1, "b": 2}) == "b", "b wins")
+hints:
+  - Track the best key and best value as you loop over `scores.items()`.
+  - Start with no best yet, and update whenever you see a larger value.
+solution: |
+  def top_key(scores):
+      best_key = None
+      best_value = None
+      for key, value in scores.items():
+          if best_value is None or value > best_value:
+              best_key = key
+              best_value = value
+      return best_key

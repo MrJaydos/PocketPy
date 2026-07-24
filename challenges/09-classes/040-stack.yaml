@@ -1,0 +1,72 @@
+id: classes-stack
+title: A Stack
+topic: classes
+tags: [classes, lists, data-structures]
+difficulty: 3
+order: 40
+runner: pyodide
+description: |
+  ## Building a data structure
+
+  A stack is "last in, first out". Write a class `Stack` that starts empty and
+  supports:
+
+  - `.push(item)` adds an item on top
+  - `.pop()` removes and returns the top item
+  - `.peek()` returns the top item without removing it
+  - `.is_empty()` returns `True` when there are no items
+
+  ```python
+  s = Stack()
+  s.push(1)
+  s.push(2)
+  s.pop()      # -> 2
+  s.peek()     # -> 1
+  ```
+starter_code: |
+  class Stack:
+      def __init__(self):
+          # Use a list to hold the items.
+          pass
+
+      def push(self, item):
+          pass
+
+      def pop(self):
+          pass
+
+      def peek(self):
+          pass
+
+      def is_empty(self):
+          pass
+tests: |
+  s = Stack()
+  check(s.is_empty() is True, "new stack is empty")
+  s.push(1)
+  s.push(2)
+  check(s.is_empty() is False, "not empty after pushes")
+  check(s.peek() == 2, "peek shows the top without removing")
+  check(s.pop() == 2, "pop returns the top")
+  check(s.pop() == 1, "then the next one")
+  check(s.is_empty() is True, "empty again")
+hints:
+  - 'Store items in a list, e.g. `self.items = []`.'
+  - '`self.items.append(item)` pushes; `self.items.pop()` removes the last item.'
+  - The top item is the last one in the list, `self.items[-1]`.
+solution: |
+  class Stack:
+      def __init__(self):
+          self.items = []
+
+      def push(self, item):
+          self.items.append(item)
+
+      def pop(self):
+          return self.items.pop()
+
+      def peek(self):
+          return self.items[-1]
+
+      def is_empty(self):
+          return len(self.items) == 0

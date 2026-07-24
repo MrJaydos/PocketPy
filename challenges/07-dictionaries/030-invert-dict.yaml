@@ -1,0 +1,32 @@
+id: dictionaries-invert
+title: Invert a Dictionary
+topic: dictionaries
+tags: [dictionaries, loops]
+difficulty: 2
+order: 30
+runner: pyodide
+description: |
+  ## Swapping keys and values
+
+  Write a function `invert(d)` that returns a new dictionary where each key
+  becomes a value and each value becomes a key. You can assume the values are
+  unique.
+
+  For example, `invert({"a": 1, "b": 2})` returns `{1: "a", 2: "b"}`.
+starter_code: |
+  def invert(d):
+      # Return a new dict with keys and values swapped.
+      pass
+tests: |
+  check(invert({"a": 1, "b": 2}) == {1: "a", 2: "b"}, "swaps keys and values")
+  check(invert({}) == {}, "empty dict")
+  check(invert({"x": "y"}) == {"y": "x"}, "string values become keys")
+hints:
+  - 'Loop over the items with `for key, value in d.items():`.'
+  - Put each pair into the new dict the other way around.
+solution: |
+  def invert(d):
+      result = {}
+      for key, value in d.items():
+          result[value] = key
+      return result

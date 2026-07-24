@@ -1,0 +1,28 @@
+id: syntax-average-three
+title: Average of Three
+topic: syntax-variables
+tags: [numbers, functions]
+difficulty: 2
+order: 40
+runner: pyodide
+description: |
+  ## Returning a float
+
+  Write a function `average(a, b, c)` that returns the average (mean) of three
+  numbers.
+
+  For example, `average(1, 2, 3)` is `2.0`.
+starter_code: |
+  def average(a, b, c):
+      # Add them up and divide by how many there are.
+      pass
+tests: |
+  check(average(1, 2, 3) == 2.0, "average of 1, 2, 3 is 2.0")
+  check(average(10, 10, 10) == 10.0, "all the same -> that value")
+  check(average(0, 0, 3) == 1.0, "0, 0, 3 -> 1.0")
+hints:
+  - Add all three numbers, then divide by 3.
+  - The `/` operator always gives a float, which is what the tests expect.
+solution: |
+  def average(a, b, c):
+      return (a + b + c) / 3
