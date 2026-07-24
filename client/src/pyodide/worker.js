@@ -44,6 +44,23 @@ def check(cond, msg=""):
     _pp_results.append({"ok": bool(cond), "msg": str(msg)})
 `;
 
+// We capture stdout by redirecting Python's sys.stdout to an in-memory StringIO and
+// reading it back after the run. This is deterministic across browsers — unlike
+// pyodide.setStdout({batched}), whose JS callback timing turned out unreliable on
+// iOS Safari (print output silently vanished). Importantly we redirect ONLY stdout,
+// not stderr: redirecting stderr swallows exception tracebacks so runPython stops
+// throwing, which would break our code-error detection. Stderr stays on setStderr.
+const STDOUT_SETUP = `
+import sys as __pp_sys, io as __pp_io
+__pp_out = __pp_io.StringIO()
+__pp_saved_out = __pp_sys.stdout
+__pp_sys.stdout = __pp_out
+`;
+const STDOUT_TEARDOWN = `
+__pp_sys.stdout = __pp_saved_out
+__pp_stdout_value = __pp_out.getvalue()
+`;
+
 /**
  * Turn a Pyodide PythonError message (a full traceback) into a short, friendly
  * one-liner like "NameError: name 'shift' is not defined".
@@ -61,22 +78,26 @@ function friendlyError(message) {
  * @returns {{stdout: string, stderr: string, error?: string}}
  */
 function runOnce(pyodide, code) {
-  const stdout = [];
   const stderr = [];
-  pyodide.setStdout({ batched: (s) => stdout.push(s) });
   pyodide.setStderr({ batched: (s) => stderr.push(s) });
 
   // A brand-new dict per run means no variables leak between runs.
   const namespace = pyodide.toPy({});
+  let error;
   try {
-    pyodide.runPython(code, { globals: namespace });
-    return { stdout: stdout.join(''), stderr: stderr.join('') };
-  } catch (err) {
-    return {
-      stdout: stdout.join(''),
-      stderr: stderr.join(''),
-      error: friendlyError(err?.message ?? String(err)),
-    };
+    // Start capturing stdout into a StringIO.
+    pyodide.runPython(STDOUT_SETUP, { globals: namespace });
+    try {
+      pyodide.runPython(code, { globals: namespace });
+    } catch (err) {
+      // A real error in the user's code — record a friendly one-liner.
+      error = friendlyError(err?.message ?? String(err));
+    }
+    // Always restore stdout and read what was captured, even if the code errored
+    // partway (so output printed before the error is still shown).
+    pyodide.runPython(STDOUT_TEARDOWN, { globals: namespace });
+    const stdout = String(namespace.get('__pp_stdout_value') ?? '');
+    return { stdout, stderr: stderr.join(''), error };
   } finally {
     namespace.destroy();
   }
