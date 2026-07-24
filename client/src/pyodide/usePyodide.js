@@ -14,7 +14,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 const RUN_TIMEOUT_MS = 10_000;
 
-export function usePyodide() {
+/**
+ * @param {{enabled?: boolean}} [options] Set enabled:false to skip loading Pyodide
+ *   entirely (e.g. for server-run challenges that never touch the worker).
+ */
+export function usePyodide({ enabled = true } = {}) {
   const workerRef = useRef(null);
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -61,14 +65,15 @@ export function usePyodide() {
     workerRef.current = worker;
   }, []);
 
-  // Spawn on mount; tear down on unmount.
+  // Spawn on mount (unless disabled); tear down on unmount / when disabled.
   useEffect(() => {
+    if (!enabled) return undefined;
     spawnWorker();
     return () => {
       workerRef.current?.terminate();
       workerRef.current = null;
     };
-  }, [spawnWorker]);
+  }, [enabled, spawnWorker]);
 
   // Kill the current worker mid-task and replace it with a fresh, warming one.
   const recycleWorker = useCallback(() => {

@@ -93,7 +93,9 @@ export class ChallengeStore {
       runner: c.runner,
       description: c.description,
       starter_code: c.starter_code,
-      tests: c.tests,
+      // Pyodide runs the tests in the browser, so it needs them. Server-run
+      // challenges execute on the backend, so their tests stay hidden — never sent.
+      tests: c.runner === 'server' ? undefined : c.tests,
       hintCount: c.hints.length,
     };
   }

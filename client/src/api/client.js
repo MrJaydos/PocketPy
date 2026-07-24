@@ -73,5 +73,18 @@ export const api = {
       json: { giveUp },
     }),
 
+  // Phase 2 server-run challenges (runner: "server"): code executes in the sandboxed
+  // runner container and grading happens on the server.
+  runServer: (id, code) =>
+    apiFetch(`/api/challenges/${encodeURIComponent(id)}/run-server`, {
+      method: 'POST',
+      json: { code },
+    }),
+  submitServer: (id, code) =>
+    apiFetch(`/api/challenges/${encodeURIComponent(id)}/submit-server`, {
+      method: 'POST',
+      json: { code },
+    }),
+
   progress: () => apiFetch('/api/progress'),
 };

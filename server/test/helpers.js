@@ -55,6 +55,7 @@ export async function makeTestApp(overrides = {}) {
     config: { ...testConfig, ...(overrides.config ?? {}) },
     db,
     store: overrides.store ?? fixtureStore(),
+    runner: overrides.runner, // undefined => real runner; tests pass a stub
     serveClient: false,
   });
   return { app, db };

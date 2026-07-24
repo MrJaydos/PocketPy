@@ -119,4 +119,65 @@ export async function challengeRoutes(fastify) {
     markSolutionViewed(db, id);
     return { solution: store.solution(id) };
   });
+
+  // --- Phase 2: server-side runner (challenges flagged `runner: "server"`) -------
+  // These run in the sandboxed runner container instead of Pyodide. The hidden tests
+  // never reach the browser, and grading is authoritative — decided here from the
+  // real result, not trusted from the client.
+
+  /** Look up a challenge and ensure it's a server-run one, else send an error. */
+  function requireServerChallenge(id, reply) {
+    const ch = store.get(id);
+    if (!ch) {
+      reply.code(404).send({ error: 'Challenge not found' });
+      return null;
+    }
+    if (ch.runner !== 'server') {
+      reply.code(400).send({ error: 'Not a server-run challenge' });
+      return null;
+    }
+    return ch;
+  }
+
+  // Tight-ish limit on the exec endpoints (they're the untrusted-code entry point).
+  const runnerRate = { config: { rateLimit: { max: 30, timeWindow: '1 minute' } } };
+
+  // Plain Run: execute the code and return its output. No tests, no grading.
+  fastify.post('/api/challenges/:id/run-server', runnerRate, async (request, reply) => {
+    const ch = requireServerChallenge(request.params.id, reply);
+    if (!ch) return reply;
+    try {
+      return await fastify.runner.run({ code: request.body?.code ?? '', tests: '' });
+    } catch (err) {
+      request.log.error(err, 'server runner failed');
+      return reply
+        .code(502)
+        .send({ status: 'runner_error', error: 'The runner is unavailable. Try again in a moment.' });
+    }
+  });
+
+  // Graded Submit: run the hidden tests on the server and record the outcome.
+  fastify.post('/api/challenges/:id/submit-server', runnerRate, async (request, reply) => {
+    const ch = requireServerChallenge(request.params.id, reply);
+    if (!ch) return reply;
+
+    recordAttempt(db, ch.id);
+    let result;
+    try {
+      result = await fastify.runner.run({ code: request.body?.code ?? '', tests: ch.tests });
+    } catch (err) {
+      request.log.error(err, 'server runner failed');
+      return reply
+        .code(502)
+        .send({ status: 'runner_error', error: 'The runner is unavailable. Try again in a moment.' });
+    }
+
+    // Authoritative grading: we ran the real tests, so we can trust the outcome.
+    let streak = null;
+    if (result.status === 'ok' && result.passed) {
+      const r = recordSolve(db, ch.id, fastify.config.appTz);
+      streak = { current: r.current, longest: r.longest };
+    }
+    return { ...result, streak };
+  });
 }

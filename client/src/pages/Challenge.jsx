@@ -35,7 +35,6 @@ export default function Challenge() {
   const showToast = useToast();
   const isDesktop = useMediaQuery('(min-width: 900px)');
   const keyboardInset = useVisualViewportInset();
-  const { ready, busy, run, submit, cancel } = usePyodide();
 
   const editorRef = useRef(null);
   const codeRef = useRef(''); // latest editor text (avoids stale closures in callbacks)
@@ -45,6 +44,15 @@ export default function Challenge() {
   const [loadError, setLoadError] = useState('');
   const [activeTab, setActiveTab] = useState('description');
   const [editorFocused, setEditorFocused] = useState(false);
+
+  // Server-run challenges (runner: "server") execute in the sandboxed runner
+  // container via the backend; everything else runs in the Pyodide worker. We only
+  // load Pyodide for the latter.
+  const isServer = challenge?.runner === 'server';
+  const { ready, busy, run, submit, cancel } = usePyodide({ enabled: !isServer });
+  const [serverBusy, setServerBusy] = useState(false);
+  const executing = isServer ? serverBusy : busy;
+  const engineReady = isServer ? true : ready;
 
   // Execution state. `mode` says which result the Output pane should show.
   const [mode, setMode] = useState('run'); // 'run' | 'tests'
@@ -103,19 +111,57 @@ export default function Challenge() {
   // Flush a pending save when leaving the screen.
   useEffect(() => () => clearTimeout(saveTimer.current), []);
 
+  // Show a "Solved!" toast with the streak (shared by both run engines).
+  function celebrate(streakCurrent) {
+    setStatus('solved');
+    showToast(streakCurrent > 1 ? `Solved! 🔥 ${streakCurrent}-day streak` : 'Solved! 🎉');
+  }
+
   // --- Run / Submit -------------------------------------------------------------
   async function onRun() {
     setMode('run');
     setRunResult(null);
     if (!isDesktop) setActiveTab('output');
-    const result = await run(codeRef.current);
-    setRunResult(result);
+
+    if (isServer) {
+      setServerBusy(true);
+      try {
+        setRunResult(await api.runServer(id, codeRef.current));
+      } catch (err) {
+        if (!handleUnauthorized(err)) {
+          setRunResult({ status: 'error', error: err.message || 'The runner is unavailable.' });
+        }
+      } finally {
+        setServerBusy(false);
+      }
+      return;
+    }
+
+    setRunResult(await run(codeRef.current));
   }
 
   async function onSubmit() {
     setMode('tests');
     setSubmitResult(null);
     if (!isDesktop) setActiveTab('output');
+
+    if (isServer) {
+      // The runner container runs the hidden tests and grades authoritatively; the
+      // backend records the solve, and we just reflect the outcome.
+      setServerBusy(true);
+      try {
+        const result = await api.submitServer(id, codeRef.current);
+        setSubmitResult(result);
+        if (result.status === 'ok' && result.passed) celebrate(result.streak?.current ?? 0);
+      } catch (err) {
+        if (!handleUnauthorized(err)) {
+          setSubmitResult({ status: 'error', error: err.message || 'The runner is unavailable.' });
+        }
+      } finally {
+        setServerBusy(false);
+      }
+      return;
+    }
 
     api.recordAttempt(id).catch(() => {});
     const result = await submit(codeRef.current, challenge.tests);
@@ -127,9 +173,7 @@ export default function Challenge() {
       if (status !== 'solved') {
         try {
           const r = await api.recordSolve(id);
-          setStatus('solved');
-          const streak = r.streak?.current ?? 0;
-          showToast(streak > 1 ? `Solved! 🔥 ${streak}-day streak` : 'Solved! 🎉');
+          celebrate(r.streak?.current ?? 0);
         } catch (err) {
           handleUnauthorized(err);
         }
@@ -237,16 +281,18 @@ export default function Challenge() {
         bottomInset={keyboardInset}
       />
       <div className="row">
-        {busy ? (
+        {/* Pyodide runs synchronously and can be cancelled by killing the worker;
+            the server runner enforces its own timeout, so it shows no Stop button. */}
+        {!isServer && busy ? (
           <button className="btn-danger" onClick={cancel}>
             Stop
           </button>
         ) : (
-          <button className="btn-ghost" onClick={onRun} disabled={!ready}>
-            {ready ? 'Run' : 'Loading Python…'}
+          <button className="btn-ghost" onClick={onRun} disabled={executing || !engineReady}>
+            {engineReady ? 'Run' : 'Loading Python…'}
           </button>
         )}
-        <button className="btn-primary" onClick={onSubmit} disabled={busy || !ready}>
+        <button className="btn-primary" onClick={onSubmit} disabled={executing || !engineReady}>
           Submit
         </button>
         <div className="spacer" />
@@ -260,9 +306,9 @@ export default function Challenge() {
   const outputPane = (
     <div className="stack">
       {mode === 'run' ? (
-        <OutputPanel result={runResult} running={busy && mode === 'run'} />
+        <OutputPanel result={runResult} running={executing && mode === 'run'} />
       ) : (
-        <TestResults result={submitResult} running={busy && mode === 'tests'} />
+        <TestResults result={submitResult} running={executing && mode === 'tests'} />
       )}
     </div>
   );

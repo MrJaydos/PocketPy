@@ -16,6 +16,7 @@ import { config as defaultConfig } from './config.js';
 import { openDatabase } from './db/db.js';
 import { loadChallenges } from './challenges/loader.js';
 import { requireAuth } from './auth/session.js';
+import { makeRunner } from './runner/serverRunner.js';
 import { authRoutes } from './auth/routes.js';
 import { challengeRoutes } from './routes/challenges.js';
 import { progressRoutes } from './routes/progress.js';
@@ -44,6 +45,7 @@ function cacheControlFor(filePath) {
  * @param {typeof defaultConfig} [overrides.config]  Swap config (tests use temp paths/secrets).
  * @param {import('better-sqlite3').Database} [overrides.db]  Provide a db (tests use in-memory).
  * @param {import('./challenges/loader.js').ChallengeStore} [overrides.store]  Provide challenges.
+ * @param {{run: Function}} [overrides.runner]  Server-side code runner (tests stub this).
  * @param {boolean} [overrides.serveClient]  Serve the built SPA (default: production only).
  * @returns {Promise<import('fastify').FastifyInstance>}
  */
@@ -51,6 +53,7 @@ export async function buildApp(overrides = {}) {
   const config = overrides.config ?? defaultConfig;
   const db = overrides.db ?? openDatabase(config.dbPath);
   const store = overrides.store ?? loadChallenges(config.challengesDir);
+  const runner = overrides.runner ?? makeRunner(config.runnerUrl);
   const serveClient = overrides.serveClient ?? config.isProduction;
 
   const fastify = Fastify({
@@ -66,6 +69,7 @@ export async function buildApp(overrides = {}) {
   fastify.decorate('config', config);
   fastify.decorate('db', db);
   fastify.decorate('store', store);
+  fastify.decorate('runner', runner);
   // Close the DB cleanly when the server stops.
   fastify.addHook('onClose', async () => db.close());
 

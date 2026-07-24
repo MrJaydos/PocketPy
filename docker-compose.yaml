@@ -63,5 +63,42 @@ services:
 
     restart: unless-stopped
 
+  # --- Phase 2: sandboxed server-side runner -----------------------------------
+  # Executes challenges flagged `runner: "server"` in throwaway subprocesses. It is
+  # NOT exposed (no ports, no SERVICE_FQDN), and sits on an `internal` network with
+  # no internet egress, so untrusted code can't phone home or be reached via the
+  # tunnel. Hardened: non-root, read-only rootfs (+ tmpfs /tmp), memory/CPU/pids
+  # caps, all capabilities dropped, no privilege escalation.
+  #
+  # NOTE (staged rollout): the `pypocket` app service above is intentionally NOT yet
+  # joined to `runner_net` — that change is made in a follow-up so it can be verified
+  # separately (adding `networks:` to the app can disturb Coolify's proxy attachment).
+  # Until then this service simply runs, isolated and unused.
+  runner:
+    build:
+      context: ./runner
+      dockerfile: Dockerfile
+    networks:
+      - runner_net
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 256m
+    pids_limit: 128
+    cpus: 0.75
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      RUN_TIMEOUT_SECONDS: '10'
+    restart: unless-stopped
+
 volumes:
   pypocket-data:
+
+networks:
+  # internal: true => this network has no route to the internet. The runner is only
+  # on this network, so code running inside it cannot make outbound connections.
+  runner_net:
+    internal: true

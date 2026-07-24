@@ -51,6 +51,10 @@ export const config = {
   // Timezone used to bucket solves into calendar days for the streak.
   appTz: process.env.APP_TZ ?? 'UTC',
 
+  // Phase 2 server-side runner. Defaults to the internal compose service name; the
+  // app reaches it only on the private Docker network, never through the tunnel.
+  runnerUrl: process.env.RUNNER_URL ?? 'http://runner:8000',
+
   // Where the hand-authored challenge YAML files live.
   challengesDir: process.env.CHALLENGES_DIR ?? path.join(repoRoot, 'challenges'),
 
