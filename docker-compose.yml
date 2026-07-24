@@ -1,27 +1,66 @@
-# Local end-to-end test of the production image. Build and run with:
+# Coolify deployment via Docker Compose.
 #
-#   APP_PASSWORD=yourpass SESSION_SECRET=$(openssl rand -hex 32) docker compose up --build
+# In Coolify, create the app with Build Pack = "Docker Compose" and point it at this
+# file. Coolify builds the image from the Dockerfile (see `build:` below), injects the
+# environment variables, provisions the named volume, and wires the domain to the
+# service through its proxy.
 #
-# then open http://localhost:3000. This mirrors how Coolify runs the container,
-# including the persistent /data volume for the SQLite database.
+# Coolify conventions used here:
+#   ${APP_PASSWORD:?...}          -> a REQUIRED variable; deployment fails until you
+#                                    set it in the Coolify UI.
+#   ${SERVICE_PASSWORD_64_...}    -> Coolify auto-generates a stable 64-char secret,
+#                                    so you don't have to invent a SESSION_SECRET.
+#   SERVICE_FQDN_PYPOCKET_3000    -> tells Coolify to route the assigned domain to
+#                                    this service's port 3000 (its internal proxy).
+#
+# For local testing you can't use the Coolify magic vars; run the app directly with
+# `npm run dev:server` + `npm run dev:client` instead (see README).
 
 services:
   pypocket:
-    build: .
-    ports:
-      - '3000:3000'
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       NODE_ENV: production
       PORT: 3000
-      # Provide these via a .env file or your shell. The defaults are for local
-      # testing ONLY — never expose these to the internet.
-      APP_PASSWORD: ${APP_PASSWORD:-changeme}
-      SESSION_SECRET: ${SESSION_SECRET:-local-only-insecure-session-secret-change-me}
+
+      # Coolify assigns a domain and proxies it to port 3000. The value "/" serves
+      # the app at the domain root. Your Cloudflare tunnel points at this domain.
+      SERVICE_FQDN_PYPOCKET_3000: /
+
+      # The single login password. REQUIRED — set it in Coolify's Environment tab.
+      APP_PASSWORD: ${APP_PASSWORD:?set a login password in the Coolify UI}
+
+      # Session cookie signing secret. Coolify generates a stable random value the
+      # first time and keeps it across redeploys; you can override it in the UI.
+      SESSION_SECRET: ${SERVICE_PASSWORD_64_PYPOCKET}
+
+      # SQLite lives on the persistent volume mounted below.
       DB_PATH: /data/app.db
+
+      # IANA timezone used to bucket solves into days for the streak.
       APP_TZ: ${APP_TZ:-UTC}
+
+    # Expose (not publish) the port so Coolify's proxy handles external access.
+    expose:
+      - '3000'
+
     volumes:
-      # Named volume so your progress/streak data survives container rebuilds.
+      # Named volume — Coolify persists it across deploys, keeping your progress.
       - pypocket-data:/data
+
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
     restart: unless-stopped
 
 volumes:

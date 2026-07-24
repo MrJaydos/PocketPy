@@ -34,12 +34,20 @@ npm run dev:client          # terminal 2 — Vite dev server on :5173 (proxies /
 # open http://localhost:5173  (dev password defaults to "dev")
 ```
 
-## Quick start (production image)
+## Deployment
+
+Deploys on **Coolify** via the **Docker Compose** build pack (`docker-compose.yml`
+builds the `Dockerfile`, and Coolify handles the domain, secrets, and the persistent
+`/data` volume). Full steps — including the Cloudflare tunnel notes — are in
+[DEPLOY.md](./DEPLOY.md).
+
+To smoke-test the container image locally:
 
 ```bash
-APP_PASSWORD=yourpass \
-SESSION_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))") \
-docker compose up --build
+docker build -t pypocket .
+docker run --rm -p 3000:3000 -e NODE_ENV=production -e APP_PASSWORD=yourpass \
+  -e SESSION_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))") \
+  -e DB_PATH=/data/app.db -v pypocket-data:/data pypocket
 # open http://localhost:3000
 ```
 

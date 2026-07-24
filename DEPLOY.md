@@ -17,18 +17,32 @@ built app). Data is a single SQLite file on a mounted volume.
 In production the server **refuses to start** without `APP_PASSWORD` and
 `SESSION_SECRET`, so a misconfigured deploy fails loudly instead of running insecure.
 
-## Coolify setup
+## Coolify setup (Docker Compose build pack)
 
-1. **New Resource → Application → from your Git repo** (this repo). Coolify detects
-   the `Dockerfile` and builds it. Pushing to `main` triggers a rebuild + redeploy.
-2. **Persistent storage**: add a volume mounted at **`/data`**. This is where
-   `app.db` lives; without it your progress resets on every redeploy.
-3. **Environment variables**: set `APP_PASSWORD`, `SESSION_SECRET`, `DB_PATH=/data/app.db`,
-   `APP_TZ`, and `NODE_ENV=production`.
-4. **Port**: the container listens on `3000` (or `$PORT`). Point Coolify's proxy at it.
-5. **Health check**: path **`/healthz`** (the image also declares a Docker
-   `HEALTHCHECK`).
-6. **Domain**: assign the domain that your Cloudflare tunnel points at.
+This repo deploys via **`docker-compose.yml`**, which builds the image from the
+`Dockerfile` and wires everything up using Coolify's compose conventions. Most of the
+config is in the compose file, so there's very little to click.
+
+1. **New Resource → Application → from your Git repo** → set **Build Pack = "Docker
+   Compose"**. Coolify auto-detects `docker-compose.yml` at the repo root (if asked,
+   Base Directory = `/`, Compose file = `/docker-compose.yml`). Pushing to `main`
+   triggers a rebuild + redeploy.
+2. **Environment variables** (Coolify reads these from the compose file and shows
+   editable fields):
+   - `APP_PASSWORD` — **required**; deployment won't proceed until you set it. This is
+     your login password.
+   - `SESSION_SECRET` — **auto-generated** by Coolify (`SERVICE_PASSWORD_64_PYPOCKET`),
+     stable across redeploys. Nothing to do; override in the UI if you like.
+   - `APP_TZ` — optional, defaults to `UTC`. Set e.g. `Europe/London` so streak days
+     roll over at your midnight.
+   - `NODE_ENV`, `PORT`, `DB_PATH` are already set in the compose file.
+3. **Persistent storage**: handled automatically — the compose file declares the
+   `pypocket-data` named volume mounted at `/data`, which Coolify persists across
+   deploys. (Your progress/streaks live there.)
+4. **Domain / port**: the compose file's `SERVICE_FQDN_PYPOCKET_3000` tells Coolify to
+   route the assigned domain to the container's port 3000 through its proxy. Assign the
+   domain your Cloudflare tunnel points at.
+5. **Health check**: the service declares one hitting `/healthz`; Coolify uses it.
 
 ## Cloudflare tunnel notes
 
@@ -42,18 +56,31 @@ In production the server **refuses to start** without `APP_PASSWORD` and
 - First load downloads ~13 MB of Pyodide runtime (once, then cached). Subsequent
   loads and offline use are instant.
 
-## Local test of the production image
+## Local testing
 
-Before pushing, you can run exactly what Coolify runs:
+The committed `docker-compose.yml` uses Coolify's magic variables (`SERVICE_FQDN_…`,
+`SERVICE_PASSWORD_64_…`) and `expose` rather than a published host port, so it's meant
+for Coolify, not a plain local `docker compose up`. For local development just run the
+app directly (no Docker needed):
 
 ```bash
-APP_PASSWORD=testpass \
-SESSION_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))") \
-docker compose up --build
-# open http://localhost:3000
+npm install
+npm run dev:server   # API on :3000
+npm run dev:client   # Vite dev server on :5173 (proxies /api) — open this
 ```
 
-The `pypocket-data` named volume keeps your data across rebuilds.
+If you specifically want to smoke-test the built container locally, build the image and
+run it with a published port and env vars:
+
+```bash
+docker build -t pypocket .
+docker run --rm -p 3000:3000 \
+  -e NODE_ENV=production -e APP_PASSWORD=testpass \
+  -e SESSION_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))") \
+  -e DB_PATH=/data/app.db -v pypocket-data:/data \
+  pypocket
+# open http://localhost:3000
+```
 
 ## Pre-deploy checks
 
