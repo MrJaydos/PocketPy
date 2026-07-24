@@ -409,11 +409,23 @@ input[type='text'] {
 
 /* ---------- Desktop enhancements ---------- */
 @media (min-width: 900px) {
+  /* A little more room on wide screens so the two panes aren't cramped. */
+  .app-main {
+    max-width: 1100px;
+  }
   .challenge-panes {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* minmax(0, 1fr) — NOT plain 1fr. A bare 1fr won't shrink below a column's
+       intrinsic content width, so the code editor (which is wide) would hog the row
+       and squish the description column to almost nothing. minmax(0, ...) lets each
+       column take an equal half. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 16px;
     align-items: start;
+  }
+  /* Allow the panes (and the CodeMirror editor inside) to shrink within their track. */
+  .challenge-panes > .pane {
+    min-width: 0;
   }
   /* On desktop we show panes side by side, so the mobile tab bar is hidden. */
   .tabs {
