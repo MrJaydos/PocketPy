@@ -87,4 +87,12 @@ export const api = {
     }),
 
   progress: () => apiFetch('/api/progress'),
+
+  // Spaced-repetition review: the due queue, and grading a review to reschedule it.
+  reviews: () => apiFetch('/api/reviews'),
+  gradeReview: (id, grade) =>
+    apiFetch(`/api/reviews/${encodeURIComponent(id)}/grade`, {
+      method: 'POST',
+      json: { grade },
+    }),
 };

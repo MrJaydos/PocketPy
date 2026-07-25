@@ -20,6 +20,7 @@ import { makeRunner } from './runner/serverRunner.js';
 import { authRoutes } from './auth/routes.js';
 import { challengeRoutes } from './routes/challenges.js';
 import { progressRoutes } from './routes/progress.js';
+import { reviewRoutes } from './routes/reviews.js';
 import { healthRoutes } from './routes/health.js';
 
 /**
@@ -116,6 +117,7 @@ export async function buildApp(overrides = {}) {
     protectedScope.addHook('onRequest', requireAuth);
     await protectedScope.register(challengeRoutes);
     await protectedScope.register(progressRoutes);
+    await protectedScope.register(reviewRoutes);
   });
 
   // --- Serve the built client (production) -----------------------------------

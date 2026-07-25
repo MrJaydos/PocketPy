@@ -6,7 +6,7 @@
 // can be cancelled.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import AppHeader from '../components/AppHeader.jsx';
 import Editor from '../components/Editor.jsx';
 import SymbolToolbar from '../components/SymbolToolbar.jsx';
@@ -31,6 +31,11 @@ const TABS = [
 
 export default function Challenge() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  // Review mode (reached via /review with ?review=1): once the tests pass we ask the
+  // user to grade their recall and reschedule the card, then move to the next due one.
+  const isReview = searchParams.get('review') === '1';
   const { handleUnauthorized } = useAuth();
   const showToast = useToast();
   const isDesktop = useMediaQuery('(min-width: 900px)');
@@ -64,9 +69,23 @@ export default function Challenge() {
   const [revealedHints, setRevealedHints] = useState([]);
   const [solutionText, setSolutionText] = useState(null);
 
+  // Review state: `reviewPassed` gates the grading panel; `grading` disables the
+  // buttons while a grade is in flight and we navigate to the next card.
+  const [reviewPassed, setReviewPassed] = useState(false);
+  const [grading, setGrading] = useState(false);
+
   // --- Load the challenge (and restore draft + previously revealed hints) --------
   useEffect(() => {
     let cancelled = false;
+    // Moving between review cards changes only the :id param (no remount), so clear
+    // the per-challenge UI state explicitly.
+    setReviewPassed(false);
+    setGrading(false);
+    setSubmitResult(null);
+    setRunResult(null);
+    setRevealedHints([]);
+    setSolutionText(null);
+    setMode('run');
     api
       .getChallenge(id)
       .then(async (c) => {
@@ -152,7 +171,14 @@ export default function Challenge() {
       try {
         const result = await api.submitServer(id, codeRef.current);
         setSubmitResult(result);
-        if (result.status === 'ok' && result.passed) celebrate(result.streak?.current ?? 0);
+        if (result.status === 'ok' && result.passed) {
+          if (isReview) {
+            setStatus('solved');
+            setReviewPassed(true);
+          } else {
+            celebrate(result.streak?.current ?? 0);
+          }
+        }
       } catch (err) {
         if (!handleUnauthorized(err)) {
           setSubmitResult({ status: 'error', error: err.message || 'The runner is unavailable.' });
@@ -170,7 +196,11 @@ export default function Challenge() {
     // Only mark solved if the worker confirms every check passed (see the empty-
     // results guard in the worker — this can't be spoofed by an errored run).
     if (result.status === 'ok' && result.passed) {
-      if (status !== 'solved') {
+      if (isReview) {
+        // A review card is already solved; passing again just unlocks grading.
+        setStatus('solved');
+        setReviewPassed(true);
+      } else if (status !== 'solved') {
         try {
           const r = await api.recordSolve(id);
           celebrate(r.streak?.current ?? 0);
@@ -180,6 +210,28 @@ export default function Challenge() {
       } else {
         showToast('Solved again ✅');
       }
+    }
+  }
+
+  // --- Review grading -----------------------------------------------------------
+  // After a review card is solved, the user rates recall; we reschedule it and jump
+  // to the next due card (or back to the review list when the queue is empty).
+  async function onGrade(grade) {
+    setGrading(true);
+    try {
+      const r = await api.gradeReview(id, grade);
+      showToast(
+        r.intervalDays <= 1 ? 'Got it — back tomorrow' : `Got it — back in ${r.intervalDays} days`,
+      );
+      // The card we just graded is now due in the future, so it drops out of the
+      // queue; whatever's left is genuinely the next thing to review.
+      const next = await api.reviews().catch(() => null);
+      const nextItem = next?.due?.[0];
+      if (nextItem) navigate(`/challenge/${nextItem.id}?review=1`);
+      else navigate('/review');
+    } catch (err) {
+      if (!handleUnauthorized(err)) showToast('Could not save your review.');
+      setGrading(false);
     }
   }
 
@@ -303,6 +355,26 @@ export default function Challenge() {
     </div>
   );
 
+  const gradePanel = isReview && reviewPassed && (
+    <div className="card grade-panel">
+      <strong>How well did you remember this?</strong>
+      <p className="muted" style={{ margin: '4px 0 10px' }}>
+        Your answer sets when this challenge comes back.
+      </p>
+      <div className="row grade-buttons">
+        <button className="btn-danger" disabled={grading} onClick={() => onGrade('again')}>
+          Again
+        </button>
+        <button className="btn-ghost" disabled={grading} onClick={() => onGrade('good')}>
+          Good
+        </button>
+        <button className="btn-primary" disabled={grading} onClick={() => onGrade('easy')}>
+          Easy
+        </button>
+      </div>
+    </div>
+  );
+
   const outputPane = (
     <div className="stack">
       {mode === 'run' ? (
@@ -310,13 +382,19 @@ export default function Challenge() {
       ) : (
         <TestResults result={submitResult} running={executing && mode === 'tests'} />
       )}
+      {gradePanel}
     </div>
   );
 
   return (
     <>
-      <AppHeader title={challenge.title} back="/challenges" />
+      <AppHeader title={challenge.title} back={isReview ? '/review' : '/challenges'} />
       <main className="app-main stack">
+        {isReview && (
+          <div className="review-banner">
+            🧠 Review · solve it again to reschedule
+          </div>
+        )}
         {isDesktop ? (
           <div className="challenge-panes">
             <div className="pane">{descriptionPane}</div>

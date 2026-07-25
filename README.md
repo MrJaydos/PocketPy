@@ -80,5 +80,5 @@ See [`challenges/AUTHORING.md`](./challenges/AUTHORING.md). Add a YAML file, run
 - **Phase 2** — a sandboxed server-side runner (second container, internal network
   only) for challenges needing real packages, bigger programs, or genuinely hidden
   tests. The challenge schema already has a `runner: server` seam for it.
-- **Phase 3** — in-app challenge authoring, spaced-repetition review, import/export
-  progress as JSON.
+- **Phase 3** (in progress) — ✅ spaced-repetition review (solved challenges resurface
+  on an SM-2 schedule); ⬜ in-app challenge authoring; ⬜ import/export progress as JSON.

@@ -9,6 +9,7 @@ import Login from './pages/Login.jsx';
 import Home from './pages/Home.jsx';
 import ChallengeList from './pages/ChallengeList.jsx';
 import Challenge from './pages/Challenge.jsx';
+import Review from './pages/Review.jsx';
 
 export default function App() {
   const { status } = useAuth();
@@ -32,6 +33,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/challenges" element={<ChallengeList />} />
+        <Route path="/review" element={<Review />} />
         <Route path="/challenge/:id" element={<Challenge />} />
         {/* Anything unknown goes home. */}
         <Route path="*" element={<Navigate to="/" replace />} />
