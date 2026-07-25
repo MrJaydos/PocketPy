@@ -12,7 +12,8 @@
 //   - 'easy'  → effortless recall: same ladder but nudge the ease factor up.
 
 import { addDays, dayInTz } from './dates.js';
-import { getReview, getDueReviews, saveReview } from '../db/reviewsRepo.js';
+import { getReview, getDueReviews, saveReview, ensureReview } from '../db/reviewsRepo.js';
+import { getMeta, setMeta } from '../db/progressRepo.js';
 
 /** SM-2 quality score (0–5) for each grade button. Below 3 counts as a lapse. */
 const QUALITY = { again: 2, good: 4, easy: 5 };
@@ -128,6 +129,59 @@ export function gradeReview(db, challengeId, grade, timeZone, clock = () => new 
   const today = dayInTz(clock(), timeZone);
   const next = schedule(prev, grade, today);
   return saveReview(db, challengeId, next);
+}
+
+/** How many days to spread backfilled reviews across, so they don't all pile up. */
+const BACKFILL_SPREAD_DAYS = 14;
+
+/**
+ * One-time enrolment of challenges solved *before* review scheduling existed. Review
+ * rows are normally created on a challenge's first solve, so on the deploy that adds
+ * this feature every already-solved challenge has none and would never surface. This
+ * seeds one review per solved-but-unscheduled challenge, staggering their first due
+ * dates across the next two weeks so the queue is populated but paced rather than
+ * dumping dozens of cards on day one.
+ *
+ * Gated by a `meta` flag so it runs exactly once; afterwards new solves enrol
+ * themselves through recordSolve as usual. Dangling solved rows (a challenge the
+ * store no longer knows) are skipped.
+ *
+ * @param {import('better-sqlite3').Database} db
+ * @param {import('../challenges/loader.js').ChallengeStore} store
+ * @param {string} timeZone
+ * @param {() => Date} [clock]
+ * @returns {{ enrolled: number, alreadyDone: boolean }}
+ */
+export function backfillReviews(db, store, timeZone, clock = () => new Date()) {
+  if (getMeta(db, 'reviews_backfilled') === '1') {
+    return { enrolled: 0, alreadyDone: true };
+  }
+
+  const today = dayInTz(clock(), timeZone);
+  const rows = db
+    .prepare(
+      `SELECT challenge_id FROM progress
+        WHERE status = 'solved'
+          AND challenge_id NOT IN (SELECT challenge_id FROM reviews)
+        ORDER BY solved_at ASC, challenge_id ASC`,
+    )
+    .all();
+
+  let enrolled = 0;
+  for (const { challenge_id } of rows) {
+    if (!store.get(challenge_id)) continue; // skip a challenge that no longer exists
+    const offset = (enrolled % BACKFILL_SPREAD_DAYS) + 1; // 1..14 days out
+    ensureReview(db, challenge_id, {
+      ease: INITIAL_EASE,
+      interval_days: offset,
+      reps: 1,
+      due_day: addDays(today, offset),
+    });
+    enrolled += 1;
+  }
+
+  setMeta(db, 'reviews_backfilled', '1');
+  return { enrolled, alreadyDone: false };
 }
 
 export { dayInTz };

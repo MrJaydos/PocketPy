@@ -16,6 +16,7 @@ import { config as defaultConfig } from './config.js';
 import { openDatabase } from './db/db.js';
 import { loadChallenges, ChallengeRegistry } from './challenges/loader.js';
 import { loadAuthored } from './challenges/authored.js';
+import { backfillReviews } from './services/review.js';
 import { requireAuth } from './auth/session.js';
 import { makeRunner } from './runner/serverRunner.js';
 import { authRoutes } from './auth/routes.js';
@@ -84,6 +85,13 @@ export async function buildApp(overrides = {}) {
   // Merge any user-authored challenges from the database into the store. Done now
   // that we have a logger: a corrupt authored row is logged and skipped, never fatal.
   registry.rebuild(loadAuthored(db, fastify.log));
+
+  // One-time: enrol challenges solved before spaced-repetition existed, so the review
+  // queue isn't empty on the deploy that introduces it. Gated by a meta flag inside.
+  const backfill = backfillReviews(db, registry, config.appTz);
+  if (backfill.enrolled > 0) {
+    fastify.log.info(`Backfilled ${backfill.enrolled} solved challenge(s) into the review schedule.`);
+  }
 
   // --- Security + parsing plugins -------------------------------------------
   await fastify.register(helmet, {

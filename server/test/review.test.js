@@ -11,9 +11,11 @@ import {
   buildReviewQueue,
   countDueReviews,
   gradeReview,
+  backfillReviews,
 } from '../src/services/review.js';
 import { recordSolve } from '../src/services/progress.js';
 import { getReview, ensureReview } from '../src/db/reviewsRepo.js';
+import { markSolved, getMeta } from '../src/db/progressRepo.js';
 import { memoryDb, fixtureStore, makeTestApp, cookieFrom, testConfig } from './helpers.js';
 
 const clockAt = (iso) => () => new Date(iso);
@@ -113,6 +115,38 @@ test('gradeReview reschedules an existing review and returns null otherwise', ()
   assert.ok(row.last_reviewed_at, 'grading stamps the review time');
 
   assert.equal(gradeReview(db, 'never-scheduled', 'good', 'UTC'), null);
+});
+
+test('backfillReviews enrols pre-existing solves, staggered, and runs once', () => {
+  const db = memoryDb();
+  const store = fixtureStore(); // knows 'demo'
+
+  // Two challenges solved before reviews existed: 'demo' (real) and 'ghost' (dangling).
+  markSolved(db, 'demo');
+  markSolved(db, 'ghost');
+
+  const clock = clockAt('2026-07-01T12:00:00Z');
+  const res = backfillReviews(db, store, 'UTC', clock);
+  assert.equal(res.enrolled, 1, 'only the real challenge is enrolled');
+  assert.equal(getReview(db, 'ghost'), undefined, 'dangling solve is skipped');
+
+  const row = getReview(db, 'demo');
+  assert.ok(row, 'demo now has a review');
+  assert.equal(row.due_day, '2026-07-02', 'first card is due one day out');
+  assert.equal(getMeta(db, 'reviews_backfilled'), '1', 'the one-time flag is set');
+
+  // A second run is a no-op (flag gates it).
+  assert.deepEqual(backfillReviews(db, store, 'UTC', clock), { enrolled: 0, alreadyDone: true });
+});
+
+test('backfillReviews leaves already-scheduled challenges untouched', () => {
+  const db = memoryDb();
+  const store = fixtureStore();
+  markSolved(db, 'demo');
+  ensureReview(db, 'demo', { ease: 2.5, interval_days: 30, reps: 5, due_day: '2027-01-01' });
+
+  backfillReviews(db, store, 'UTC', clockAt('2026-07-01T12:00:00Z'));
+  assert.equal(getReview(db, 'demo').due_day, '2027-01-01', 'existing schedule is preserved');
 });
 
 // --- HTTP routes --------------------------------------------------------------
