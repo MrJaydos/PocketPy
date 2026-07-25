@@ -81,4 +81,5 @@ See [`challenges/AUTHORING.md`](./challenges/AUTHORING.md). Add a YAML file, run
   only) for challenges needing real packages, bigger programs, or genuinely hidden
   tests. The challenge schema already has a `runner: server` seam for it.
 - **Phase 3** (in progress) — ✅ spaced-repetition review (solved challenges resurface
-  on an SM-2 schedule); ⬜ in-app challenge authoring; ⬜ import/export progress as JSON.
+  on an SM-2 schedule); ✅ in-app challenge authoring (create/edit challenges in the
+  app; stored in the DB and merged with the repo's YAML); ⬜ import/export progress as JSON.

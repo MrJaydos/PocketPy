@@ -80,6 +80,10 @@ export default function Home() {
             <Link to="/challenges" style={{ textDecoration: 'none' }}>
               <button style={{ width: '100%' }}>Browse all challenges</button>
             </Link>
+
+            <Link to="/authored" style={{ textDecoration: 'none' }}>
+              <button className="btn-ghost" style={{ width: '100%' }}>✎ My challenges</button>
+            </Link>
           </>
         )}
       </main>

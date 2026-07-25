@@ -145,6 +145,16 @@ export function getSolveDays(db) {
   return db.prepare('SELECT day FROM solve_days ORDER BY day ASC').all().map((r) => r.day);
 }
 
+/**
+ * Delete the progress row for a challenge. Used when an authored challenge is
+ * removed, so its solved/attempted state can't linger and skew the dashboard counts.
+ * @param {import('better-sqlite3').Database} db
+ * @param {string} challengeId
+ */
+export function deleteProgress(db, challengeId) {
+  db.prepare('DELETE FROM progress WHERE challenge_id = ?').run(challengeId);
+}
+
 /** Read a scalar from the meta table. */
 export function getMeta(db, key) {
   return db.prepare('SELECT value FROM meta WHERE key = ?').get(key)?.value;

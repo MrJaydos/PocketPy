@@ -132,6 +132,70 @@ export class ChallengeStore {
 }
 
 /**
+ * A live, swappable view over the challenge set.
+ *
+ * The repo's YAML challenges are an immutable *seed*, loaded once at boot. User-
+ * authored challenges (stored in the database) are merged on top and can change at
+ * runtime — every create/edit/delete calls `rebuild()`. Routes hold a reference to
+ * the registry and call the same read methods a plain ChallengeStore exposes, so the
+ * mutability is invisible to them.
+ *
+ * Crucially we *mutate the inner store in place* rather than reassigning the
+ * `fastify.store` decoration — a decoration reassigned across Fastify's plugin scope
+ * boundary wouldn't be seen by already-registered routes.
+ */
+export class ChallengeRegistry {
+  /** @param {import('./schema.js').Challenge[]} seed  Validated repo challenges. */
+  constructor(seed) {
+    this._seed = [...seed];
+    this._seedIds = new Set(this._seed.map((c) => c.id));
+    this._store = new ChallengeStore(this._seed);
+  }
+
+  /** The ids owned by the immutable repo seed (authored ids may not collide with these). */
+  seedIds() {
+    return this._seedIds;
+  }
+
+  /**
+   * Rebuild the merged store from the seed plus the given authored challenges. Any
+   * authored challenge whose id collides with a seed id is dropped as a safety net
+   * (the write path rejects these first, so it normally never happens here).
+   * @param {import('./schema.js').Challenge[]} authored
+   */
+  rebuild(authored) {
+    const merged = [...this._seed];
+    for (const c of authored) {
+      if (!this._seedIds.has(c.id)) merged.push(c);
+    }
+    this._store = new ChallengeStore(merged);
+  }
+
+  // --- Delegated read API (identical surface to ChallengeStore) ----------------
+  all() {
+    return this._store.all();
+  }
+  get(id) {
+    return this._store.get(id);
+  }
+  list() {
+    return this._store.list();
+  }
+  full(id) {
+    return this._store.full(id);
+  }
+  hint(id, index) {
+    return this._store.hint(id, index);
+  }
+  solution(id) {
+    return this._store.solution(id);
+  }
+  topics() {
+    return this._store.topics();
+  }
+}
+
+/**
  * Read + validate all challenge files under `dir` and return a ChallengeStore.
  * Throws with a readable message if any file is malformed or ids collide.
  * @param {string} dir

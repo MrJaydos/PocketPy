@@ -95,4 +95,14 @@ export const api = {
       method: 'POST',
       json: { grade },
     }),
+
+  // In-app challenge authoring (CRUD over user-authored challenges).
+  listAuthored: () => apiFetch('/api/authored'),
+  getAuthored: (id) => apiFetch(`/api/authored/${encodeURIComponent(id)}`),
+  createAuthored: (challenge) =>
+    apiFetch('/api/authored', { method: 'POST', json: challenge }),
+  updateAuthored: (id, challenge) =>
+    apiFetch(`/api/authored/${encodeURIComponent(id)}`, { method: 'PUT', json: challenge }),
+  deleteAuthored: (id) =>
+    apiFetch(`/api/authored/${encodeURIComponent(id)}`, { method: 'DELETE' }),
 };

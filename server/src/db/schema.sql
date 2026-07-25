@@ -57,3 +57,16 @@ CREATE TABLE IF NOT EXISTS reviews (
   last_reviewed_at TEXT,             -- ISO 8601 timestamp, null until first graded
   updated_at       TEXT    NOT NULL  -- ISO 8601 timestamp
 );
+
+-- User-authored challenges. Unlike the repo's YAML challenges (the immutable seed
+-- loaded at boot), these are created in-app and live in the database, merged into the
+-- same challenge store at runtime. The full validated challenge is stored as JSON in
+-- `data` so we keep the exact same shape as a YAML challenge with no column drift; the
+-- in-memory store does all the sorting/filtering anyway. A malformed row here must
+-- never brick startup, so the loader validates and skips-with-log rather than aborting.
+CREATE TABLE IF NOT EXISTS authored_challenges (
+  id         TEXT PRIMARY KEY, -- the challenge slug (also the key in `data`)
+  data       TEXT NOT NULL,    -- JSON conforming to challengeSchema
+  created_at TEXT NOT NULL,    -- ISO 8601 timestamp
+  updated_at TEXT NOT NULL     -- ISO 8601 timestamp
+);
