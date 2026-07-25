@@ -1,0 +1,36 @@
+id: files-longest-line
+title: Longest Line
+topic: files
+tags:
+  - files
+difficulty: 3
+order: 120
+runner: pyodide
+description: |
+  ## The widest row
+
+  Write a function `longest_line_length(lines)` that writes each string in `lines`
+  to a file (one per line), then reads them back and returns the length of the
+  longest line (ignoring the newline). An empty input gives `0`.
+
+  For example, `longest_line_length(["a", "bbb", "cc"])` returns `3`.
+starter_code: |
+  def longest_line_length(lines):
+      pass
+tests: |
+  check(longest_line_length(["a", "bbb", "cc"]) == 3, "bbb is longest")
+  check(longest_line_length([]) == 0, "empty input")
+  check(longest_line_length(["hello"]) == 5, "single line")
+hints:
+  - Track the largest length as you read each line.
+  - Strip the trailing newline with `.rstrip("\n")` before measuring.
+solution: |
+  def longest_line_length(lines):
+      with open("files-longest-line.txt", "w") as f:
+          for line in lines:
+              f.write(line + "\n")
+      longest = 0
+      with open("files-longest-line.txt") as f:
+          for line in f:
+              longest = max(longest, len(line.rstrip("\n")))
+      return longest

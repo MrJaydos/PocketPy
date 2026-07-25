@@ -1,0 +1,36 @@
+id: files-count-nonempty
+title: Count Non-Empty Lines
+topic: files
+tags:
+  - files
+difficulty: 3
+order: 80
+runner: pyodide
+description: |
+  ## Skip the blanks
+
+  Write a function `count_nonempty(lines)` that writes each string in `lines` to a
+  file (one per line), then reads it back and returns how many lines are not blank.
+
+  For example, `count_nonempty(["a", "", "b"])` returns `2`.
+starter_code: |
+  def count_nonempty(lines):
+      pass
+tests: |
+  check(count_nonempty(["a", "", "b"]) == 2, "skips the blank")
+  check(count_nonempty([]) == 0, "empty input")
+  check(count_nonempty(["x"]) == 1, "one non-blank line")
+hints:
+  - After writing, loop over the file line by line.
+  - "`line.strip()` is falsy for a blank line."
+solution: |
+  def count_nonempty(lines):
+      with open("files-count-nonempty.txt", "w") as f:
+          for line in lines:
+              f.write(line + "\n")
+      count = 0
+      with open("files-count-nonempty.txt") as f:
+          for line in f:
+              if line.strip():
+                  count += 1
+      return count

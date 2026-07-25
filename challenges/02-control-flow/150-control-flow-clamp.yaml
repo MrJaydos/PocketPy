@@ -1,0 +1,33 @@
+id: control-flow-clamp
+title: Clamp a Value
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 2
+order: 150
+runner: pyodide
+description: |
+  ## Keep it in bounds
+
+  Write a function `clamp(n, lo, hi)` that returns `n` limited to the range
+  `lo`..`hi`: if `n` is below `lo` return `lo`, if it's above `hi` return `hi`,
+  otherwise return `n` unchanged.
+
+  For example, `clamp(15, 0, 10)` returns `10`.
+starter_code: |
+  def clamp(n, lo, hi):
+      pass
+tests: |
+  check(clamp(5, 0, 10) == 5, "already in range")
+  check(clamp(-3, 0, 10) == 0, "below is pulled up")
+  check(clamp(15, 0, 10) == 10, "above is pulled down")
+  check(clamp(0, 0, 10) == 0, "on the boundary")
+hints:
+  - Two `if` checks — one for the low end, one for the high end.
+solution: |
+  def clamp(n, lo, hi):
+      if n < lo:
+          return lo
+      if n > hi:
+          return hi
+      return n

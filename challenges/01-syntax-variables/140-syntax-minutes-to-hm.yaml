@@ -1,0 +1,31 @@
+id: syntax-minutes-to-hm
+title: Minutes to Hours and Minutes
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+  - tuples
+difficulty: 2
+order: 140
+runner: pyodide
+description: |
+  ## Break down the minutes
+
+  Write a function `split(total)` that takes a number of minutes and returns a
+  tuple `(hours, minutes)`.
+
+  For example, `split(135)` returns `(2, 15)`.
+starter_code: |
+  def split(total):
+      pass
+tests: |
+  check(split(0) == (0, 0), "zero minutes")
+  check(split(59) == (0, 59), "under an hour")
+  check(split(60) == (1, 0), "exactly one hour")
+  check(split(135) == (2, 15), "two hours fifteen")
+hints:
+  - Integer division `//` by 60 gives whole hours.
+  - The remainder `% 60` gives the leftover minutes.
+solution: |
+  def split(total):
+      return (total // 60, total % 60)

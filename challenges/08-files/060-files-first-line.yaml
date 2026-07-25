@@ -1,0 +1,33 @@
+id: files-first-line
+title: First Line
+topic: files
+tags:
+  - files
+difficulty: 2
+order: 60
+runner: pyodide
+description: |
+  ## Read just the first line
+
+  Write a function `first_line(lines)` that writes each string in `lines` to a file
+  on its own line, then reads the file and returns the first line (without its
+  newline). If `lines` is empty, return `""`.
+
+  For example, `first_line(["a", "b", "c"])` returns `"a"`.
+starter_code: |
+  def first_line(lines):
+      pass
+tests: |
+  check(first_line(["a", "b", "c"]) == "a", "first of three")
+  check(first_line(["only"]) == "only", "one line")
+  check(first_line([]) == "", "no lines")
+hints:
+  - Write each line followed by `"\n"`.
+  - "`.readline()` reads a single line; `.strip()` removes the newline."
+solution: |
+  def first_line(lines):
+      with open("files-first-line.txt", "w") as f:
+          for line in lines:
+              f.write(line + "\n")
+      with open("files-first-line.txt") as f:
+          return f.readline().strip()

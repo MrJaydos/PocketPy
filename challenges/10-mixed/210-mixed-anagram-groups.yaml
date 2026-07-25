@@ -1,0 +1,38 @@
+id: mixed-anagram-groups
+title: Anagram Groups
+topic: mixed
+tags:
+  - mixed
+  - strings
+  - dictionaries
+difficulty: 5
+order: 210
+runner: pyodide
+description: |
+  ## Group the anagrams
+
+  Write a function `anagram_groups(words)` that groups words that are anagrams of
+  each other. Return a list of groups; sort the words within each group
+  alphabetically, and sort the groups by their first word.
+
+  For example, `anagram_groups(["eat", "tea", "tan", "ate", "nat", "bat"])` returns
+  `[["ate", "eat", "tea"], ["bat"], ["nat", "tan"]]`.
+starter_code: |
+  def anagram_groups(words):
+      pass
+tests: |
+  check(anagram_groups(["eat", "tea", "tan", "ate", "nat", "bat"]) == [["ate", "eat", "tea"], ["bat"], ["nat", "tan"]], "three groups")
+  check(anagram_groups([]) == [], "no words")
+  check(anagram_groups(["abc"]) == [["abc"]], "one word")
+hints:
+  - Two words are anagrams when their sorted letters are equal — use that as a dictionary key.
+  - Sort each group's words, then sort the groups by their first word.
+solution: |
+  def anagram_groups(words):
+      groups = {}
+      for w in words:
+          key = "".join(sorted(w))
+          groups.setdefault(key, []).append(w)
+      result = [sorted(g) for g in groups.values()]
+      result.sort(key=lambda g: g[0])
+      return result

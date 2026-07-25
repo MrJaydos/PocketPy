@@ -1,0 +1,32 @@
+id: dictionaries-merge-add
+title: Merge and Add
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 3
+order: 190
+runner: pyodide
+description: |
+  ## Combine two dictionaries
+
+  Write a function `merge_add(a, b)` that merges two dictionaries. When a key
+  appears in both, its values are added together.
+
+  For example, `merge_add({"a": 1, "b": 2}, {"b": 3, "c": 4})` returns
+  `{"a": 1, "b": 5, "c": 4}`.
+starter_code: |
+  def merge_add(a, b):
+      pass
+tests: |
+  check(merge_add({"a": 1, "b": 2}, {"b": 3, "c": 4}) == {"a": 1, "b": 5, "c": 4}, "adds shared keys")
+  check(merge_add({}, {}) == {}, "both empty")
+  check(merge_add({"x": 1}, {}) == {"x": 1}, "second empty")
+hints:
+  - Start with a copy of `a` (`dict(a)`).
+  - For each key in `b`, add its value onto whatever is already there.
+solution: |
+  def merge_add(a, b):
+      result = dict(a)
+      for k, v in b.items():
+          result[k] = result.get(k, 0) + v
+      return result

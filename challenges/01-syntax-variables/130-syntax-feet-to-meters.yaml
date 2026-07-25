@@ -1,0 +1,28 @@
+id: syntax-feet-to-meters
+title: Feet to Meters
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 1
+order: 130
+runner: pyodide
+description: |
+  ## Convert units
+
+  Write a function `feet_to_meters(feet)` that converts a length in feet to
+  meters, rounded to 4 decimal places. One foot is `0.3048` meters.
+
+  For example, `feet_to_meters(10)` returns `3.048`.
+starter_code: |
+  def feet_to_meters(feet):
+      pass
+tests: |
+  check(feet_to_meters(1) == 0.3048, "one foot")
+  check(feet_to_meters(10) == 3.048, "ten feet")
+  check(feet_to_meters(0) == 0.0, "zero feet")
+hints:
+  - Multiply by `0.3048` and round to 4 places.
+solution: |
+  def feet_to_meters(feet):
+      return round(feet * 0.3048, 4)

@@ -1,0 +1,26 @@
+id: strings-shout
+title: Shout
+topic: strings
+tags:
+  - strings
+difficulty: 1
+order: 60
+runner: pyodide
+description: |
+  ## All caps
+
+  Write a function `shout(s)` that returns the string in uppercase.
+
+  For example, `shout("hi")` returns `"HI"`.
+starter_code: |
+  def shout(s):
+      pass
+tests: |
+  check(shout("hi") == "HI", "lowercase to upper")
+  check(shout("") == "", "empty string")
+  check(shout("AbC") == "ABC", "mixed case")
+hints:
+  - Strings have an `.upper()` method.
+solution: |
+  def shout(s):
+      return s.upper()

@@ -1,0 +1,37 @@
+id: functions-make-counter
+title: Counter Factory
+topic: functions
+tags:
+  - functions
+  - closures
+difficulty: 4
+order: 180
+runner: pyodide
+description: |
+  ## Remember between calls
+
+  Write a function `make_counter()` that returns a new function. Each time the
+  returned function is called it returns the next integer starting from 1. Two
+  counters made separately are independent.
+
+  For example, `c = make_counter()` then `c()` returns `1`, `c()` returns `2`.
+starter_code: |
+  def make_counter():
+      pass
+tests: |
+  c = make_counter()
+  check(c() == 1, "first call")
+  check(c() == 2, "second call")
+  check(c() == 3, "third call")
+  d = make_counter()
+  check(d() == 1, "a fresh counter starts again")
+hints:
+  - Keep a count in the outer function and use `nonlocal` to update it from inside.
+solution: |
+  def make_counter():
+      count = 0
+      def inc():
+          nonlocal count
+          count += 1
+          return count
+      return inc

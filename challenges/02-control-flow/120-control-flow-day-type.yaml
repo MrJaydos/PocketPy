@@ -1,0 +1,31 @@
+id: control-flow-day-type
+title: Weekday or Weekend
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 1
+order: 120
+runner: pyodide
+description: |
+  ## Which kind of day?
+
+  Days are numbered 0 (Monday) through 6 (Sunday). Write a function `day_type(d)`
+  that returns `"weekend"` for Saturday (5) or Sunday (6), and `"weekday"`
+  otherwise.
+
+  For example, `day_type(5)` returns `"weekend"`.
+starter_code: |
+  def day_type(d):
+      pass
+tests: |
+  check(day_type(0) == "weekday", "Monday")
+  check(day_type(4) == "weekday", "Friday")
+  check(day_type(5) == "weekend", "Saturday")
+  check(day_type(6) == "weekend", "Sunday")
+hints:
+  - Saturday and Sunday are the days numbered 5 and 6.
+solution: |
+  def day_type(d):
+      if d >= 5:
+          return "weekend"
+      return "weekday"

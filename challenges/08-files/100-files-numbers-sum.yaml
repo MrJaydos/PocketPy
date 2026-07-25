@@ -1,0 +1,36 @@
+id: files-numbers-sum
+title: Save and Sum Numbers
+topic: files
+tags:
+  - files
+difficulty: 3
+order: 100
+runner: pyodide
+description: |
+  ## Numbers through a file
+
+  Write a function `save_and_sum(nums)` that writes each number in `nums` to a file
+  on its own line, then reads the lines back, converts them to integers, and
+  returns their sum.
+
+  For example, `save_and_sum([1, 2, 3])` returns `6`.
+starter_code: |
+  def save_and_sum(nums):
+      pass
+tests: |
+  check(save_and_sum([1, 2, 3]) == 6, "sums three numbers")
+  check(save_and_sum([]) == 0, "empty input")
+  check(save_and_sum([-1, 1]) == 0, "negatives cancel")
+hints:
+  - Write `str(n) + "\n"` for each number.
+  - "`int(line)` ignores the surrounding whitespace when reading back."
+solution: |
+  def save_and_sum(nums):
+      with open("files-numbers-sum.txt", "w") as f:
+          for n in nums:
+              f.write(str(n) + "\n")
+      total = 0
+      with open("files-numbers-sum.txt") as f:
+          for line in f:
+              total += int(line)
+      return total

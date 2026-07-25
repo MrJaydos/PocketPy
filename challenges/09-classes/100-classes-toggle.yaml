@@ -1,0 +1,46 @@
+id: classes-toggle
+title: Toggle Switch
+topic: classes
+tags:
+  - classes
+difficulty: 2
+order: 100
+runner: pyodide
+description: |
+  ## On and off
+
+  Write a class `Toggle` that starts switched off. Add a method `flip()` that
+  switches its state, and `is_on()` that returns `True` when it's on.
+
+  For example, a new `Toggle` reports `is_on()` as `False`; after one `flip()` it's
+  `True`.
+starter_code: |
+  class Toggle:
+      def __init__(self):
+          pass
+
+      def flip(self):
+          pass
+
+      def is_on(self):
+          pass
+tests: |
+  t = Toggle()
+  check(t.is_on() == False, "starts off")
+  t.flip()
+  check(t.is_on() == True, "on after one flip")
+  t.flip()
+  check(t.is_on() == False, "off again after two")
+hints:
+  - Store the state as a boolean on `self`.
+  - "`flip` sets it to `not` its current value."
+solution: |
+  class Toggle:
+      def __init__(self):
+          self.on = False
+
+      def flip(self):
+          self.on = not self.on
+
+      def is_on(self):
+          return self.on

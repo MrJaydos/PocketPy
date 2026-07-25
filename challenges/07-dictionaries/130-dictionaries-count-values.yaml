@@ -1,0 +1,31 @@
+id: dictionaries-count-values
+title: Count Matching Values
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 2
+order: 130
+runner: pyodide
+description: |
+  ## How many map to it?
+
+  Write a function `count_values(d, target)` that returns how many keys map to the
+  value `target`.
+
+  For example, `count_values({"a": 1, "b": 1, "c": 2}, 1)` returns `2`.
+starter_code: |
+  def count_values(d, target):
+      pass
+tests: |
+  check(count_values({"a": 1, "b": 1, "c": 2}, 1) == 2, "two ones")
+  check(count_values({}, 5) == 0, "empty dictionary")
+  check(count_values({"a": 3}, 3) == 1, "single match")
+hints:
+  - Loop over `d.values()` and count the ones equal to `target`.
+solution: |
+  def count_values(d, target):
+      count = 0
+      for v in d.values():
+          if v == target:
+              count += 1
+      return count

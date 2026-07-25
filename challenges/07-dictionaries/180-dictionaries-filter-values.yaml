@@ -1,0 +1,27 @@
+id: dictionaries-filter-values
+title: Filter by Value
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 3
+order: 180
+runner: pyodide
+description: |
+  ## Keys above a threshold
+
+  Write a function `above(d, threshold)` that returns a **sorted** list of the keys
+  whose value is strictly greater than `threshold`.
+
+  For example, `above({"a": 5, "b": 1, "c": 10}, 4)` returns `["a", "c"]`.
+starter_code: |
+  def above(d, threshold):
+      pass
+tests: |
+  check(above({"a": 5, "b": 1, "c": 10}, 4) == ["a", "c"], "two keys qualify")
+  check(above({"x": 1}, 5) == [], "none qualify")
+  check(above({"b": 9, "a": 9}, 5) == ["a", "b"], "sorted result")
+hints:
+  - Keep the keys where the value is greater than `threshold`, then sort them.
+solution: |
+  def above(d, threshold):
+      return sorted(k for k, v in d.items() if v > threshold)

@@ -1,0 +1,31 @@
+id: loops-count-multiples
+title: Count Multiples
+topic: loops
+tags:
+  - loops
+difficulty: 2
+order: 140
+runner: pyodide
+description: |
+  ## Multiples up to n
+
+  Write a function `count_multiples(n, k)` that returns how many numbers from 1 to
+  `n` are multiples of `k`.
+
+  For example, `count_multiples(10, 3)` returns `3` (3, 6, and 9).
+starter_code: |
+  def count_multiples(n, k):
+      pass
+tests: |
+  check(count_multiples(10, 2) == 5, "even numbers to 10")
+  check(count_multiples(10, 3) == 3, "3, 6, 9")
+  check(count_multiples(5, 10) == 0, "k bigger than n")
+hints:
+  - A number is a multiple of `k` when `i % k == 0`.
+solution: |
+  def count_multiples(n, k):
+      count = 0
+      for i in range(1, n + 1):
+          if i % k == 0:
+              count += 1
+      return count

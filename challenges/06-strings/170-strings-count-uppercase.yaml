@@ -1,0 +1,31 @@
+id: strings-count-uppercase
+title: Count Uppercase
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 170
+runner: pyodide
+description: |
+  ## Capital letters
+
+  Write a function `count_uppercase(s)` that returns how many uppercase letters the
+  string contains.
+
+  For example, `count_uppercase("Hello World")` returns `2`.
+starter_code: |
+  def count_uppercase(s):
+      pass
+tests: |
+  check(count_uppercase("Hello World") == 2, "H and W")
+  check(count_uppercase("abc") == 0, "none")
+  check(count_uppercase("ABC") == 3, "all caps")
+hints:
+  - A character is uppercase when `ch.isupper()` is true.
+solution: |
+  def count_uppercase(s):
+      count = 0
+      for ch in s:
+          if ch.isupper():
+              count += 1
+      return count

@@ -1,0 +1,31 @@
+id: mixed-binary-to-decimal
+title: Binary to Decimal
+topic: mixed
+tags:
+  - mixed
+  - math
+difficulty: 3
+order: 100
+runner: pyodide
+description: |
+  ## Read a binary string
+
+  Write a function `binary_to_decimal(s)` that returns the integer value of a
+  binary string, without using `int(s, 2)`.
+
+  For example, `binary_to_decimal("101")` returns `5`.
+starter_code: |
+  def binary_to_decimal(s):
+      pass
+tests: |
+  check(binary_to_decimal("101") == 5, "5 in binary")
+  check(binary_to_decimal("0") == 0, "zero")
+  check(binary_to_decimal("1111") == 15, "four ones")
+hints:
+  - Start at 0 and, for each digit, do `result = result * 2 + int(digit)`.
+solution: |
+  def binary_to_decimal(s):
+      result = 0
+      for ch in s:
+          result = result * 2 + int(ch)
+      return result

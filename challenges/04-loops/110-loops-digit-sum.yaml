@@ -1,0 +1,33 @@
+id: loops-digit-sum
+title: Sum of Digits
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## Add up the digits
+
+  Write a function `digit_sum(n)` that returns the sum of the digits of a
+  non-negative integer.
+
+  For example, `digit_sum(123)` returns `6`.
+starter_code: |
+  def digit_sum(n):
+      pass
+tests: |
+  check(digit_sum(123) == 6, "1+2+3")
+  check(digit_sum(0) == 0, "zero")
+  check(digit_sum(99) == 18, "9+9")
+hints:
+  - "`n % 10` gives the last digit; `n // 10` removes it."
+  - Loop with a `while n > 0`.
+solution: |
+  def digit_sum(n):
+      total = 0
+      while n > 0:
+          total += n % 10
+          n //= 10
+      return total

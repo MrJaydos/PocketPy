@@ -1,0 +1,33 @@
+id: lists-minimum
+title: Smallest Element
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 2
+order: 80
+runner: pyodide
+description: |
+  ## Find the minimum
+
+  Write a function `minimum(items)` that returns the smallest value in a non-empty
+  list, **without** using the built-in `min`.
+
+  For example, `minimum([3, 1, 2])` returns `1`.
+starter_code: |
+  def minimum(items):
+      pass
+tests: |
+  check(minimum([3, 1, 2]) == 1, "finds the smallest")
+  check(minimum([5]) == 5, "single element")
+  check(minimum([-1, -5, 2]) == -5, "handles negatives")
+hints:
+  - Start by assuming the first item is smallest.
+  - Loop through the rest and update whenever you find something smaller.
+solution: |
+  def minimum(items):
+      m = items[0]
+      for x in items:
+          if x < m:
+              m = x
+      return m

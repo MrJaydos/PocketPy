@@ -1,0 +1,34 @@
+id: files-append
+title: Write then Append
+topic: files
+tags:
+  - files
+difficulty: 3
+order: 90
+runner: pyodide
+description: |
+  ## Two modes
+
+  Write a function `append_and_length(first, second)` that writes `first` to a
+  file (replacing it), then **appends** `second` to the same file, then reads the
+  whole file and returns its length.
+
+  For example, `append_and_length("ab", "cd")` returns `4`.
+starter_code: |
+  def append_and_length(first, second):
+      pass
+tests: |
+  check(append_and_length("ab", "cd") == 4, "two chunks")
+  check(append_and_length("", "x") == 1, "append to empty")
+  check(append_and_length("hi", "") == 2, "append nothing")
+hints:
+  - Open with `"w"` for the first write, then `"a"` to append.
+  - Read it all back and return `len(...)`.
+solution: |
+  def append_and_length(first, second):
+      with open("files-append.txt", "w") as f:
+          f.write(first)
+      with open("files-append.txt", "a") as f:
+          f.write(second)
+      with open("files-append.txt") as f:
+          return len(f.read())

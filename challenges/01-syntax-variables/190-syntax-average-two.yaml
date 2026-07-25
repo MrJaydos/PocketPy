@@ -1,0 +1,27 @@
+id: syntax-average-two
+title: Average of Two
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 1
+order: 190
+runner: pyodide
+description: |
+  ## The midpoint
+
+  Write a function `average(a, b)` that returns the mean of two numbers.
+
+  For example, `average(2, 4)` returns `3.0`.
+starter_code: |
+  def average(a, b):
+      pass
+tests: |
+  check(average(2, 4) == 3.0, "mean of 2 and 4")
+  check(average(1, 2) == 1.5, "gives a fraction")
+  check(average(-2, 2) == 0.0, "cancels out")
+hints:
+  - Add them together and divide by 2.
+solution: |
+  def average(a, b):
+      return (a + b) / 2

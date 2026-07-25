@@ -1,0 +1,36 @@
+id: loops-count-digits
+title: Count Digits
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 2
+order: 120
+runner: pyodide
+description: |
+  ## How many digits?
+
+  Write a function `count_digits(n)` that returns how many digits a non-negative
+  integer has. `0` has one digit.
+
+  For example, `count_digits(12345)` returns `5`.
+starter_code: |
+  def count_digits(n):
+      pass
+tests: |
+  check(count_digits(12345) == 5, "five digits")
+  check(count_digits(0) == 1, "zero has one digit")
+  check(count_digits(5) == 1, "single digit")
+  check(count_digits(999) == 3, "three digits")
+hints:
+  - Handle 0 as a special case first.
+  - Otherwise strip a digit with `n //= 10` and count the steps.
+solution: |
+  def count_digits(n):
+      if n == 0:
+          return 1
+      count = 0
+      while n > 0:
+          count += 1
+          n //= 10
+      return count

@@ -1,0 +1,47 @@
+id: classes-histogram
+title: Histogram
+topic: classes
+tags:
+  - classes
+  - dictionaries
+difficulty: 3
+order: 140
+runner: pyodide
+description: |
+  ## Tally as you go
+
+  Write a class `Histogram` with `record(item)` to note one occurrence of an item,
+  and `count(item)` that returns how many times it has been recorded (0 if never).
+
+  For example, after recording "a" twice, `count("a")` returns `2`.
+starter_code: |
+  class Histogram:
+      def __init__(self):
+          pass
+
+      def record(self, item):
+          pass
+
+      def count(self, item):
+          pass
+tests: |
+  h = Histogram()
+  h.record("a")
+  h.record("a")
+  h.record("b")
+  check(h.count("a") == 2, "counts repeats")
+  check(h.count("b") == 1, "single record")
+  check(h.count("z") == 0, "never recorded")
+hints:
+  - Keep the counts in a dictionary.
+  - "`record` bumps the count; `count` uses `.get(item, 0)`."
+solution: |
+  class Histogram:
+      def __init__(self):
+          self.counts = {}
+
+      def record(self, item):
+          self.counts[item] = self.counts.get(item, 0) + 1
+
+      def count(self, item):
+          return self.counts.get(item, 0)

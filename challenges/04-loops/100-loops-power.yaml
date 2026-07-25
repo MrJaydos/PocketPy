@@ -1,0 +1,32 @@
+id: loops-power
+title: Power
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 2
+order: 100
+runner: pyodide
+description: |
+  ## Repeated multiplication
+
+  Write a function `power(base, exp)` that returns `base` raised to `exp` (a
+  non-negative integer) **without** using the `**` operator or `pow`.
+
+  For example, `power(2, 3)` returns `8`.
+starter_code: |
+  def power(base, exp):
+      pass
+tests: |
+  check(power(2, 3) == 8, "2 cubed")
+  check(power(5, 0) == 1, "anything to the 0 is 1")
+  check(power(3, 2) == 9, "3 squared")
+  check(power(2, 10) == 1024, "larger exponent")
+hints:
+  - Start a result at 1 and multiply by `base` `exp` times.
+solution: |
+  def power(base, exp):
+      result = 1
+      for _ in range(exp):
+          result *= base
+      return result

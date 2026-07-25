@@ -1,0 +1,28 @@
+id: lists-average
+title: List Average
+topic: lists
+tags:
+  - lists
+difficulty: 2
+order: 70
+runner: pyodide
+description: |
+  ## The mean
+
+  Write a function `average(items)` that returns the mean of a non-empty list of
+  numbers, rounded to 2 decimal places.
+
+  For example, `average([1, 2, 3, 4])` returns `2.5`.
+starter_code: |
+  def average(items):
+      pass
+tests: |
+  check(average([1, 2, 3, 4]) == 2.5, "mean of four numbers")
+  check(average([5]) == 5.0, "single element")
+  check(average([1, 2]) == 1.5, "gives a fraction")
+hints:
+  - Divide the sum of the list by its length.
+  - "`len(items)` gives the count."
+solution: |
+  def average(items):
+      return round(sum(items) / len(items), 2)

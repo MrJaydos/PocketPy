@@ -1,0 +1,33 @@
+id: lists-flatten
+title: Flatten One Level
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 3
+order: 190
+runner: pyodide
+description: |
+  ## Un-nest a list
+
+  Write a function `flatten(nested)` that takes a list of lists and returns a
+  single flat list with all the elements, in order.
+
+  For example, `flatten([[1, 2], [3], [4, 5]])` returns `[1, 2, 3, 4, 5]`.
+starter_code: |
+  def flatten(nested):
+      pass
+tests: |
+  check(flatten([[1, 2], [3], [4, 5]]) == [1, 2, 3, 4, 5], "flattens")
+  check(flatten([]) == [], "empty outer list")
+  check(flatten([[], [1]]) == [1], "empty inner list")
+hints:
+  - Loop over each sublist, then loop over its items.
+  - Append each inner item to your result list.
+solution: |
+  def flatten(nested):
+      result = []
+      for sub in nested:
+          for x in sub:
+              result.append(x)
+      return result

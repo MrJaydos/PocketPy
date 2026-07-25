@@ -1,0 +1,32 @@
+id: control-flow-sign-word
+title: Sign in Words
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 1
+order: 100
+runner: pyodide
+description: |
+  ## Positive, negative, or zero?
+
+  Write a function `sign_word(n)` that returns the string `"positive"`,
+  `"negative"`, or `"zero"` describing the number.
+
+  For example, `sign_word(-3)` returns `"negative"`.
+starter_code: |
+  def sign_word(n):
+      pass
+tests: |
+  check(sign_word(5) == "positive", "positive number")
+  check(sign_word(-3) == "negative", "negative number")
+  check(sign_word(0) == "zero", "zero")
+hints:
+  - Handle the three cases with `if` / `elif` / `else`.
+solution: |
+  def sign_word(n):
+      if n > 0:
+          return "positive"
+      elif n < 0:
+          return "negative"
+      else:
+          return "zero"

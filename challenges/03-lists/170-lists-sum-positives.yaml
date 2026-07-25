@@ -1,0 +1,32 @@
+id: lists-sum-positives
+title: Sum of Positives
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 2
+order: 170
+runner: pyodide
+description: |
+  ## Only the positives
+
+  Write a function `sum_positives(items)` that returns the sum of only the positive
+  numbers in the list.
+
+  For example, `sum_positives([1, -2, 3, -4])` returns `4`.
+starter_code: |
+  def sum_positives(items):
+      pass
+tests: |
+  check(sum_positives([1, -2, 3, -4]) == 4, "adds 1 and 3")
+  check(sum_positives([-1, -2]) == 0, "no positives")
+  check(sum_positives([]) == 0, "empty list")
+hints:
+  - Add a number only when it's greater than 0.
+solution: |
+  def sum_positives(items):
+      s = 0
+      for x in items:
+          if x > 0:
+              s += x
+      return s

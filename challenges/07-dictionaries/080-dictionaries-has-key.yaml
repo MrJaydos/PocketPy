@@ -1,0 +1,27 @@
+id: dictionaries-has-key
+title: Has Key
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 1
+order: 80
+runner: pyodide
+description: |
+  ## Is the key there?
+
+  Write a function `has_key(d, key)` that returns `True` if `key` is in the
+  dictionary and `False` otherwise.
+
+  For example, `has_key({"a": 1}, "a")` returns `True`.
+starter_code: |
+  def has_key(d, key):
+      pass
+tests: |
+  check(has_key({"a": 1}, "a") == True, "key present")
+  check(has_key({"a": 1}, "b") == False, "key absent")
+  check(has_key({}, "x") == False, "empty dictionary")
+hints:
+  - The `in` operator checks dictionary keys.
+solution: |
+  def has_key(d, key):
+      return key in d

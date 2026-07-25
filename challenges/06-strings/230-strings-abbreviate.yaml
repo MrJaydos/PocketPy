@@ -1,0 +1,31 @@
+id: strings-abbreviate
+title: Abbreviate
+topic: strings
+tags:
+  - strings
+difficulty: 3
+order: 230
+runner: pyodide
+description: |
+  ## Numeronyms
+
+  Write a function `abbreviate(word)` that shortens a word to its first letter, the
+  count of letters in between, and its last letter — the way `"internationalization"`
+  becomes `"i18n"`. Words of 2 letters or fewer are returned unchanged.
+
+  For example, `abbreviate("internationalization")` returns `"i18n"`.
+starter_code: |
+  def abbreviate(word):
+      pass
+tests: |
+  check(abbreviate("internationalization") == "i18n", "the famous one")
+  check(abbreviate("cat") == "c1t", "one letter in the middle")
+  check(abbreviate("to") == "to", "too short to abbreviate")
+hints:
+  - If the word is 2 letters or fewer, return it unchanged.
+  - Otherwise join the first letter, `str(len(word) - 2)`, and the last letter.
+solution: |
+  def abbreviate(word):
+      if len(word) <= 2:
+          return word
+      return word[0] + str(len(word) - 2) + word[-1]

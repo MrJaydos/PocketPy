@@ -1,0 +1,27 @@
+id: dictionaries-keys-with-value
+title: Keys With a Value
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 2
+order: 140
+runner: pyodide
+description: |
+  ## Reverse lookup
+
+  Write a function `keys_with_value(d, target)` that returns a **sorted** list of
+  all keys whose value equals `target`.
+
+  For example, `keys_with_value({"a": 1, "b": 2, "c": 1}, 1)` returns `["a", "c"]`.
+starter_code: |
+  def keys_with_value(d, target):
+      pass
+tests: |
+  check(keys_with_value({"a": 1, "b": 2, "c": 1}, 1) == ["a", "c"], "two keys")
+  check(keys_with_value({"x": 5}, 9) == [], "no matches")
+  check(keys_with_value({"b": 1, "a": 1}, 1) == ["a", "b"], "sorted order")
+hints:
+  - Collect keys where the value matches, then `sorted(...)` them.
+solution: |
+  def keys_with_value(d, target):
+      return sorted(k for k, v in d.items() if v == target)

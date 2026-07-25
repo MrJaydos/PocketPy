@@ -1,0 +1,36 @@
+id: mixed-gcd-of-list
+title: GCD of a List
+topic: mixed
+tags:
+  - mixed
+  - math
+difficulty: 4
+order: 170
+runner: pyodide
+description: |
+  ## Common divisor of many
+
+  Write a function `gcd_of_list(nums)` that returns the greatest common divisor of
+  all the numbers in a non-empty list.
+
+  For example, `gcd_of_list([12, 8, 4])` returns `4`.
+starter_code: |
+  def gcd_of_list(nums):
+      pass
+tests: |
+  check(gcd_of_list([12, 8, 4]) == 4, "three numbers")
+  check(gcd_of_list([7]) == 7, "single number")
+  check(gcd_of_list([10, 20, 30]) == 10, "all multiples of ten")
+hints:
+  - Write a two-number gcd helper (Euclid's algorithm).
+  - Fold it across the list, starting from the first element.
+solution: |
+  def gcd_of_list(nums):
+      def gcd(a, b):
+          while b:
+              a, b = b, a % b
+          return a
+      result = nums[0]
+      for x in nums[1:]:
+          result = gcd(result, x)
+      return result

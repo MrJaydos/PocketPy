@@ -1,0 +1,40 @@
+id: loops-count-primes
+title: Count Primes
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 3
+order: 200
+runner: pyodide
+description: |
+  ## Primes up to n
+
+  Write a function `count_primes(n)` that returns how many prime numbers are less
+  than or equal to `n`. A prime is a whole number greater than 1 divisible only by
+  1 and itself.
+
+  For example, `count_primes(10)` returns `4` (2, 3, 5, 7).
+starter_code: |
+  def count_primes(n):
+      pass
+tests: |
+  check(count_primes(10) == 4, "2, 3, 5, 7")
+  check(count_primes(2) == 1, "2 is the first prime")
+  check(count_primes(1) == 0, "nothing prime yet")
+  check(count_primes(20) == 8, "primes up to 20")
+hints:
+  - For each number, test divisibility by every value from 2 up to its square root.
+  - If nothing divides it, it's prime.
+solution: |
+  def count_primes(n):
+      count = 0
+      for num in range(2, n + 1):
+          is_p = True
+          for d in range(2, int(num ** 0.5) + 1):
+              if num % d == 0:
+                  is_p = False
+                  break
+          if is_p:
+              count += 1
+      return count

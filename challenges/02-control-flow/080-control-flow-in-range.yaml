@@ -1,0 +1,29 @@
+id: control-flow-in-range
+title: In Range
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 1
+order: 80
+runner: pyodide
+description: |
+  ## Between two bounds
+
+  Write a function `in_range(n, lo, hi)` that returns `True` if `n` is between `lo`
+  and `hi` inclusive, and `False` otherwise.
+
+  For example, `in_range(5, 0, 10)` returns `True`.
+starter_code: |
+  def in_range(n, lo, hi):
+      pass
+tests: |
+  check(in_range(5, 0, 10) == True, "inside")
+  check(in_range(0, 0, 10) == True, "on the lower bound")
+  check(in_range(10, 0, 10) == True, "on the upper bound")
+  check(in_range(-1, 0, 10) == False, "below")
+  check(in_range(11, 0, 10) == False, "above")
+hints:
+  - Python lets you chain comparisons, e.g. `lo <= n <= hi`.
+solution: |
+  def in_range(n, lo, hi):
+      return lo <= n <= hi

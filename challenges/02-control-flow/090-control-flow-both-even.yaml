@@ -1,0 +1,29 @@
+id: control-flow-both-even
+title: Both Even
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 1
+order: 90
+runner: pyodide
+description: |
+  ## Two evens
+
+  Write a function `both_even(a, b)` that returns `True` only when **both** numbers
+  are even.
+
+  For example, `both_even(2, 4)` returns `True` and `both_even(2, 3)` returns `False`.
+starter_code: |
+  def both_even(a, b):
+      pass
+tests: |
+  check(both_even(2, 4) == True, "both even")
+  check(both_even(2, 3) == False, "one odd")
+  check(both_even(0, 0) == True, "zero is even")
+  check(both_even(1, 1) == False, "both odd")
+hints:
+  - A number is even when `n % 2 == 0`.
+  - Combine two conditions with `and`.
+solution: |
+  def both_even(a, b):
+      return a % 2 == 0 and b % 2 == 0

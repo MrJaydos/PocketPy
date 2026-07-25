@@ -1,0 +1,39 @@
+id: mixed-most-frequent-word
+title: Most Frequent Word
+topic: mixed
+tags:
+  - mixed
+  - strings
+  - dictionaries
+difficulty: 3
+order: 130
+runner: pyodide
+description: |
+  ## The word used most
+
+  Write a function `most_frequent_word(text)` that returns the most frequently
+  occurring word in a non-empty text (split on whitespace). If several tie, return
+  the one that appears first.
+
+  For example, `most_frequent_word("the cat the dog the")` returns `"the"`.
+starter_code: |
+  def most_frequent_word(text):
+      pass
+tests: |
+  check(most_frequent_word("the cat the dog the") == "the", "the wins")
+  check(most_frequent_word("hi") == "hi", "single word")
+  check(most_frequent_word("a b a b") == "a", "tie goes to the earliest")
+hints:
+  - Count the words in a dictionary.
+  - Scan the words in order, keeping the one with the strictly highest count.
+solution: |
+  def most_frequent_word(text):
+      words = text.split()
+      counts = {}
+      for w in words:
+          counts[w] = counts.get(w, 0) + 1
+      best = words[0]
+      for w in words:
+          if counts[w] > counts[best]:
+              best = w
+      return best

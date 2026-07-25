@@ -1,0 +1,26 @@
+id: lists-last
+title: Last Element
+topic: lists
+tags:
+  - lists
+difficulty: 1
+order: 120
+runner: pyodide
+description: |
+  ## Grab the end
+
+  Write a function `last(items)` that returns the last element of a non-empty list.
+
+  For example, `last([1, 2, 3])` returns `3`.
+starter_code: |
+  def last(items):
+      pass
+tests: |
+  check(last([1, 2, 3]) == 3, "last of three")
+  check(last(["a"]) == "a", "single element")
+  check(last([9, 8, 7, 6]) == 6, "longer list")
+hints:
+  - "Negative indexing: `items[-1]` is the last element."
+solution: |
+  def last(items):
+      return items[-1]

@@ -1,0 +1,31 @@
+id: dictionaries-tally
+title: Tally a List
+topic: dictionaries
+tags:
+  - dictionaries
+  - lists
+difficulty: 2
+order: 120
+runner: pyodide
+description: |
+  ## Count each item
+
+  Write a function `tally(items)` that returns a dictionary mapping each item to
+  how many times it appears in the list.
+
+  For example, `tally(["a", "b", "a"])` returns `{"a": 2, "b": 1}`.
+starter_code: |
+  def tally(items):
+      pass
+tests: |
+  check(tally(["a", "b", "a"]) == {"a": 2, "b": 1}, "counts repeats")
+  check(tally([]) == {}, "empty list")
+  check(tally([1, 1, 1]) == {1: 3}, "all the same")
+hints:
+  - Use `counts.get(item, 0) + 1` to add to a running total.
+solution: |
+  def tally(items):
+      counts = {}
+      for x in items:
+          counts[x] = counts.get(x, 0) + 1
+      return counts

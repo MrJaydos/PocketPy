@@ -1,0 +1,27 @@
+id: lists-contains
+title: Contains
+topic: lists
+tags:
+  - lists
+difficulty: 1
+order: 100
+runner: pyodide
+description: |
+  ## Is it in there?
+
+  Write a function `contains(items, target)` that returns `True` if `target` is in
+  the list and `False` otherwise.
+
+  For example, `contains([1, 2, 3], 2)` returns `True`.
+starter_code: |
+  def contains(items, target):
+      pass
+tests: |
+  check(contains([1, 2, 3], 2) == True, "present")
+  check(contains([1, 2, 3], 9) == False, "absent")
+  check(contains([], 1) == False, "empty list")
+hints:
+  - The `in` operator checks membership directly.
+solution: |
+  def contains(items, target):
+      return target in items

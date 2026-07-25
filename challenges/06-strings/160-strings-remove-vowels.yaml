@@ -1,0 +1,28 @@
+id: strings-remove-vowels
+title: Remove Vowels
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 160
+runner: pyodide
+description: |
+  ## Strip the vowels
+
+  Write a function `remove_vowels(s)` that returns the string with all vowels
+  (a, e, i, o, u, any case) removed.
+
+  For example, `remove_vowels("hello")` returns `"hll"`.
+starter_code: |
+  def remove_vowels(s):
+      pass
+tests: |
+  check(remove_vowels("hello") == "hll", "removes e and o")
+  check(remove_vowels("aeiou") == "", "all vowels")
+  check(remove_vowels("xyz") == "xyz", "no vowels")
+  check(remove_vowels("HELLO") == "HLL", "uppercase too")
+hints:
+  - Keep only the characters whose lowercase form is not a vowel.
+solution: |
+  def remove_vowels(s):
+      return "".join(ch for ch in s if ch.lower() not in "aeiou")

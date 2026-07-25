@@ -1,0 +1,31 @@
+id: functions-recursive-power
+title: Recursive Power
+topic: functions
+tags:
+  - functions
+  - recursion
+difficulty: 3
+order: 160
+runner: pyodide
+description: |
+  ## Power without a loop
+
+  Write a function `recursive_power(base, exp)` that computes `base` to the `exp`
+  (a non-negative integer) using recursion.
+
+  For example, `recursive_power(2, 3)` returns `8`.
+starter_code: |
+  def recursive_power(base, exp):
+      pass
+tests: |
+  check(recursive_power(2, 3) == 8, "2 cubed")
+  check(recursive_power(5, 0) == 1, "base case: exponent 0")
+  check(recursive_power(3, 2) == 9, "3 squared")
+hints:
+  - "Base case: any number to the power 0 is 1."
+  - Otherwise return `base * recursive_power(base, exp - 1)`.
+solution: |
+  def recursive_power(base, exp):
+      if exp == 0:
+          return 1
+      return base * recursive_power(base, exp - 1)

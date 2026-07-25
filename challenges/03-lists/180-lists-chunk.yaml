@@ -1,0 +1,28 @@
+id: lists-chunk
+title: Chunk a List
+topic: lists
+tags:
+  - lists
+difficulty: 3
+order: 180
+runner: pyodide
+description: |
+  ## Split into groups
+
+  Write a function `chunk(items, n)` that splits a list into sublists of length
+  `n`. The final chunk may be shorter if there aren't enough items.
+
+  For example, `chunk([1, 2, 3, 4, 5], 2)` returns `[[1, 2], [3, 4], [5]]`.
+starter_code: |
+  def chunk(items, n):
+      pass
+tests: |
+  check(chunk([1, 2, 3, 4, 5], 2) == [[1, 2], [3, 4], [5]], "uneven split")
+  check(chunk([1, 2, 3, 4], 2) == [[1, 2], [3, 4]], "even split")
+  check(chunk([], 3) == [], "empty list")
+hints:
+  - Slicing `items[i:i+n]` grabs one chunk.
+  - Step through the start indices with `range(0, len(items), n)`.
+solution: |
+  def chunk(items, n):
+      return [items[i:i + n] for i in range(0, len(items), n)]

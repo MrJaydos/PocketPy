@@ -1,0 +1,28 @@
+id: functions-filter-list
+title: Keep If
+topic: functions
+tags:
+  - functions
+  - higher-order
+difficulty: 3
+order: 100
+runner: pyodide
+description: |
+  ## Your own filter
+
+  Write a function `filter_list(pred, items)` that returns a new list with only the
+  elements for which `pred(element)` is truthy.
+
+  For example, `filter_list(lambda x: x > 0, [-1, 2, -3, 4])` returns `[2, 4]`.
+starter_code: |
+  def filter_list(pred, items):
+      pass
+tests: |
+  check(filter_list(lambda x: x > 0, [-1, 2, -3, 4]) == [2, 4], "keeps positives")
+  check(filter_list(lambda x: x % 2 == 0, [1, 3]) == [], "nothing matches")
+  check(filter_list(lambda x: True, []) == [], "empty list")
+hints:
+  - Keep `x` only when `pred(x)` is true.
+solution: |
+  def filter_list(pred, items):
+      return [x for x in items if pred(x)]

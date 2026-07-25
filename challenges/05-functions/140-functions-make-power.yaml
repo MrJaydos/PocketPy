@@ -1,0 +1,30 @@
+id: functions-make-power
+title: Make a Power Function
+topic: functions
+tags:
+  - functions
+  - closures
+difficulty: 3
+order: 140
+runner: pyodide
+description: |
+  ## Fix the exponent
+
+  Write a function `make_power(exp)` that returns a new function raising its
+  argument to the power `exp`.
+
+  For example, `square = make_power(2)` then `square(5)` returns `25`.
+starter_code: |
+  def make_power(exp):
+      pass
+tests: |
+  check(make_power(2)(5) == 25, "square")
+  check(make_power(3)(2) == 8, "cube")
+  check(make_power(2)(0) == 0, "zero squared")
+hints:
+  - Return an inner function that computes `x ** exp`.
+solution: |
+  def make_power(exp):
+      def f(x):
+          return x ** exp
+      return f

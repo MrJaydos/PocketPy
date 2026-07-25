@@ -1,0 +1,36 @@
+id: mixed-two-sum
+title: Two Sum
+topic: mixed
+tags:
+  - mixed
+  - dictionaries
+difficulty: 4
+order: 150
+runner: pyodide
+description: |
+  ## Find the pair
+
+  Write a function `two_sum(nums, target)` that returns a tuple of the two indices
+  `(i, j)` with `i < j` whose values add up to `target`. Assume exactly one
+  solution exists.
+
+  For example, `two_sum([2, 7, 11, 15], 9)` returns `(0, 1)`.
+starter_code: |
+  def two_sum(nums, target):
+      pass
+tests: |
+  check(two_sum([2, 7, 11, 15], 9) == (0, 1), "first two")
+  check(two_sum([3, 2, 4], 6) == (1, 2), "not the first element")
+  check(two_sum([3, 3], 6) == (0, 1), "same value twice")
+hints:
+  - As you scan, remember each value's index in a dictionary.
+  - For each value, check whether `target - value` has already been seen.
+solution: |
+  def two_sum(nums, target):
+      seen = {}
+      for i in range(len(nums)):
+          need = target - nums[i]
+          if need in seen:
+              return (seen[need], i)
+          seen[nums[i]] = i
+      return None

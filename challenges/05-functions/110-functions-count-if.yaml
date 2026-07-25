@@ -1,0 +1,32 @@
+id: functions-count-if
+title: Count If
+topic: functions
+tags:
+  - functions
+  - higher-order
+difficulty: 3
+order: 110
+runner: pyodide
+description: |
+  ## Count the matches
+
+  Write a function `count_if(pred, items)` that returns how many elements satisfy
+  the predicate `pred`.
+
+  For example, `count_if(lambda x: x > 0, [-1, 2, 3])` returns `2`.
+starter_code: |
+  def count_if(pred, items):
+      pass
+tests: |
+  check(count_if(lambda x: x > 0, [-1, 2, 3]) == 2, "two positives")
+  check(count_if(lambda x: x > 100, [1, 2]) == 0, "none match")
+  check(count_if(lambda x: True, []) == 0, "empty list")
+hints:
+  - Add 1 to a counter whenever `pred(x)` is true.
+solution: |
+  def count_if(pred, items):
+      count = 0
+      for x in items:
+          if pred(x):
+              count += 1
+      return count

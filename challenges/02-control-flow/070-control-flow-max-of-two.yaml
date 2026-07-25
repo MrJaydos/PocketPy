@@ -1,0 +1,30 @@
+id: control-flow-max-of-two
+title: Larger of Two
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 1
+order: 70
+runner: pyodide
+description: |
+  ## Pick the bigger one
+
+  Write a function `max_of_two(a, b)` that returns the larger of two numbers
+  (without using the built-in `max`). If they're equal, return either.
+
+  For example, `max_of_two(3, 7)` returns `7`.
+starter_code: |
+  def max_of_two(a, b):
+      pass
+tests: |
+  check(max_of_two(3, 7) == 7, "second is bigger")
+  check(max_of_two(7, 3) == 7, "first is bigger")
+  check(max_of_two(4, 4) == 4, "equal")
+  check(max_of_two(-1, -5) == -1, "negatives")
+hints:
+  - Compare `a` and `b` with `>` inside an `if`.
+solution: |
+  def max_of_two(a, b):
+      if a > b:
+          return a
+      return b

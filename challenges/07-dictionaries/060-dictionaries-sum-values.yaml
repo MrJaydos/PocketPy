@@ -1,0 +1,28 @@
+id: dictionaries-sum-values
+title: Sum the Values
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 1
+order: 60
+runner: pyodide
+description: |
+  ## Add up a dictionary
+
+  Write a function `sum_values(d)` that returns the sum of all the values in a
+  dictionary. An empty dictionary sums to `0`.
+
+  For example, `sum_values({"a": 1, "b": 2})` returns `3`.
+starter_code: |
+  def sum_values(d):
+      pass
+tests: |
+  check(sum_values({"a": 1, "b": 2}) == 3, "two values")
+  check(sum_values({}) == 0, "empty dictionary")
+  check(sum_values({"x": 5}) == 5, "one value")
+hints:
+  - "`d.values()` gives just the values."
+  - The built-in `sum` adds them.
+solution: |
+  def sum_values(d):
+      return sum(d.values())

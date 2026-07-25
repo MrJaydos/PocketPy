@@ -1,0 +1,32 @@
+id: files-char-count
+title: Save and Count Characters
+topic: files
+tags:
+  - files
+difficulty: 2
+order: 50
+runner: pyodide
+description: |
+  ## Write it, then measure it
+
+  Write a function `save_char_count(text)` that writes `text` to a file, reads the
+  file back, and returns the number of characters it contains.
+
+  For example, `save_char_count("hello")` returns `5`.
+starter_code: |
+  def save_char_count(text):
+      pass
+tests: |
+  check(save_char_count("hello") == 5, "five characters")
+  check(save_char_count("") == 0, "empty text")
+  check(save_char_count("abc") == 3, "three characters")
+hints:
+  - Open a file in write mode (`"w"`) and call `.write(text)`.
+  - Open it again, read it with `.read()`, and return the length.
+solution: |
+  def save_char_count(text):
+      with open("files-char-count.txt", "w") as f:
+          f.write(text)
+      with open("files-char-count.txt") as f:
+          content = f.read()
+      return len(content)

@@ -1,0 +1,46 @@
+id: classes-person
+title: Person
+topic: classes
+tags:
+  - classes
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## Name and age
+
+  Write a class `Person` whose constructor takes a `name` and `age`. Add a method
+  `greet()` that returns `"Hi, I'm NAME"` and `have_birthday()` that increases the
+  age by one.
+
+  For example, `Person("Ada", 30).greet()` returns `"Hi, I'm Ada"`.
+starter_code: |
+  class Person:
+      def __init__(self, name, age):
+          pass
+
+      def greet(self):
+          pass
+
+      def have_birthday(self):
+          pass
+tests: |
+  p = Person("Ada", 30)
+  check(p.greet() == "Hi, I'm Ada", "greeting uses the name")
+  check(p.age == 30, "stores the age")
+  p.have_birthday()
+  check(p.age == 31, "a year older")
+hints:
+  - Store `name` and `age` on `self`.
+  - Build the greeting with an f-string.
+solution: |
+  class Person:
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+
+      def greet(self):
+          return f"Hi, I'm {self.name}"
+
+      def have_birthday(self):
+          self.age += 1

@@ -1,0 +1,30 @@
+id: syntax-last-digit
+title: Last Digit
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 2
+order: 100
+runner: pyodide
+description: |
+  ## The rightmost digit
+
+  Write a function `last_digit(n)` that returns the last digit of an integer `n`.
+  Negative numbers should give the same digit as their positive version.
+
+  For example, `last_digit(1234)` returns `4` and `last_digit(-52)` returns `2`.
+starter_code: |
+  def last_digit(n):
+      pass
+tests: |
+  check(last_digit(1234) == 4, "last digit of 1234")
+  check(last_digit(7) == 7, "single digit")
+  check(last_digit(0) == 0, "zero")
+  check(last_digit(-52) == 2, "ignores the sign")
+hints:
+  - The remainder operator `%` gives the last digit when you divide by 10.
+  - Use `abs(n)` first so a negative number is handled.
+solution: |
+  def last_digit(n):
+      return abs(n) % 10

@@ -1,0 +1,27 @@
+id: lists-max-diff
+title: Range of a List
+topic: lists
+tags:
+  - lists
+difficulty: 2
+order: 150
+runner: pyodide
+description: |
+  ## Biggest minus smallest
+
+  Write a function `max_diff(items)` that returns the difference between the
+  largest and smallest values in a non-empty list.
+
+  For example, `max_diff([1, 5, 3])` returns `4`.
+starter_code: |
+  def max_diff(items):
+      pass
+tests: |
+  check(max_diff([1, 5, 3]) == 4, "5 minus 1")
+  check(max_diff([7]) == 0, "single element")
+  check(max_diff([-2, 2]) == 4, "spans zero")
+hints:
+  - The built-ins `max` and `min` make this a one-liner.
+solution: |
+  def max_diff(items):
+      return max(items) - min(items)

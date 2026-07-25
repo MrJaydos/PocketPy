@@ -1,0 +1,30 @@
+id: strings-truncate
+title: Truncate
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 150
+runner: pyodide
+description: |
+  ## Cut it short
+
+  Write a function `truncate(s, n)` that returns `s` unchanged if it's `n`
+  characters or fewer, otherwise the first `n` characters followed by `"..."`.
+
+  For example, `truncate("hello world", 5)` returns `"hello..."`.
+starter_code: |
+  def truncate(s, n):
+      pass
+tests: |
+  check(truncate("hello world", 5) == "hello...", "too long, gets cut")
+  check(truncate("hi", 5) == "hi", "shorter than the limit")
+  check(truncate("hello", 5) == "hello", "exactly the limit")
+hints:
+  - Compare `len(s)` with `n`.
+  - If it's longer, slice `s[:n]` and add `"..."`.
+solution: |
+  def truncate(s, n):
+      if len(s) > n:
+          return s[:n] + "..."
+      return s

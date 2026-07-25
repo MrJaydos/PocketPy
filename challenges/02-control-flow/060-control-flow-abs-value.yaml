@@ -1,0 +1,30 @@
+id: control-flow-abs-value
+title: Absolute Value
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 1
+order: 60
+runner: pyodide
+description: |
+  ## Drop the sign
+
+  Write a function `abs_value(n)` that returns the absolute value of `n` (the
+  number without its sign) **without** using the built-in `abs`.
+
+  For example, `abs_value(-5)` returns `5`.
+starter_code: |
+  def abs_value(n):
+      pass
+tests: |
+  check(abs_value(5) == 5, "positive stays positive")
+  check(abs_value(-5) == 5, "negative becomes positive")
+  check(abs_value(0) == 0, "zero")
+hints:
+  - Use an `if` to check whether `n` is negative.
+  - If it's negative, return `-n`; otherwise return `n`.
+solution: |
+  def abs_value(n):
+      if n < 0:
+          return -n
+      return n

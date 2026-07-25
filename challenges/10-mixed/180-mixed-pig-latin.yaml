@@ -1,0 +1,38 @@
+id: mixed-pig-latin
+title: Pig Latin
+topic: mixed
+tags:
+  - mixed
+  - strings
+difficulty: 4
+order: 180
+runner: pyodide
+description: |
+  ## Move the consonants
+
+  Write a function `pig_latin(word)` for a single lowercase word: if it starts with
+  a vowel, add `"way"` to the end; otherwise move the leading consonants to the end
+  and add `"ay"`.
+
+  For example, `pig_latin("hello")` returns `"ellohay"` and `pig_latin("apple")`
+  returns `"appleway"`.
+starter_code: |
+  def pig_latin(word):
+      pass
+tests: |
+  check(pig_latin("hello") == "ellohay", "one leading consonant")
+  check(pig_latin("string") == "ingstray", "consonant cluster")
+  check(pig_latin("apple") == "appleway", "starts with a vowel")
+  check(pig_latin("eat") == "eatway", "another vowel start")
+hints:
+  - If the first letter is a vowel, it's just `word + "way"`.
+  - Otherwise find how many leading consonants there are, then rearrange with slicing.
+solution: |
+  def pig_latin(word):
+      vowels = "aeiou"
+      if word[0] in vowels:
+          return word + "way"
+      i = 0
+      while i < len(word) and word[i] not in vowels:
+          i += 1
+      return word[i:] + word[:i] + "ay"

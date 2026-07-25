@@ -1,0 +1,32 @@
+id: functions-max-all
+title: Max of Arguments
+topic: functions
+tags:
+  - functions
+  - args
+difficulty: 2
+order: 70
+runner: pyodide
+description: |
+  ## Largest of many
+
+  Write a function `max_all(*nums)` that returns the largest of its arguments
+  (there will always be at least one), without using the built-in `max`.
+
+  For example, `max_all(3, 7, 2)` returns `7`.
+starter_code: |
+  def max_all(*nums):
+      pass
+tests: |
+  check(max_all(3, 7, 2) == 7, "three arguments")
+  check(max_all(5) == 5, "one argument")
+  check(max_all(-1, -4) == -1, "negatives")
+hints:
+  - Start with the first argument and compare it against the rest.
+solution: |
+  def max_all(*nums):
+      m = nums[0]
+      for n in nums:
+          if n > m:
+              m = n
+      return m

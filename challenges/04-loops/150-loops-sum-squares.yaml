@@ -1,0 +1,31 @@
+id: loops-sum-squares
+title: Sum of Squares
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 2
+order: 150
+runner: pyodide
+description: |
+  ## Square then add
+
+  Write a function `sum_squares(n)` that returns the sum of the squares of the
+  numbers from 1 to `n`.
+
+  For example, `sum_squares(3)` returns `14` (1 + 4 + 9).
+starter_code: |
+  def sum_squares(n):
+      pass
+tests: |
+  check(sum_squares(3) == 14, "1+4+9")
+  check(sum_squares(1) == 1, "just 1")
+  check(sum_squares(0) == 0, "empty range")
+hints:
+  - Add `i * i` for each `i` from 1 to `n`.
+solution: |
+  def sum_squares(n):
+      total = 0
+      for i in range(1, n + 1):
+          total += i * i
+      return total

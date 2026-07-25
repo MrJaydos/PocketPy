@@ -1,0 +1,28 @@
+id: syntax-swap
+title: Swap Two Values
+topic: syntax-variables
+tags:
+  - syntax
+  - tuples
+difficulty: 1
+order: 90
+runner: pyodide
+description: |
+  ## Swap them around
+
+  Write a function `swap(a, b)` that returns a tuple with the two values in the
+  opposite order: `(b, a)`.
+
+  For example, `swap(1, 2)` returns `(2, 1)`.
+starter_code: |
+  def swap(a, b):
+      pass
+tests: |
+  check(swap(1, 2) == (2, 1), "swaps numbers")
+  check(swap("x", "y") == ("y", "x"), "swaps strings")
+  check(swap(0, 0) == (0, 0), "equal values")
+hints:
+  - A tuple is written with parentheses, like `(b, a)`.
+solution: |
+  def swap(a, b):
+      return (b, a)

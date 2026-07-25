@@ -1,0 +1,28 @@
+id: strings-title-case
+title: Title Case
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## Capitalise each word
+
+  Write a function `title_case(s)` that returns the sentence with the first letter
+  of each word capitalised and the rest lowercased. Words are separated by single
+  spaces.
+
+  For example, `title_case("the cat sat")` returns `"The Cat Sat"`.
+starter_code: |
+  def title_case(s):
+      pass
+tests: |
+  check(title_case("the cat sat") == "The Cat Sat", "capitalises each word")
+  check(title_case("hello") == "Hello", "single word")
+  check(title_case("HELLO there") == "Hello There", "lowercases the rest")
+hints:
+  - Split into words, `.capitalize()` each, then join with spaces.
+solution: |
+  def title_case(s):
+      return " ".join(word.capitalize() for word in s.split())

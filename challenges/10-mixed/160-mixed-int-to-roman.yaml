@@ -1,0 +1,39 @@
+id: mixed-int-to-roman
+title: Integer to Roman
+topic: mixed
+tags:
+  - mixed
+difficulty: 4
+order: 160
+runner: pyodide
+description: |
+  ## Write the numeral
+
+  Write a function `int_to_roman(n)` that converts an integer from 1 to 3999 into
+  its Roman numeral string.
+
+  For example, `int_to_roman(1994)` returns `"MCMXCIV"`.
+starter_code: |
+  def int_to_roman(n):
+      pass
+tests: |
+  check(int_to_roman(4) == "IV", "subtractive four")
+  check(int_to_roman(9) == "IX", "subtractive nine")
+  check(int_to_roman(58) == "LVIII", "fifty-eight")
+  check(int_to_roman(1994) == "MCMXCIV", "a big one")
+hints:
+  - List the values and their symbols from largest to smallest, including 900, 400, 90, 40, 9, 4.
+  - Repeatedly subtract the largest value that fits, appending its symbol.
+solution: |
+  def int_to_roman(n):
+      table = [
+          (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+          (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+          (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I"),
+      ]
+      result = ""
+      for value, symbol in table:
+          while n >= value:
+              result += symbol
+              n -= value
+      return result

@@ -1,0 +1,27 @@
+id: dictionaries-count-items
+title: Count Entries
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 1
+order: 70
+runner: pyodide
+description: |
+  ## How many keys?
+
+  Write a function `count_items(d)` that returns how many key/value pairs a
+  dictionary has.
+
+  For example, `count_items({"a": 1, "b": 2})` returns `2`.
+starter_code: |
+  def count_items(d):
+      pass
+tests: |
+  check(count_items({"a": 1, "b": 2}) == 2, "two entries")
+  check(count_items({}) == 0, "empty")
+  check(count_items({"only": 1}) == 1, "one entry")
+hints:
+  - "`len(d)` counts the keys."
+solution: |
+  def count_items(d):
+      return len(d)

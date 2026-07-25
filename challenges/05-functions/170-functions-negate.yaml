@@ -1,0 +1,34 @@
+id: functions-negate
+title: Negate a Predicate
+topic: functions
+tags:
+  - functions
+  - closures
+  - higher-order
+difficulty: 4
+order: 170
+runner: pyodide
+description: |
+  ## Flip a test
+
+  Write a function `negate(pred)` that takes a predicate (a function returning
+  True/False) and returns a new predicate that returns the opposite result.
+
+  For example, if `is_even` returns True for even numbers, `negate(is_even)`
+  returns True for odd numbers.
+starter_code: |
+  def negate(pred):
+      pass
+tests: |
+  is_even = lambda n: n % 2 == 0
+  is_odd = negate(is_even)
+  check(is_odd(3) == True, "3 is odd")
+  check(is_odd(4) == False, "4 is not odd")
+  check(negate(lambda x: x > 0)(-1) == True, "negated positivity")
+hints:
+  - Return an inner function that calls `pred` and applies `not` to the result.
+solution: |
+  def negate(pred):
+      def negated(x):
+          return not pred(x)
+      return negated

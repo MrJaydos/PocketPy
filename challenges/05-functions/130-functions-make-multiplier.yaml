@@ -1,0 +1,31 @@
+id: functions-make-multiplier
+title: Make a Multiplier
+topic: functions
+tags:
+  - functions
+  - closures
+difficulty: 3
+order: 130
+runner: pyodide
+description: |
+  ## A function that makes functions
+
+  Write a function `make_multiplier(n)` that returns a **new function**. The
+  returned function takes one argument and multiplies it by `n`.
+
+  For example, `double = make_multiplier(2)` then `double(5)` returns `10`.
+starter_code: |
+  def make_multiplier(n):
+      pass
+tests: |
+  check(make_multiplier(2)(5) == 10, "doubles")
+  check(make_multiplier(3)(4) == 12, "triples")
+  check(make_multiplier(2)(0) == 0, "times zero")
+hints:
+  - Define an inner function that uses `n`, and return it.
+  - The inner function remembers `n` even after `make_multiplier` returns.
+solution: |
+  def make_multiplier(n):
+      def mult(x):
+          return x * n
+      return mult

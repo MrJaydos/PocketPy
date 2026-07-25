@@ -1,0 +1,28 @@
+id: strings-compress-spaces
+title: Compress Spaces
+topic: strings
+tags:
+  - strings
+difficulty: 3
+order: 220
+runner: pyodide
+description: |
+  ## One space only
+
+  Write a function `compress(s)` that collapses any run of spaces into a single
+  space and removes leading and trailing spaces.
+
+  For example, `compress("a  b   c")` returns `"a b c"`.
+starter_code: |
+  def compress(s):
+      pass
+tests: |
+  check(compress("a  b   c") == "a b c", "collapses runs")
+  check(compress("  hi  ") == "hi", "trims the ends")
+  check(compress("no") == "no", "nothing to change")
+hints:
+  - "`s.split()` drops all the empty gaps between words."
+  - Join the pieces back with a single space.
+solution: |
+  def compress(s):
+      return " ".join(s.split())

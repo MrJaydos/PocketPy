@@ -1,0 +1,27 @@
+id: dictionaries-min-value
+title: Smallest Value
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## The minimum value
+
+  Write a function `min_value(d)` that returns the smallest value in a non-empty
+  dictionary.
+
+  For example, `min_value({"a": 3, "b": 1, "c": 2})` returns `1`.
+starter_code: |
+  def min_value(d):
+      pass
+tests: |
+  check(min_value({"a": 3, "b": 1, "c": 2}) == 1, "smallest value")
+  check(min_value({"x": 5}) == 5, "single entry")
+  check(min_value({"a": -2, "b": 4}) == -2, "negatives")
+hints:
+  - "`min(d.values())` finds the smallest value."
+solution: |
+  def min_value(d):
+      return min(d.values())

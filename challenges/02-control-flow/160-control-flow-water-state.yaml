@@ -1,0 +1,34 @@
+id: control-flow-water-state
+title: State of Water
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 2
+order: 160
+runner: pyodide
+description: |
+  ## Solid, liquid, or gas
+
+  Write a function `water_state(temp)` for the state of water at a Celsius
+  temperature: `"solid"` at 0 or below, `"gas"` at 100 or above, `"liquid"` in
+  between.
+
+  For example, `water_state(50)` returns `"liquid"`.
+starter_code: |
+  def water_state(temp):
+      pass
+tests: |
+  check(water_state(-5) == "solid", "freezing")
+  check(water_state(0) == "solid", "exactly zero")
+  check(water_state(50) == "liquid", "room-ish")
+  check(water_state(100) == "gas", "boiling point")
+  check(water_state(150) == "gas", "steam")
+hints:
+  - Handle the `<= 0` case, then the `>= 100` case, then everything else.
+solution: |
+  def water_state(temp):
+      if temp <= 0:
+          return "solid"
+      elif temp >= 100:
+          return "gas"
+      return "liquid"

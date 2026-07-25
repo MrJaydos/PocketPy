@@ -1,0 +1,37 @@
+id: mixed-spreadsheet-column
+title: Spreadsheet Column
+topic: mixed
+tags:
+  - mixed
+  - strings
+  - math
+difficulty: 5
+order: 220
+runner: pyodide
+description: |
+  ## Column letters to a number
+
+  Spreadsheet columns are labelled `A`, `B`, ..., `Z`, `AA`, `AB`, and so on. Write
+  a function `column_number(s)` that returns the 1-based number for a column label
+  of uppercase letters.
+
+  For example, `column_number("A")` is `1`, `column_number("AB")` is `28`, and
+  `column_number("ZZ")` is `702`.
+starter_code: |
+  def column_number(s):
+      pass
+tests: |
+  check(column_number("A") == 1, "first column")
+  check(column_number("Z") == 26, "last single letter")
+  check(column_number("AB") == 28, "two letters")
+  check(column_number("ZZ") == 702, "double Z")
+  check(column_number("AAA") == 703, "three letters")
+hints:
+  - "It's base-26, but with no zero: `A` counts as 1, not 0."
+  - For each letter do `result = result * 26 + (ord(ch) - ord("A") + 1)`.
+solution: |
+  def column_number(s):
+      result = 0
+      for ch in s:
+          result = result * 26 + (ord(ch) - ord("A") + 1)
+      return result

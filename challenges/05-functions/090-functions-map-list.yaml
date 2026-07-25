@@ -1,0 +1,29 @@
+id: functions-map-list
+title: Apply to Each
+topic: functions
+tags:
+  - functions
+  - higher-order
+difficulty: 3
+order: 90
+runner: pyodide
+description: |
+  ## Your own map
+
+  Write a function `map_list(func, items)` that returns a new list with `func`
+  applied to every element.
+
+  For example, `map_list(lambda x: x * 2, [1, 2, 3])` returns `[2, 4, 6]`.
+starter_code: |
+  def map_list(func, items):
+      pass
+tests: |
+  check(map_list(lambda x: x * 2, [1, 2, 3]) == [2, 4, 6], "doubles each")
+  check(map_list(str, [1, 2]) == ["1", "2"], "converts to strings")
+  check(map_list(lambda x: x, []) == [], "empty list")
+hints:
+  - Call `func(x)` for each `x` in the list.
+  - A list comprehension works well here.
+solution: |
+  def map_list(func, items):
+      return [func(x) for x in items]

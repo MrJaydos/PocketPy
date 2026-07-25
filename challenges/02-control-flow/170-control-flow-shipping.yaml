@@ -1,0 +1,33 @@
+id: control-flow-shipping
+title: Shipping Cost
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 2
+order: 170
+runner: pyodide
+description: |
+  ## Cost by weight
+
+  Write a function `shipping(weight)` returning the postage cost by weight in kg:
+  `5` for 1 kg or under, `10` for over 1 up to 5 kg, and `20` for anything heavier.
+
+  For example, `shipping(3)` returns `10`.
+starter_code: |
+  def shipping(weight):
+      pass
+tests: |
+  check(shipping(0.5) == 5, "light")
+  check(shipping(1) == 5, "exactly 1 kg")
+  check(shipping(3) == 10, "medium")
+  check(shipping(5) == 10, "exactly 5 kg")
+  check(shipping(10) == 20, "heavy")
+hints:
+  - Check the lightest band first and return early.
+solution: |
+  def shipping(weight):
+      if weight <= 1:
+          return 5
+      elif weight <= 5:
+          return 10
+      return 20

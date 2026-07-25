@@ -1,0 +1,48 @@
+id: classes-circle
+title: Circle
+topic: classes
+tags:
+  - classes
+  - math
+difficulty: 2
+order: 80
+runner: pyodide
+description: |
+  ## Area and circumference
+
+  Write a class `Circle` whose constructor takes a `radius`. Add methods `area()`
+  and `circumference()`, each rounded to 2 decimal places, using `math.pi`.
+
+  For example, `Circle(1).area()` returns `3.14`.
+starter_code: |
+  import math
+
+  class Circle:
+      def __init__(self, radius):
+          pass
+
+      def area(self):
+          pass
+
+      def circumference(self):
+          pass
+tests: |
+  c = Circle(1)
+  check(c.radius == 1, "stores radius")
+  check(c.area() == 3.14, "area of unit circle")
+  check(c.circumference() == 6.28, "circumference of unit circle")
+hints:
+  - Area is `pi * r ** 2`; circumference is `2 * pi * r`.
+  - Round both to 2 decimal places.
+solution: |
+  import math
+
+  class Circle:
+      def __init__(self, radius):
+          self.radius = radius
+
+      def area(self):
+          return round(math.pi * self.radius ** 2, 2)
+
+      def circumference(self):
+          return round(2 * math.pi * self.radius, 2)

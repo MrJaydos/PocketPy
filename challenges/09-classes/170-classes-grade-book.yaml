@@ -1,0 +1,55 @@
+id: classes-grade-book
+title: Grade Book
+topic: classes
+tags:
+  - classes
+difficulty: 3
+order: 170
+runner: pyodide
+description: |
+  ## Track scores
+
+  Write a class `GradeBook` with `add_score(s)` to record a score, `average()` for
+  the mean (rounded to 2 dp, or `0` with no scores), and `highest()` for the top
+  score.
+
+  For example, after adding 50 and 100, `average()` is `75.0` and `highest()` is
+  `100`.
+starter_code: |
+  class GradeBook:
+      def __init__(self):
+          pass
+
+      def add_score(self, s):
+          pass
+
+      def average(self):
+          pass
+
+      def highest(self):
+          pass
+tests: |
+  g = GradeBook()
+  check(g.average() == 0, "no scores yet")
+  g.add_score(50)
+  g.add_score(100)
+  check(g.average() == 75.0, "mean of the scores")
+  check(g.highest() == 100, "top score")
+hints:
+  - Store the scores in a list.
+  - "`highest` can use the built-in `max`."
+solution: |
+  class GradeBook:
+      def __init__(self):
+          self.scores = []
+
+      def add_score(self, s):
+          self.scores.append(s)
+
+      def average(self):
+          if not self.scores:
+              return 0
+          return round(sum(self.scores) / len(self.scores), 2)
+
+      def highest(self):
+          return max(self.scores)

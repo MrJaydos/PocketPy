@@ -1,0 +1,38 @@
+id: classes-temperature
+title: Temperature
+topic: classes
+tags:
+  - classes
+difficulty: 2
+order: 70
+runner: pyodide
+description: |
+  ## Celsius to Fahrenheit
+
+  Write a class `Temperature` whose constructor takes a temperature in `celsius`
+  and stores it. Add a method `to_fahrenheit()` that returns the temperature in
+  Fahrenheit (`celsius * 9 / 5 + 32`).
+
+  For example, `Temperature(100).to_fahrenheit()` returns `212.0`.
+starter_code: |
+  class Temperature:
+      def __init__(self, celsius):
+          pass
+
+      def to_fahrenheit(self):
+          pass
+tests: |
+  t = Temperature(0)
+  check(t.celsius == 0, "stores celsius")
+  check(t.to_fahrenheit() == 32.0, "freezing point")
+  check(Temperature(100).to_fahrenheit() == 212.0, "boiling point")
+hints:
+  - Save `celsius` on `self` in the constructor.
+  - Apply the conversion formula in the method.
+solution: |
+  class Temperature:
+      def __init__(self, celsius):
+          self.celsius = celsius
+
+      def to_fahrenheit(self):
+          return self.celsius * 9 / 5 + 32

@@ -1,0 +1,28 @@
+id: syntax-initials
+title: Initials
+topic: syntax-variables
+tags:
+  - syntax
+  - strings
+difficulty: 2
+order: 170
+runner: pyodide
+description: |
+  ## Just the initials
+
+  Write a function `initials(first, last)` that returns the two uppercase initials
+  of a name.
+
+  For example, `initials("ada", "lovelace")` returns `"AL"`.
+starter_code: |
+  def initials(first, last):
+      pass
+tests: |
+  check(initials("ada", "lovelace") == "AL", "lowercase input")
+  check(initials("Alan", "Turing") == "AT", "already capitalised")
+hints:
+  - Take the first character of each name with `first[0]` and `last[0]`.
+  - Call `.upper()` on the two-letter result.
+solution: |
+  def initials(first, last):
+      return (first[0] + last[0]).upper()

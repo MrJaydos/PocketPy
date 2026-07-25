@@ -1,0 +1,30 @@
+id: strings-is-pangram
+title: Pangram
+topic: strings
+tags:
+  - strings
+  - sets
+difficulty: 3
+order: 200
+runner: pyodide
+description: |
+  ## Every letter at least once
+
+  Write a function `is_pangram(s)` that returns `True` if the string contains every
+  letter of the alphabet at least once (ignoring case), and `False` otherwise.
+
+  For example, `"The quick brown fox jumps over the lazy dog"` is a pangram.
+starter_code: |
+  def is_pangram(s):
+      pass
+tests: |
+  check(is_pangram("The quick brown fox jumps over the lazy dog") == True, "classic pangram")
+  check(is_pangram("hello") == False, "missing most letters")
+  check(is_pangram("abcdefghijklmnopqrstuvwxyz") == True, "the alphabet itself")
+hints:
+  - Collect the distinct letters into a set.
+  - If the set has all 26 letters, it's a pangram.
+solution: |
+  def is_pangram(s):
+      letters = set(ch for ch in s.lower() if ch.isalpha())
+      return len(letters) == 26
