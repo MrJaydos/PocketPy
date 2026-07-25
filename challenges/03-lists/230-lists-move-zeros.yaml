@@ -1,0 +1,29 @@
+id: lists-move-zeros
+title: Move Zeros to the End
+topic: lists
+tags:
+  - lists
+difficulty: 3
+order: 230
+runner: pyodide
+description: |
+  ## Push zeros back
+
+  Write a function `move_zeros(items)` that returns a new list with all the zeros
+  moved to the end, keeping the order of the other numbers.
+
+  For example, `move_zeros([0, 1, 0, 2, 3])` returns `[1, 2, 3, 0, 0]`.
+starter_code: |
+  def move_zeros(items):
+      pass
+tests: |
+  check(move_zeros([0, 1, 0, 2, 3]) == [1, 2, 3, 0, 0], "zeros pushed back")
+  check(move_zeros([1, 2]) == [1, 2], "no zeros")
+  check(move_zeros([0, 0]) == [0, 0], "all zeros")
+hints:
+  - Build one list of the non-zero items and one of the zeros, then join them.
+solution: |
+  def move_zeros(items):
+      nonzero = [x for x in items if x != 0]
+      zeros = [x for x in items if x == 0]
+      return nonzero + zeros

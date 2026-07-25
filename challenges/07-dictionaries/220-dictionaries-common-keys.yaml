@@ -1,0 +1,27 @@
+id: dictionaries-common-keys
+title: Common Keys
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 3
+order: 220
+runner: pyodide
+description: |
+  ## Keys in both
+
+  Write a function `common_keys(a, b)` that returns a **sorted** list of the keys
+  that appear in both dictionaries.
+
+  For example, `common_keys({"a": 1, "b": 2}, {"b": 3, "c": 4})` returns `["b"]`.
+starter_code: |
+  def common_keys(a, b):
+      pass
+tests: |
+  check(common_keys({"a": 1, "b": 2}, {"b": 3, "c": 4}) == ["b"], "one shared key")
+  check(common_keys({"a": 1}, {"b": 2}) == [], "no overlap")
+  check(common_keys({"y": 1, "x": 2}, {"x": 9, "y": 9}) == ["x", "y"], "sorted result")
+hints:
+  - Keep the keys of `a` that are also in `b`, then sort them.
+solution: |
+  def common_keys(a, b):
+      return sorted(k for k in a if k in b)

@@ -1,0 +1,35 @@
+id: mixed-decimal-to-binary
+title: Decimal to Binary
+topic: mixed
+tags:
+  - mixed
+  - math
+difficulty: 3
+order: 110
+runner: pyodide
+description: |
+  ## Build a binary string
+
+  Write a function `decimal_to_binary(n)` that returns the binary representation of
+  a non-negative integer as a string, without using `bin`.
+
+  For example, `decimal_to_binary(5)` returns `"101"`.
+starter_code: |
+  def decimal_to_binary(n):
+      pass
+tests: |
+  check(decimal_to_binary(5) == "101", "5 is 101")
+  check(decimal_to_binary(0) == "0", "zero")
+  check(decimal_to_binary(8) == "1000", "power of two")
+hints:
+  - Repeatedly take `n % 2` and prepend it, then `n //= 2`.
+  - Handle `0` as a special case so you don't return an empty string.
+solution: |
+  def decimal_to_binary(n):
+      if n == 0:
+          return "0"
+      digits = ""
+      while n > 0:
+          digits = str(n % 2) + digits
+          n //= 2
+      return digits

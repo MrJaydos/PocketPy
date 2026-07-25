@@ -1,0 +1,53 @@
+id: classes-unique-bag
+title: Unique Bag
+topic: classes
+tags:
+  - classes
+difficulty: 3
+order: 180
+runner: pyodide
+description: |
+  ## A set of your own
+
+  Write a class `UniqueBag` with `add(x)` that stores `x` only if it isn't already
+  present, `contains(x)` returning whether it's there, and `size()` for the number
+  of distinct items.
+
+  For example, adding 1, 1, then 2 gives a `size()` of `2`.
+starter_code: |
+  class UniqueBag:
+      def __init__(self):
+          pass
+
+      def add(self, x):
+          pass
+
+      def contains(self, x):
+          pass
+
+      def size(self):
+          pass
+tests: |
+  s = UniqueBag()
+  s.add(1)
+  s.add(1)
+  s.add(2)
+  check(s.size() == 2, "duplicates are ignored")
+  check(s.contains(1) == True, "contains an added item")
+  check(s.contains(9) == False, "does not contain a missing item")
+hints:
+  - Back it with a list and only append when the item isn't already in it.
+solution: |
+  class UniqueBag:
+      def __init__(self):
+          self.items = []
+
+      def add(self, x):
+          if x not in self.items:
+              self.items.append(x)
+
+      def contains(self, x):
+          return x in self.items
+
+      def size(self):
+          return len(self.items)

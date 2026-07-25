@@ -1,0 +1,26 @@
+id: strings-whisper
+title: Whisper
+topic: strings
+tags:
+  - strings
+difficulty: 1
+order: 70
+runner: pyodide
+description: |
+  ## All lowercase
+
+  Write a function `whisper(s)` that returns the string in lowercase.
+
+  For example, `whisper("HI")` returns `"hi"`.
+starter_code: |
+  def whisper(s):
+      pass
+tests: |
+  check(whisper("HI") == "hi", "upper to lower")
+  check(whisper("") == "", "empty string")
+  check(whisper("AbC") == "abc", "mixed case")
+hints:
+  - Strings have a `.lower()` method.
+solution: |
+  def whisper(s):
+      return s.lower()

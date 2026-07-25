@@ -1,0 +1,35 @@
+id: mixed-flatten-deep
+title: Deep Flatten
+topic: mixed
+tags:
+  - mixed
+  - recursion
+difficulty: 4
+order: 200
+runner: pyodide
+description: |
+  ## Any depth of nesting
+
+  Write a function `flatten_deep(nested)` that flattens a list nested to any depth
+  into a single flat list, in order.
+
+  For example, `flatten_deep([1, [2, [3, 4], 5]])` returns `[1, 2, 3, 4, 5]`.
+starter_code: |
+  def flatten_deep(nested):
+      pass
+tests: |
+  check(flatten_deep([1, [2, [3, 4], 5]]) == [1, 2, 3, 4, 5], "mixed nesting")
+  check(flatten_deep([]) == [], "empty list")
+  check(flatten_deep([[[1]]]) == [1], "deeply nested single value")
+hints:
+  - Loop over each item; if it's a list, recurse into it, otherwise append it.
+  - "`isinstance(item, list)` tells you whether to recurse."
+solution: |
+  def flatten_deep(nested):
+      result = []
+      for item in nested:
+          if isinstance(item, list):
+              result.extend(flatten_deep(item))
+          else:
+              result.append(item)
+      return result

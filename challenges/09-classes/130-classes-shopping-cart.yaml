@@ -1,0 +1,51 @@
+id: classes-shopping-cart
+title: Shopping Cart
+topic: classes
+tags:
+  - classes
+difficulty: 3
+order: 130
+runner: pyodide
+description: |
+  ## A basket of items
+
+  Write a class `Cart` with `add_item(name, price)` to add an item, `total()` for
+  the sum of all prices, and `item_count()` for how many items are in the cart.
+
+  For example, adding an apple at 2 and a pear at 3 gives a `total()` of `5`.
+starter_code: |
+  class Cart:
+      def __init__(self):
+          pass
+
+      def add_item(self, name, price):
+          pass
+
+      def total(self):
+          pass
+
+      def item_count(self):
+          pass
+tests: |
+  c = Cart()
+  check(c.total() == 0, "empty cart totals zero")
+  c.add_item("apple", 2)
+  c.add_item("pear", 3)
+  check(c.total() == 5, "adds prices")
+  check(c.item_count() == 2, "two items")
+hints:
+  - Keep a list of the items you've added.
+  - "`total` sums their prices; `item_count` is the length of the list."
+solution: |
+  class Cart:
+      def __init__(self):
+          self.items = []
+
+      def add_item(self, name, price):
+          self.items.append((name, price))
+
+      def total(self):
+          return sum(price for name, price in self.items)
+
+      def item_count(self):
+          return len(self.items)

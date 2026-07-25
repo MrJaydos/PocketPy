@@ -1,0 +1,32 @@
+id: lists-common
+title: Common Elements
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 3
+order: 220
+runner: pyodide
+description: |
+  ## What's in both?
+
+  Write a function `common(a, b)` that returns the elements appearing in **both**
+  lists, in the order they first appear in `a`, with no duplicates.
+
+  For example, `common([1, 2, 2, 3], [2, 3, 4])` returns `[2, 3]`.
+starter_code: |
+  def common(a, b):
+      pass
+tests: |
+  check(common([1, 2, 2, 3], [2, 3, 4]) == [2, 3], "shared values, deduped")
+  check(common([1, 2], [3, 4]) == [], "nothing in common")
+  check(common([], [1]) == [], "empty first list")
+hints:
+  - Loop over `a`; keep an item if it's in `b` and not already in your result.
+solution: |
+  def common(a, b):
+      result = []
+      for x in a:
+          if x in b and x not in result:
+              result.append(x)
+      return result

@@ -1,0 +1,38 @@
+id: control-flow-rock-paper-scissors
+title: Rock Paper Scissors
+topic: control-flow
+tags:
+  - control-flow
+  - dictionaries
+difficulty: 3
+order: 200
+runner: pyodide
+description: |
+  ## Who wins?
+
+  Write a function `winner(a, b)` where `a` and `b` are each `"rock"`, `"paper"`,
+  or `"scissors"`. Return `"a"` if player a wins, `"b"` if player b wins, or
+  `"tie"` if they chose the same move. Rock beats scissors, scissors beats paper,
+  paper beats rock.
+
+  For example, `winner("rock", "scissors")` returns `"a"`.
+starter_code: |
+  def winner(a, b):
+      pass
+tests: |
+  check(winner("rock", "scissors") == "a", "rock beats scissors")
+  check(winner("scissors", "rock") == "b", "rock beats scissors (other way)")
+  check(winner("paper", "paper") == "tie", "same move")
+  check(winner("paper", "rock") == "a", "paper beats rock")
+  check(winner("scissors", "paper") == "a", "scissors beats paper")
+hints:
+  - A dictionary mapping each move to what it beats keeps this tidy.
+  - If `a` and `b` are equal it's a tie; otherwise check whether a's move beats b's.
+solution: |
+  def winner(a, b):
+      beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
+      if a == b:
+          return "tie"
+      if beats[a] == b:
+          return "a"
+      return "b"

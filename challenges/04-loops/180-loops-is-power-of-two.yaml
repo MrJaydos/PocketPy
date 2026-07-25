@@ -1,0 +1,36 @@
+id: loops-is-power-of-two
+title: Power of Two?
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 3
+order: 180
+runner: pyodide
+description: |
+  ## Halve until odd
+
+  Write a function `is_power_of_two(n)` that returns `True` if `n` is a power of
+  two (1, 2, 4, 8, ...) and `False` otherwise. Numbers below 1 are not powers of
+  two.
+
+  For example, `is_power_of_two(8)` returns `True`.
+starter_code: |
+  def is_power_of_two(n):
+      pass
+tests: |
+  check(is_power_of_two(1) == True, "2 to the 0")
+  check(is_power_of_two(8) == True, "2 to the 3")
+  check(is_power_of_two(1024) == True, "a big one")
+  check(is_power_of_two(6) == False, "not a power of two")
+  check(is_power_of_two(0) == False, "zero")
+hints:
+  - Rule out numbers below 1 first.
+  - Keep dividing by 2 while it's even; a power of two ends up at exactly 1.
+solution: |
+  def is_power_of_two(n):
+      if n < 1:
+          return False
+      while n % 2 == 0:
+          n //= 2
+      return n == 1

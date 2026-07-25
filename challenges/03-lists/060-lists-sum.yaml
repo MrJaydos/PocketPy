@@ -1,0 +1,31 @@
+id: lists-sum
+title: Sum a List
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 1
+order: 60
+runner: pyodide
+description: |
+  ## Add them all up
+
+  Write a function `total(items)` that returns the sum of a list of numbers. An
+  empty list sums to `0`.
+
+  For example, `total([1, 2, 3])` returns `6`.
+starter_code: |
+  def total(items):
+      pass
+tests: |
+  check(total([1, 2, 3]) == 6, "sums the numbers")
+  check(total([]) == 0, "empty list is zero")
+  check(total([-1, 1]) == 0, "positives and negatives cancel")
+hints:
+  - Start a running total at 0 and add each item in a loop.
+solution: |
+  def total(items):
+      s = 0
+      for x in items:
+          s += x
+      return s

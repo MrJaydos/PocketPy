@@ -1,0 +1,32 @@
+id: control-flow-vowel-or-consonant
+title: Vowel or Consonant
+topic: control-flow
+tags:
+  - control-flow
+  - strings
+difficulty: 2
+order: 140
+runner: pyodide
+description: |
+  ## Classify a letter
+
+  Write a function `classify(letter)` that returns `"vowel"` if the single letter
+  is a vowel (a, e, i, o, u — either case) and `"consonant"` otherwise.
+
+  For example, `classify("E")` returns `"vowel"`.
+starter_code: |
+  def classify(letter):
+      pass
+tests: |
+  check(classify("a") == "vowel", "lowercase vowel")
+  check(classify("E") == "vowel", "uppercase vowel")
+  check(classify("b") == "consonant", "consonant")
+  check(classify("z") == "consonant", "another consonant")
+hints:
+  - Lowercase the letter first with `.lower()`.
+  - Check membership with `letter in "aeiou"`.
+solution: |
+  def classify(letter):
+      if letter.lower() in "aeiou":
+          return "vowel"
+      return "consonant"

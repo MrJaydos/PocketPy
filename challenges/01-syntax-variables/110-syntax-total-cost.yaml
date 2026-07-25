@@ -1,0 +1,28 @@
+id: syntax-total-cost
+title: Total Cost
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## Price times quantity
+
+  Write a function `total_cost(price, quantity)` that returns the total cost,
+  rounded to 2 decimal places.
+
+  For example, `total_cost(1.99, 3)` returns `5.97`.
+starter_code: |
+  def total_cost(price, quantity):
+      pass
+tests: |
+  check(total_cost(2.5, 4) == 10.0, "2.50 times 4")
+  check(total_cost(1.99, 3) == 5.97, "rounds to cents")
+  check(total_cost(0, 5) == 0, "nothing costs nothing")
+hints:
+  - Multiply the two arguments, then use `round(value, 2)`.
+solution: |
+  def total_cost(price, quantity):
+      return round(price * quantity, 2)

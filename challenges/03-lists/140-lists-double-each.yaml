@@ -1,0 +1,27 @@
+id: lists-double-each
+title: Double Each
+topic: lists
+tags:
+  - lists
+difficulty: 2
+order: 140
+runner: pyodide
+description: |
+  ## Times two
+
+  Write a function `double_each(items)` that returns a new list with every number
+  doubled.
+
+  For example, `double_each([1, 2, 3])` returns `[2, 4, 6]`.
+starter_code: |
+  def double_each(items):
+      pass
+tests: |
+  check(double_each([1, 2, 3]) == [2, 4, 6], "doubles each")
+  check(double_each([]) == [], "empty list")
+  check(double_each([-1]) == [-2], "negatives too")
+hints:
+  - Build the new list with `[x * 2 for x in items]`.
+solution: |
+  def double_each(items):
+      return [x * 2 for x in items]

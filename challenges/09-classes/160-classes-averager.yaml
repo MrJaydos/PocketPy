@@ -1,0 +1,49 @@
+id: classes-averager
+title: Averager
+topic: classes
+tags:
+  - classes
+difficulty: 3
+order: 160
+runner: pyodide
+description: |
+  ## Running average
+
+  Write a class `Averager` with `add(n)` to record a number and `average()` that
+  returns the mean of everything added so far, rounded to 2 decimal places. With no
+  numbers yet, `average()` returns `0`.
+
+  For example, after adding 2 and 4, `average()` returns `3.0`.
+starter_code: |
+  class Averager:
+      def __init__(self):
+          pass
+
+      def add(self, n):
+          pass
+
+      def average(self):
+          pass
+tests: |
+  a = Averager()
+  check(a.average() == 0, "no numbers yet")
+  a.add(2)
+  a.add(4)
+  check(a.average() == 3.0, "mean of 2 and 4")
+  a.add(0)
+  check(a.average() == 2.0, "mean of 2, 4 and 0")
+hints:
+  - Keep the numbers in a list.
+  - Guard against dividing by zero when the list is empty.
+solution: |
+  class Averager:
+      def __init__(self):
+          self.values = []
+
+      def add(self, n):
+          self.values.append(n)
+
+      def average(self):
+          if not self.values:
+              return 0
+          return round(sum(self.values) / len(self.values), 2)

@@ -1,0 +1,33 @@
+id: strings-count-consonants
+title: Count Consonants
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 120
+runner: pyodide
+description: |
+  ## Letters that aren't vowels
+
+  Write a function `count_consonants(s)` that returns how many letters are
+  consonants (alphabetic characters that aren't a, e, i, o, or u). Ignore case and
+  non-letters.
+
+  For example, `count_consonants("hello")` returns `3`.
+starter_code: |
+  def count_consonants(s):
+      pass
+tests: |
+  check(count_consonants("hello") == 3, "h, l, l")
+  check(count_consonants("aeiou") == 0, "all vowels")
+  check(count_consonants("Sky!") == 3, "ignores punctuation and case")
+hints:
+  - Lowercase the string and loop over its characters.
+  - Count a character when it `.isalpha()` and is not in "aeiou".
+solution: |
+  def count_consonants(s):
+      count = 0
+      for ch in s.lower():
+          if ch.isalpha() and ch not in "aeiou":
+              count += 1
+      return count

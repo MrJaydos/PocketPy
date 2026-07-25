@@ -1,0 +1,35 @@
+id: functions-make-clamper
+title: Make a Clamper
+topic: functions
+tags:
+  - functions
+  - closures
+difficulty: 4
+order: 190
+runner: pyodide
+description: |
+  ## Bake in the bounds
+
+  Write a function `make_clamper(lo, hi)` that returns a new function which clamps
+  its argument to the range `lo`..`hi`.
+
+  For example, `c = make_clamper(0, 10)` then `c(15)` returns `10` and `c(-3)`
+  returns `0`.
+starter_code: |
+  def make_clamper(lo, hi):
+      pass
+tests: |
+  check(make_clamper(0, 10)(5) == 5, "in range")
+  check(make_clamper(0, 10)(-3) == 0, "below")
+  check(make_clamper(0, 10)(15) == 10, "above")
+hints:
+  - Return an inner function that compares its argument against `lo` and `hi`.
+solution: |
+  def make_clamper(lo, hi):
+      def clamp(n):
+          if n < lo:
+              return lo
+          if n > hi:
+              return hi
+          return n
+      return clamp

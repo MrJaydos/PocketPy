@@ -1,0 +1,31 @@
+id: functions-apply-n-times
+title: Apply N Times
+topic: functions
+tags:
+  - functions
+  - higher-order
+difficulty: 3
+order: 120
+runner: pyodide
+description: |
+  ## Repeat an operation
+
+  Write a function `apply_n_times(func, x, n)` that applies `func` to `x`, then to
+  the result, and so on, `n` times, returning the final value. With `n = 0` it
+  returns `x` unchanged.
+
+  For example, `apply_n_times(lambda v: v + 1, 0, 5)` returns `5`.
+starter_code: |
+  def apply_n_times(func, x, n):
+      pass
+tests: |
+  check(apply_n_times(lambda v: v + 1, 0, 5) == 5, "add one five times")
+  check(apply_n_times(lambda v: v * 2, 1, 3) == 8, "double three times")
+  check(apply_n_times(lambda v: v, 7, 0) == 7, "zero times is unchanged")
+hints:
+  - Reassign `x = func(x)` inside a loop that runs `n` times.
+solution: |
+  def apply_n_times(func, x, n):
+      for _ in range(n):
+          x = func(x)
+      return x

@@ -1,0 +1,36 @@
+id: strings-most-common-char
+title: Most Common Character
+topic: strings
+tags:
+  - strings
+  - dictionaries
+difficulty: 3
+order: 210
+runner: pyodide
+description: |
+  ## The frequent one
+
+  Write a function `most_common(s)` that returns the character appearing most often
+  in a non-empty string. If several tie, return the one that appears earliest.
+
+  For example, `most_common("aabbbc")` returns `"b"`.
+starter_code: |
+  def most_common(s):
+      pass
+tests: |
+  check(most_common("aabbbc") == "b", "b appears most")
+  check(most_common("x") == "x", "single character")
+  check(most_common("abcabc") == "a", "tie goes to the earliest")
+hints:
+  - Count each character in a dictionary.
+  - Then scan the string in order, keeping the character with the strictly highest count.
+solution: |
+  def most_common(s):
+      counts = {}
+      for ch in s:
+          counts[ch] = counts.get(ch, 0) + 1
+      best = s[0]
+      for ch in s:
+          if counts[ch] > counts[best]:
+              best = ch
+      return best

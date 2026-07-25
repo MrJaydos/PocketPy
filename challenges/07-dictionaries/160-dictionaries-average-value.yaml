@@ -1,0 +1,27 @@
+id: dictionaries-average-value
+title: Average Value
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 2
+order: 160
+runner: pyodide
+description: |
+  ## Mean of the values
+
+  Write a function `average_value(d)` that returns the mean of the values in a
+  non-empty dictionary, rounded to 2 decimal places.
+
+  For example, `average_value({"a": 1, "b": 2, "c": 3})` returns `2.0`.
+starter_code: |
+  def average_value(d):
+      pass
+tests: |
+  check(average_value({"a": 1, "b": 2, "c": 3}) == 2.0, "mean of three")
+  check(average_value({"x": 5}) == 5.0, "single value")
+  check(average_value({"a": 1, "b": 2}) == 1.5, "gives a fraction")
+hints:
+  - Divide the sum of the values by how many there are.
+solution: |
+  def average_value(d):
+      return round(sum(d.values()) / len(d), 2)

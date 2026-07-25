@@ -1,0 +1,32 @@
+id: lists-rotate
+title: Rotate Left
+topic: lists
+tags:
+  - lists
+difficulty: 3
+order: 210
+runner: pyodide
+description: |
+  ## Shift the list around
+
+  Write a function `rotate(items, k)` that rotates the list to the left by `k`
+  positions. `k` can be larger than the list length.
+
+  For example, `rotate([1, 2, 3, 4, 5], 2)` returns `[3, 4, 5, 1, 2]`.
+starter_code: |
+  def rotate(items, k):
+      pass
+tests: |
+  check(rotate([1, 2, 3, 4, 5], 2) == [3, 4, 5, 1, 2], "rotate by 2")
+  check(rotate([1, 2, 3], 0) == [1, 2, 3], "no rotation")
+  check(rotate([1, 2, 3], 3) == [1, 2, 3], "full rotation")
+  check(rotate([], 2) == [], "empty list")
+hints:
+  - Use `k % len(items)` so a large `k` wraps around (guard the empty list first).
+  - "Slicing: the answer is `items[k:] + items[:k]`."
+solution: |
+  def rotate(items, k):
+      if not items:
+          return []
+      k = k % len(items)
+      return items[k:] + items[:k]

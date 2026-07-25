@@ -1,0 +1,41 @@
+id: mixed-merge-sorted
+title: Merge Sorted Lists
+topic: mixed
+tags:
+  - mixed
+  - lists
+difficulty: 3
+order: 90
+runner: pyodide
+description: |
+  ## Combine into one sorted list
+
+  Write a function `merge_sorted(a, b)` that merges two already-sorted lists into a
+  single sorted list, without using `sorted` or `.sort()`.
+
+  For example, `merge_sorted([1, 3, 5], [2, 4])` returns `[1, 2, 3, 4, 5]`.
+starter_code: |
+  def merge_sorted(a, b):
+      pass
+tests: |
+  check(merge_sorted([1, 3, 5], [2, 4]) == [1, 2, 3, 4, 5], "interleaves")
+  check(merge_sorted([], [1]) == [1], "one empty")
+  check(merge_sorted([1, 2], []) == [1, 2], "other empty")
+hints:
+  - Walk two index pointers, taking the smaller front element each step.
+  - When one list runs out, append the rest of the other.
+solution: |
+  def merge_sorted(a, b):
+      result = []
+      i = 0
+      j = 0
+      while i < len(a) and j < len(b):
+          if a[i] <= b[j]:
+              result.append(a[i])
+              i += 1
+          else:
+              result.append(b[j])
+              j += 1
+      result.extend(a[i:])
+      result.extend(b[j:])
+      return result

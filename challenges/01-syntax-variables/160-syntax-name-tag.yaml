@@ -1,0 +1,27 @@
+id: syntax-name-tag
+title: Name Tag
+topic: syntax-variables
+tags:
+  - syntax
+  - strings
+difficulty: 1
+order: 160
+runner: pyodide
+description: |
+  ## Last name first
+
+  Write a function `name_tag(first, last)` that returns the name as
+  `"Last, First"`.
+
+  For example, `name_tag("Ada", "Lovelace")` returns `"Lovelace, Ada"`.
+starter_code: |
+  def name_tag(first, last):
+      pass
+tests: |
+  check(name_tag("Ada", "Lovelace") == "Lovelace, Ada", "last name first")
+  check(name_tag("Alan", "Turing") == "Turing, Alan", "another name")
+hints:
+  - An f-string makes this easy, e.g. `f"{last}, {first}"`.
+solution: |
+  def name_tag(first, last):
+      return f"{last}, {first}"

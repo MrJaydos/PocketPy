@@ -1,0 +1,27 @@
+id: dictionaries-values-list
+title: Values as a List
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 1
+order: 100
+runner: pyodide
+description: |
+  ## Collect the values
+
+  Write a function `values_list(d)` that returns a list of the dictionary's values,
+  in the order the keys were inserted.
+
+  For example, `values_list({"a": 1, "b": 2, "c": 3})` returns `[1, 2, 3]`.
+starter_code: |
+  def values_list(d):
+      pass
+tests: |
+  check(values_list({"a": 1, "b": 2, "c": 3}) == [1, 2, 3], "in order")
+  check(values_list({}) == [], "empty dictionary")
+  check(values_list({"x": 5}) == [5], "single value")
+hints:
+  - Wrap `d.values()` in `list(...)`.
+solution: |
+  def values_list(d):
+      return list(d.values())

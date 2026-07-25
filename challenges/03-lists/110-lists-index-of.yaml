@@ -1,0 +1,32 @@
+id: lists-index-of
+title: Index Of
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## Where is it?
+
+  Write a function `index_of(items, target)` that returns the index of the first
+  occurrence of `target`, or `-1` if it isn't found.
+
+  For example, `index_of([10, 20, 30], 20)` returns `1`.
+starter_code: |
+  def index_of(items, target):
+      pass
+tests: |
+  check(index_of([10, 20, 30], 20) == 1, "found in the middle")
+  check(index_of([1, 2, 3], 9) == -1, "not found")
+  check(index_of([5], 5) == 0, "first position")
+hints:
+  - Loop over `range(len(items))` so you have the index.
+  - Return as soon as you find a match; return `-1` after the loop.
+solution: |
+  def index_of(items, target):
+      for i in range(len(items)):
+          if items[i] == target:
+              return i
+      return -1

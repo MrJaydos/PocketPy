@@ -1,0 +1,28 @@
+id: syntax-double
+title: Double It
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 1
+order: 60
+runner: pyodide
+description: |
+  ## Twice as much
+
+  Write a function `double(n)` that returns `n` multiplied by 2.
+
+  For example, `double(3)` returns `6`.
+starter_code: |
+  def double(n):
+      # Return n times 2.
+      pass
+tests: |
+  check(double(3) == 6, "double(3) is 6")
+  check(double(0) == 0, "double(0) is 0")
+  check(double(-4) == -8, "works with negatives")
+hints:
+  - Multiplication in Python uses the `*` operator.
+solution: |
+  def double(n):
+      return n * 2

@@ -1,0 +1,27 @@
+id: strings-swap-case
+title: Swap Case
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 130
+runner: pyodide
+description: |
+  ## Flip every letter's case
+
+  Write a function `swap_case(s)` that returns the string with uppercase letters
+  made lowercase and vice versa.
+
+  For example, `swap_case("Hello")` returns `"hELLO"`.
+starter_code: |
+  def swap_case(s):
+      pass
+tests: |
+  check(swap_case("Hello") == "hELLO", "flips each letter")
+  check(swap_case("abc") == "ABC", "all lower to upper")
+  check(swap_case("123") == "123", "digits unchanged")
+hints:
+  - Strings have a `.swapcase()` method that does exactly this.
+solution: |
+  def swap_case(s):
+      return s.swapcase()

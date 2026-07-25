@@ -1,0 +1,40 @@
+id: classes-point
+title: Point
+topic: classes
+tags:
+  - classes
+difficulty: 2
+order: 60
+runner: pyodide
+description: |
+  ## A point on a plane
+
+  Write a class `Point` whose constructor takes `x` and `y` and stores them as
+  attributes. Add a method `distance_to(other)` that returns the straight-line
+  distance to another point, rounded to 2 decimal places.
+
+  For example, the distance from `Point(0, 0)` to `Point(3, 4)` is `5.0`.
+starter_code: |
+  class Point:
+      def __init__(self, x, y):
+          pass
+
+      def distance_to(self, other):
+          pass
+tests: |
+  p = Point(0, 0)
+  q = Point(3, 4)
+  check(p.x == 0 and p.y == 0, "stores coordinates")
+  check(p.distance_to(q) == 5.0, "3-4-5 triangle")
+  check(q.distance_to(q) == 0.0, "distance to itself is zero")
+hints:
+  - Store `x` and `y` on `self` in the constructor.
+  - The distance is the square root of the sum of the squared differences.
+solution: |
+  class Point:
+      def __init__(self, x, y):
+          self.x = x
+          self.y = y
+
+      def distance_to(self, other):
+          return round(((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5, 2)

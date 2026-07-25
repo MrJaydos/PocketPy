@@ -1,0 +1,31 @@
+id: loops-triangular
+title: Triangular Number
+topic: loops
+tags:
+  - loops
+difficulty: 1
+order: 80
+runner: pyodide
+description: |
+  ## Sum 1 to n
+
+  Write a function `triangular(n)` that returns the sum of all whole numbers from
+  1 to `n`. For `n = 0` the answer is `0`.
+
+  For example, `triangular(5)` returns `15`.
+starter_code: |
+  def triangular(n):
+      pass
+tests: |
+  check(triangular(5) == 15, "1+2+3+4+5")
+  check(triangular(1) == 1, "just one")
+  check(triangular(0) == 0, "nothing to add")
+hints:
+  - Add each number from 1 to `n` to a running total.
+  - "`range(1, n + 1)` includes `n`."
+solution: |
+  def triangular(n):
+      total = 0
+      for i in range(1, n + 1):
+          total += i
+      return total

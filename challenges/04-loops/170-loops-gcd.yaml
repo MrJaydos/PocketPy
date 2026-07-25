@@ -1,0 +1,33 @@
+id: loops-gcd
+title: Greatest Common Divisor
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 3
+order: 170
+runner: pyodide
+description: |
+  ## Euclid's algorithm
+
+  Write a function `gcd(a, b)` that returns the greatest common divisor of two
+  non-negative integers using Euclid's algorithm: repeatedly replace `(a, b)` with
+  `(b, a % b)` until `b` is 0.
+
+  For example, `gcd(12, 8)` returns `4`.
+starter_code: |
+  def gcd(a, b):
+      pass
+tests: |
+  check(gcd(12, 8) == 4, "12 and 8")
+  check(gcd(17, 5) == 1, "coprime")
+  check(gcd(0, 5) == 5, "gcd with zero")
+  check(gcd(48, 36) == 12, "larger numbers")
+hints:
+  - Loop while `b` is not 0.
+  - "Update both at once: `a, b = b, a % b`."
+solution: |
+  def gcd(a, b):
+      while b != 0:
+          a, b = b, a % b
+      return a

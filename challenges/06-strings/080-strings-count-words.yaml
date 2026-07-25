@@ -1,0 +1,29 @@
+id: strings-count-words
+title: Count Words
+topic: strings
+tags:
+  - strings
+difficulty: 1
+order: 80
+runner: pyodide
+description: |
+  ## How many words?
+
+  Write a function `count_words(sentence)` that returns the number of words,
+  separated by whitespace. An empty string has 0 words.
+
+  For example, `count_words("the cat sat")` returns `3`.
+starter_code: |
+  def count_words(sentence):
+      pass
+tests: |
+  check(count_words("the cat sat") == 3, "three words")
+  check(count_words("hi") == 1, "one word")
+  check(count_words("") == 0, "no words")
+  check(count_words("  spaced   out  ") == 2, "extra spaces don't count")
+hints:
+  - "`sentence.split()` breaks on any run of whitespace and drops the gaps."
+  - The length of that list is the word count.
+solution: |
+  def count_words(sentence):
+      return len(sentence.split())

@@ -1,0 +1,34 @@
+id: control-flow-triangle-type
+title: Triangle Type
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 3
+order: 190
+runner: pyodide
+description: |
+  ## Classify by sides
+
+  Write a function `triangle_type(a, b, c)` that classifies a triangle by its side
+  lengths: `"equilateral"` if all three are equal, `"isosceles"` if exactly two
+  are equal, and `"scalene"` if all are different.
+
+  For example, `triangle_type(3, 3, 5)` returns `"isosceles"`.
+starter_code: |
+  def triangle_type(a, b, c):
+      pass
+tests: |
+  check(triangle_type(3, 3, 3) == "equilateral", "all equal")
+  check(triangle_type(3, 3, 5) == "isosceles", "two equal")
+  check(triangle_type(5, 3, 5) == "isosceles", "the equal pair isn't adjacent")
+  check(triangle_type(3, 4, 5) == "scalene", "all different")
+hints:
+  - Check the all-equal case first.
+  - For isosceles, any one of the three pairs being equal is enough.
+solution: |
+  def triangle_type(a, b, c):
+      if a == b == c:
+          return "equilateral"
+      if a == b or b == c or a == c:
+          return "isosceles"
+      return "scalene"

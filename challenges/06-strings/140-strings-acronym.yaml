@@ -1,0 +1,28 @@
+id: strings-acronym
+title: Acronym
+topic: strings
+tags:
+  - strings
+difficulty: 2
+order: 140
+runner: pyodide
+description: |
+  ## First letters only
+
+  Write a function `acronym(phrase)` that returns the uppercase first letter of
+  each word joined together.
+
+  For example, `acronym("hyper text markup language")` returns `"HTML"`.
+starter_code: |
+  def acronym(phrase):
+      pass
+tests: |
+  check(acronym("hyper text markup language") == "HTML", "HTML")
+  check(acronym("as soon as possible") == "ASAP", "ASAP")
+  check(acronym("word") == "W", "single word")
+hints:
+  - Split into words and take the first character of each.
+  - Uppercase it and join the letters into one string.
+solution: |
+  def acronym(phrase):
+      return "".join(word[0].upper() for word in phrase.split())

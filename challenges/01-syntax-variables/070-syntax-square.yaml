@@ -1,0 +1,27 @@
+id: syntax-square
+title: Square a Number
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 1
+order: 70
+runner: pyodide
+description: |
+  ## n squared
+
+  Write a function `square(n)` that returns `n` multiplied by itself.
+
+  For example, `square(5)` returns `25`.
+starter_code: |
+  def square(n):
+      pass
+tests: |
+  check(square(5) == 25, "square(5) is 25")
+  check(square(0) == 0, "square(0) is 0")
+  check(square(-3) == 9, "a negative squared is positive")
+hints:
+  - You can use `n * n` or `n ** 2`.
+solution: |
+  def square(n):
+      return n * n

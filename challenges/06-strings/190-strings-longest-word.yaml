@@ -1,0 +1,34 @@
+id: strings-longest-word
+title: Longest Word
+topic: strings
+tags:
+  - strings
+  - loops
+difficulty: 3
+order: 190
+runner: pyodide
+description: |
+  ## The biggest word
+
+  Write a function `longest_word(sentence)` that returns the longest word in a
+  non-empty sentence. If several words tie, return the first of them.
+
+  For example, `longest_word("the quick brown fox")` returns `"quick"`.
+starter_code: |
+  def longest_word(sentence):
+      pass
+tests: |
+  check(longest_word("the quick brown fox") == "quick", "first of the longest")
+  check(longest_word("a bb ccc") == "ccc", "clear winner")
+  check(longest_word("hello") == "hello", "one word")
+hints:
+  - Split into words and track the longest seen so far.
+  - Only replace it when you find a strictly longer word (keeps the first on ties).
+solution: |
+  def longest_word(sentence):
+      words = sentence.split()
+      longest = words[0]
+      for word in words:
+          if len(word) > len(longest):
+              longest = word
+      return longest

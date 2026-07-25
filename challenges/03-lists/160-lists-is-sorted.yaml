@@ -1,0 +1,34 @@
+id: lists-is-sorted
+title: Is It Sorted?
+topic: lists
+tags:
+  - lists
+  - loops
+difficulty: 2
+order: 160
+runner: pyodide
+description: |
+  ## Ascending order
+
+  Write a function `is_sorted(items)` that returns `True` if the list is in
+  non-decreasing (ascending) order. An empty or single-element list counts as
+  sorted.
+
+  For example, `is_sorted([1, 2, 2, 3])` returns `True`.
+starter_code: |
+  def is_sorted(items):
+      pass
+tests: |
+  check(is_sorted([1, 2, 3]) == True, "ascending")
+  check(is_sorted([1, 3, 2]) == False, "out of order")
+  check(is_sorted([]) == True, "empty")
+  check(is_sorted([1, 1, 2]) == True, "equal neighbours are fine")
+hints:
+  - Compare each item with the one after it.
+  - If any item is greater than its neighbour, it isn't sorted.
+solution: |
+  def is_sorted(items):
+      for i in range(len(items) - 1):
+          if items[i] > items[i + 1]:
+              return False
+      return True

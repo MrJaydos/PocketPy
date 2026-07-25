@@ -1,0 +1,40 @@
+id: mixed-longest-run
+title: Longest Run
+topic: mixed
+tags:
+  - mixed
+  - lists
+difficulty: 3
+order: 120
+runner: pyodide
+description: |
+  ## The longest streak
+
+  Write a function `longest_run(items)` that returns the length of the longest run
+  of equal consecutive elements. An empty list gives `0`.
+
+  For example, `longest_run([1, 1, 2, 2, 2, 3])` returns `3`.
+starter_code: |
+  def longest_run(items):
+      pass
+tests: |
+  check(longest_run([1, 1, 2, 2, 2, 3]) == 3, "run of three twos")
+  check(longest_run([]) == 0, "empty list")
+  check(longest_run([5]) == 1, "single element")
+  check(longest_run([1, 2, 3]) == 1, "no repeats")
+hints:
+  - Track the current run length and the best seen so far.
+  - Reset the current run to 1 whenever an element differs from the previous one.
+solution: |
+  def longest_run(items):
+      if not items:
+          return 0
+      best = 1
+      run = 1
+      for i in range(1, len(items)):
+          if items[i] == items[i - 1]:
+              run += 1
+              best = max(best, run)
+          else:
+              run = 1
+      return best

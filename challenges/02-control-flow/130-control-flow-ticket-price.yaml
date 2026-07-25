@@ -1,0 +1,38 @@
+id: control-flow-ticket-price
+title: Ticket Price
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 2
+order: 130
+runner: pyodide
+description: |
+  ## Price by age
+
+  Write a function `ticket_price(age)` that returns the ticket price in pounds:
+
+  - under 5: free (`0`)
+  - 5 to 17: `10`
+  - 65 and over: `12`
+  - everyone else: `20`
+starter_code: |
+  def ticket_price(age):
+      pass
+tests: |
+  check(ticket_price(3) == 0, "toddler is free")
+  check(ticket_price(5) == 10, "child rate starts at 5")
+  check(ticket_price(10) == 10, "child")
+  check(ticket_price(40) == 20, "adult")
+  check(ticket_price(70) == 12, "senior")
+hints:
+  - Check the cases in order from youngest to oldest.
+  - Once a branch matches and returns, the later ones are skipped.
+solution: |
+  def ticket_price(age):
+      if age < 5:
+          return 0
+      elif age < 18:
+          return 10
+      elif age >= 65:
+          return 12
+      return 20

@@ -1,0 +1,33 @@
+id: loops-sum-multiples-3-5
+title: Multiples of 3 or 5
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 3
+order: 190
+runner: pyodide
+description: |
+  ## The classic warm-up
+
+  Write a function `sum_multiples(n)` that returns the sum of all numbers **below**
+  `n` that are multiples of 3 or 5.
+
+  For example, `sum_multiples(10)` returns `23` (3 + 5 + 6 + 9).
+starter_code: |
+  def sum_multiples(n):
+      pass
+tests: |
+  check(sum_multiples(10) == 23, "below 10")
+  check(sum_multiples(6) == 8, "3 and 5")
+  check(sum_multiples(3) == 0, "nothing below 3")
+hints:
+  - Loop over `range(n)` so you stop just below `n`.
+  - Add `i` when `i % 3 == 0 or i % 5 == 0`.
+solution: |
+  def sum_multiples(n):
+      total = 0
+      for i in range(n):
+          if i % 3 == 0 or i % 5 == 0:
+              total += i
+      return total

@@ -1,0 +1,28 @@
+id: loops-count-down
+title: Count Down
+topic: loops
+tags:
+  - loops
+difficulty: 1
+order: 60
+runner: pyodide
+description: |
+  ## From n to 1
+
+  Write a function `count_down(n)` that returns a list counting down from `n` to
+  `1`. If `n` is 0, return an empty list.
+
+  For example, `count_down(5)` returns `[5, 4, 3, 2, 1]`.
+starter_code: |
+  def count_down(n):
+      pass
+tests: |
+  check(count_down(5) == [5, 4, 3, 2, 1], "counts down from 5")
+  check(count_down(1) == [1], "just one")
+  check(count_down(0) == [], "empty")
+hints:
+  - "`range(n, 0, -1)` counts downward."
+  - Wrap it in `list(...)` to get a list.
+solution: |
+  def count_down(n):
+      return list(range(n, 0, -1))

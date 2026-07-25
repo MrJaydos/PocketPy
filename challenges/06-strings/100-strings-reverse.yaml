@@ -1,0 +1,26 @@
+id: strings-reverse
+title: Reverse a String
+topic: strings
+tags:
+  - strings
+difficulty: 1
+order: 100
+runner: pyodide
+description: |
+  ## Backwards
+
+  Write a function `reverse(s)` that returns the string reversed.
+
+  For example, `reverse("abc")` returns `"cba"`.
+starter_code: |
+  def reverse(s):
+      pass
+tests: |
+  check(reverse("abc") == "cba", "reverses")
+  check(reverse("") == "", "empty string")
+  check(reverse("a") == "a", "single character")
+hints:
+  - "Slicing with a step of -1 reverses a sequence: `s[::-1]`."
+solution: |
+  def reverse(s):
+      return s[::-1]

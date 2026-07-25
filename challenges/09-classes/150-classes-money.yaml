@@ -1,0 +1,40 @@
+id: classes-money
+title: Money
+topic: classes
+tags:
+  - classes
+difficulty: 3
+order: 150
+runner: pyodide
+description: |
+  ## Pounds and pence
+
+  Write a class `Money` whose constructor takes `pounds` and `pence` and normalises
+  them so `pence` is always 0–99, carrying any extra into `pounds`. Add a method
+  `total_pence()` returning the whole amount in pence.
+
+  For example, `Money(1, 150)` becomes 2 pounds and 50 pence.
+starter_code: |
+  class Money:
+      def __init__(self, pounds, pence):
+          pass
+
+      def total_pence(self):
+          pass
+tests: |
+  m = Money(1, 150)
+  check(m.pounds == 2 and m.pence == 50, "carries into pounds")
+  check(m.total_pence() == 250, "whole amount in pence")
+  m2 = Money(0, 99)
+  check(m2.pounds == 0 and m2.pence == 99, "no carry needed")
+hints:
+  - "`pence // 100` is the number of whole pounds to carry; `pence % 100` is what's left."
+  - "`total_pence` is `pounds * 100 + pence`."
+solution: |
+  class Money:
+      def __init__(self, pounds, pence):
+          self.pounds = pounds + pence // 100
+          self.pence = pence % 100
+
+      def total_pence(self):
+          return self.pounds * 100 + self.pence

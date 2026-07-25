@@ -1,0 +1,33 @@
+id: dictionaries-total-price
+title: Total Price
+topic: dictionaries
+tags:
+  - dictionaries
+  - lists
+difficulty: 3
+order: 210
+runner: pyodide
+description: |
+  ## Ring up the basket
+
+  Write a function `total_price(prices, basket)` where `prices` maps item names to
+  prices and `basket` is a list of item names (which may repeat). Return the total
+  cost of the basket.
+
+  For example, with `{"apple": 2, "pear": 3}` and `["apple", "pear", "apple"]` the
+  total is `7`.
+starter_code: |
+  def total_price(prices, basket):
+      pass
+tests: |
+  check(total_price({"apple": 2, "pear": 3}, ["apple", "pear", "apple"]) == 7, "two apples and a pear")
+  check(total_price({"a": 5}, []) == 0, "empty basket")
+  check(total_price({"x": 1, "y": 2}, ["y"]) == 2, "single item")
+hints:
+  - Look up each basket item's price and add it to a running total.
+solution: |
+  def total_price(prices, basket):
+      total = 0
+      for name in basket:
+          total += prices[name]
+      return total

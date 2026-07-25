@@ -1,0 +1,40 @@
+id: control-flow-quadrant
+title: Which Quadrant
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 3
+order: 180
+runner: pyodide
+description: |
+  ## Where on the plane?
+
+  Write a function `quadrant(x, y)` that returns which quadrant a point is in:
+  `1` (both positive), `2` (x negative, y positive), `3` (both negative), `4`
+  (x positive, y negative). If the point lies on either axis, return `"axis"`.
+
+  For example, `quadrant(-1, 1)` returns `2`.
+starter_code: |
+  def quadrant(x, y):
+      pass
+tests: |
+  check(quadrant(1, 1) == 1, "top right")
+  check(quadrant(-1, 1) == 2, "top left")
+  check(quadrant(-1, -1) == 3, "bottom left")
+  check(quadrant(1, -1) == 4, "bottom right")
+  check(quadrant(0, 5) == "axis", "on the y-axis")
+  check(quadrant(3, 0) == "axis", "on the x-axis")
+hints:
+  - First rule out points on an axis (`x == 0 or y == 0`).
+  - Then use the signs of `x` and `y` to choose the quadrant.
+solution: |
+  def quadrant(x, y):
+      if x == 0 or y == 0:
+          return "axis"
+      if x > 0 and y > 0:
+          return 1
+      if x < 0 and y > 0:
+          return 2
+      if x < 0 and y < 0:
+          return 3
+      return 4

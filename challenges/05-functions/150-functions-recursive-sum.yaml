@@ -1,0 +1,31 @@
+id: functions-recursive-sum
+title: Recursive Sum
+topic: functions
+tags:
+  - functions
+  - recursion
+difficulty: 3
+order: 150
+runner: pyodide
+description: |
+  ## Sum without a loop
+
+  Write a function `recursive_sum(items)` that returns the sum of a list using
+  recursion (no `for`/`while` and no built-in `sum`).
+
+  For example, `recursive_sum([1, 2, 3])` returns `6`.
+starter_code: |
+  def recursive_sum(items):
+      pass
+tests: |
+  check(recursive_sum([1, 2, 3]) == 6, "three items")
+  check(recursive_sum([]) == 0, "empty list is the base case")
+  check(recursive_sum([5]) == 5, "single item")
+hints:
+  - "Base case: an empty list sums to 0."
+  - Otherwise return the first item plus the sum of the rest (`items[1:]`).
+solution: |
+  def recursive_sum(items):
+      if not items:
+          return 0
+      return items[0] + recursive_sum(items[1:])

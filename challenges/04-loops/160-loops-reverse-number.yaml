@@ -1,0 +1,35 @@
+id: loops-reverse-number
+title: Reverse a Number
+topic: loops
+tags:
+  - loops
+  - math
+difficulty: 3
+order: 160
+runner: pyodide
+description: |
+  ## Digits backwards
+
+  Write a function `reverse_number(n)` that returns the integer formed by reversing
+  the digits of a non-negative integer. Leading zeros disappear.
+
+  For example, `reverse_number(123)` returns `321` and `reverse_number(100)`
+  returns `1`.
+starter_code: |
+  def reverse_number(n):
+      pass
+tests: |
+  check(reverse_number(123) == 321, "simple reverse")
+  check(reverse_number(100) == 1, "trailing zeros vanish")
+  check(reverse_number(5) == 5, "single digit")
+  check(reverse_number(0) == 0, "zero")
+hints:
+  - Peel digits off with `% 10` and `// 10`.
+  - Build the result with `result = result * 10 + digit`.
+solution: |
+  def reverse_number(n):
+      result = 0
+      while n > 0:
+          result = result * 10 + n % 10
+          n //= 10
+      return result

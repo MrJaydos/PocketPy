@@ -1,0 +1,28 @@
+id: loops-times-table
+title: Times Table
+topic: loops
+tags:
+  - loops
+difficulty: 1
+order: 70
+runner: pyodide
+description: |
+  ## Ten multiples
+
+  Write a function `times_table(n)` that returns the first ten multiples of `n`,
+  from `n * 1` up to `n * 10`.
+
+  For example, `times_table(3)` returns `[3, 6, 9, 12, 15, 18, 21, 24, 27, 30]`.
+starter_code: |
+  def times_table(n):
+      pass
+tests: |
+  check(times_table(3) == [3, 6, 9, 12, 15, 18, 21, 24, 27, 30], "three times table")
+  check(times_table(1) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "one times table")
+  check(times_table(0) == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "zeros")
+hints:
+  - Multiply `n` by each value from 1 to 10.
+  - "`range(1, 11)` gives 1 through 10."
+solution: |
+  def times_table(n):
+      return [n * i for i in range(1, 11)]

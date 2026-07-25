@@ -1,0 +1,31 @@
+id: dictionaries-char-frequency
+title: Character Frequency
+topic: dictionaries
+tags:
+  - dictionaries
+  - strings
+difficulty: 2
+order: 170
+runner: pyodide
+description: |
+  ## Count the characters
+
+  Write a function `char_frequency(s)` that returns a dictionary mapping each
+  character in the string to how many times it appears.
+
+  For example, `char_frequency("aab")` returns `{"a": 2, "b": 1}`.
+starter_code: |
+  def char_frequency(s):
+      pass
+tests: |
+  check(char_frequency("aab") == {"a": 2, "b": 1}, "counts characters")
+  check(char_frequency("") == {}, "empty string")
+  check(char_frequency("xx") == {"x": 2}, "one repeated character")
+hints:
+  - Loop over the characters, using `counts.get(ch, 0) + 1`.
+solution: |
+  def char_frequency(s):
+      counts = {}
+      for ch in s:
+          counts[ch] = counts.get(ch, 0) + 1
+      return counts

@@ -1,0 +1,31 @@
+id: functions-sum-all
+title: Sum All Arguments
+topic: functions
+tags:
+  - functions
+  - args
+difficulty: 2
+order: 60
+runner: pyodide
+description: |
+  ## Any number of arguments
+
+  Write a function `sum_all(*nums)` that accepts any number of arguments and
+  returns their sum. With no arguments it returns `0`.
+
+  For example, `sum_all(1, 2, 3)` returns `6`.
+starter_code: |
+  def sum_all(*nums):
+      pass
+tests: |
+  check(sum_all(1, 2, 3) == 6, "three arguments")
+  check(sum_all() == 0, "no arguments")
+  check(sum_all(5) == 5, "one argument")
+hints:
+  - "`*nums` collects the arguments into a tuple you can loop over."
+solution: |
+  def sum_all(*nums):
+      total = 0
+      for n in nums:
+          total += n
+      return total

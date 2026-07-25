@@ -1,0 +1,27 @@
+id: dictionaries-get-or-default
+title: Get or Default
+topic: dictionaries
+tags:
+  - dictionaries
+difficulty: 1
+order: 90
+runner: pyodide
+description: |
+  ## A safe lookup
+
+  Write a function `lookup(d, key, default)` that returns the value for `key`, or
+  `default` if the key isn't present.
+
+  For example, `lookup({"a": 1}, "b", 0)` returns `0`.
+starter_code: |
+  def lookup(d, key, default):
+      pass
+tests: |
+  check(lookup({"a": 1}, "a", 0) == 1, "key present")
+  check(lookup({"a": 1}, "b", 0) == 0, "key missing uses default")
+  check(lookup({}, "x", "none") == "none", "empty dictionary")
+hints:
+  - "`d.get(key, default)` does exactly this."
+solution: |
+  def lookup(d, key, default):
+      return d.get(key, default)

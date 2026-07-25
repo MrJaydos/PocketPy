@@ -1,0 +1,29 @@
+id: functions-default-power
+title: Default Exponent
+topic: functions
+tags:
+  - functions
+  - defaults
+difficulty: 2
+order: 80
+runner: pyodide
+description: |
+  ## A handy default
+
+  Write a function `default_power(base, exp=2)` that returns `base` raised to
+  `exp`, where `exp` defaults to 2 when not given.
+
+  For example, `default_power(5)` returns `25` and `default_power(2, 3)` returns `8`.
+starter_code: |
+  def default_power(base, exp=2):
+      pass
+tests: |
+  check(default_power(5) == 25, "uses the default exponent")
+  check(default_power(2, 3) == 8, "explicit exponent")
+  check(default_power(4, 0) == 1, "exponent zero")
+hints:
+  - Give `exp` a default value in the parameter list.
+  - Use the `**` operator for the power.
+solution: |
+  def default_power(base, exp=2):
+      return base ** exp

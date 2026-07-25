@@ -1,0 +1,32 @@
+id: syntax-circle-area
+title: Circle Area
+topic: syntax-variables
+tags:
+  - syntax
+  - math
+difficulty: 2
+order: 80
+runner: pyodide
+description: |
+  ## Area of a circle
+
+  Write a function `area(r)` that returns the area of a circle with radius `r`,
+  rounded to 2 decimal places. Use `math.pi` for pi.
+
+  For example, `area(1)` returns `3.14`.
+starter_code: |
+  def area(r):
+      pass
+tests: |
+  check(area(1) == 3.14, "radius 1")
+  check(area(2) == 12.57, "radius 2")
+  check(area(0) == 0.0, "radius 0")
+hints:
+  - Import the `math` module and use `math.pi`.
+  - The area of a circle is pi times the radius squared.
+  - Wrap the result in `round(value, 2)`.
+solution: |
+  import math
+
+  def area(r):
+      return round(math.pi * r * r, 2)

@@ -1,0 +1,31 @@
+id: loops-repeat-string
+title: Repeat a String
+topic: loops
+tags:
+  - loops
+  - strings
+difficulty: 1
+order: 90
+runner: pyodide
+description: |
+  ## Build by repetition
+
+  Write a function `repeat_string(s, n)` that returns `s` joined to itself `n`
+  times, **without** using the `*` operator.
+
+  For example, `repeat_string("ab", 3)` returns `"ababab"`.
+starter_code: |
+  def repeat_string(s, n):
+      pass
+tests: |
+  check(repeat_string("ab", 3) == "ababab", "three times")
+  check(repeat_string("x", 0) == "", "zero times")
+  check(repeat_string("", 5) == "", "empty string")
+hints:
+  - Start with an empty string and add `s` to it in a loop.
+solution: |
+  def repeat_string(s, n):
+      result = ""
+      for _ in range(n):
+          result += s
+      return result

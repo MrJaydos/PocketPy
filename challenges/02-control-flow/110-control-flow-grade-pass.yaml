@@ -1,0 +1,30 @@
+id: control-flow-grade-pass
+title: Pass or Fail
+topic: control-flow
+tags:
+  - control-flow
+difficulty: 2
+order: 110
+runner: pyodide
+description: |
+  ## The pass mark
+
+  Write a function `grade_pass(score)` that returns `"pass"` when the score is 50
+  or more, and `"fail"` otherwise.
+
+  For example, `grade_pass(50)` returns `"pass"`.
+starter_code: |
+  def grade_pass(score):
+      pass
+tests: |
+  check(grade_pass(50) == "pass", "exactly on the pass mark")
+  check(grade_pass(49) == "fail", "just below")
+  check(grade_pass(100) == "pass", "top marks")
+  check(grade_pass(0) == "fail", "zero")
+hints:
+  - Use `>=` so exactly 50 counts as a pass.
+solution: |
+  def grade_pass(score):
+      if score >= 50:
+          return "pass"
+      return "fail"

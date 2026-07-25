@@ -1,0 +1,36 @@
+id: mixed-digital-root
+title: Digital Root
+topic: mixed
+tags:
+  - mixed
+  - math
+difficulty: 3
+order: 80
+runner: pyodide
+description: |
+  ## Sum until one digit
+
+  Write a function `digital_root(n)` that repeatedly sums the digits of a
+  non-negative integer until a single digit remains.
+
+  For example, `digital_root(942)` is `6` (9 + 4 + 2 = 15, then 1 + 5 = 6).
+starter_code: |
+  def digital_root(n):
+      pass
+tests: |
+  check(digital_root(942) == 6, "two rounds of summing")
+  check(digital_root(0) == 0, "already single digit")
+  check(digital_root(99) == 9, "18 then 9")
+  check(digital_root(5) == 5, "single digit stays")
+hints:
+  - Use an outer loop that runs while `n` has more than one digit (`n >= 10`).
+  - Inside, sum the digits to get the new `n`.
+solution: |
+  def digital_root(n):
+      while n >= 10:
+          s = 0
+          while n > 0:
+              s += n % 10
+              n //= 10
+          n = s
+      return n

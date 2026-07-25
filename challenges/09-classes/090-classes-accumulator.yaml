@@ -1,0 +1,40 @@
+id: classes-accumulator
+title: Accumulator
+topic: classes
+tags:
+  - classes
+difficulty: 2
+order: 90
+runner: pyodide
+description: |
+  ## Keep a running total
+
+  Write a class `Accumulator` that starts with a `total` of 0. Add a method
+  `add(n)` that adds `n` to the running total (stored in the `total` attribute).
+
+  For example, after `add(5)` and `add(3)` the `total` is `8`.
+starter_code: |
+  class Accumulator:
+      def __init__(self):
+          pass
+
+      def add(self, n):
+          pass
+tests: |
+  acc = Accumulator()
+  check(acc.total == 0, "starts at zero")
+  acc.add(5)
+  acc.add(3)
+  check(acc.total == 8, "adds up")
+  acc.add(-8)
+  check(acc.total == 0, "back to zero")
+hints:
+  - Initialise `self.total = 0` in the constructor.
+  - "`add` should do `self.total += n`."
+solution: |
+  class Accumulator:
+      def __init__(self):
+          self.total = 0
+
+      def add(self, n):
+          self.total += n

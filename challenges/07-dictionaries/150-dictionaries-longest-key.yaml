@@ -1,0 +1,33 @@
+id: dictionaries-longest-key
+title: Longest Key
+topic: dictionaries
+tags:
+  - dictionaries
+  - strings
+difficulty: 2
+order: 150
+runner: pyodide
+description: |
+  ## The longest name
+
+  Write a function `longest_key(d)` that returns the longest key (by number of
+  characters) in a non-empty dictionary with string keys. If several tie, return
+  the one that comes first alphabetically.
+
+  For example, `longest_key({"a": 1, "bbb": 2, "cc": 3})` returns `"bbb"`.
+starter_code: |
+  def longest_key(d):
+      pass
+tests: |
+  check(longest_key({"a": 1, "bbb": 2, "cc": 3}) == "bbb", "the longest key")
+  check(longest_key({"x": 1}) == "x", "single key")
+  check(longest_key({"cd": 1, "ab": 2}) == "ab", "tie broken alphabetically")
+hints:
+  - Go through the keys in sorted order and keep the strictly longest.
+solution: |
+  def longest_key(d):
+      best = None
+      for k in sorted(d):
+          if best is None or len(k) > len(best):
+              best = k
+      return best

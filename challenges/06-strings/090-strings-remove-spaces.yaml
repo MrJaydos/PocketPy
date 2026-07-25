@@ -1,0 +1,27 @@
+id: strings-remove-spaces
+title: Remove Spaces
+topic: strings
+tags:
+  - strings
+difficulty: 1
+order: 90
+runner: pyodide
+description: |
+  ## Squeeze out the spaces
+
+  Write a function `remove_spaces(s)` that returns the string with every space
+  character removed.
+
+  For example, `remove_spaces("a b c")` returns `"abc"`.
+starter_code: |
+  def remove_spaces(s):
+      pass
+tests: |
+  check(remove_spaces("a b c") == "abc", "removes spaces")
+  check(remove_spaces("   ") == "", "only spaces")
+  check(remove_spaces("no") == "no", "nothing to remove")
+hints:
+  - '`.replace(" ", "")` swaps every space for nothing.'
+solution: |
+  def remove_spaces(s):
+      return s.replace(" ", "")
