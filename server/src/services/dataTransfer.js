@@ -65,7 +65,7 @@ function asArray(v) {
  */
 export function importData(db, envelope, mode = 'merge') {
   if (!isObject(envelope)) {
-    return { ok: false, status: 400, error: 'That file is not a PyPocket export.' };
+    return { ok: false, status: 400, error: 'That file is not a PocketPy export.' };
   }
   if (envelope.version !== EXPORT_VERSION) {
     return {

@@ -1,6 +1,6 @@
 # DEPLOY — Coolify + Cloudflare tunnel
 
-PyPocket ships as **one Docker container** on **one port** (serves the API and the
+PocketPy ships as **one Docker container** on **one port** (serves the API and the
 built app). Data is a single SQLite file on a mounted volume.
 
 ## Environment variables

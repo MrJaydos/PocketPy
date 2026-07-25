@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-      <AppHeader title="PyPocket" showLogout />
+      <AppHeader title="PocketPy" titleHref="/" showLogout />
       <main className="app-main stack">
         {error && <p className="error-text">{error}</p>}
         {!data && !error && <p className="muted">Loading…</p>}

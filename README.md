@@ -1,4 +1,4 @@
-# PyPocket
+# PocketPy
 
 A self-hosted, mobile-first web app for practising Python. A browser code editor,
 curated auto-graded challenges, hints, a reference solution, and streak tracking —

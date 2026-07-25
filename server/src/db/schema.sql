@@ -1,4 +1,4 @@
--- PyPocket database schema.
+-- PocketPy database schema.
 --
 -- This app is single-user, and the *content* of challenges lives in YAML files in
 -- the repo (not the database). So the only things stored here are the user's

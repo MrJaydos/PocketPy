@@ -19,7 +19,7 @@ async function main() {
 
   try {
     await app.listen({ port: config.port, host: config.host });
-    app.log.info(`PyPocket listening on http://${config.host}:${config.port}`);
+    app.log.info(`PocketPy listening on http://${config.host}:${config.port}`);
     // Diagnostic (never logs the value): if login fails despite entering the right
     // password, the stored value isn't what you think. Compare `length` to your
     // password's length, and `fp` (a truncated SHA-256 fingerprint) to what you get

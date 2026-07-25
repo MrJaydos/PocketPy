@@ -32,7 +32,7 @@ export default function Login() {
     <div className="login-wrap">
       <form className="card login-card stack" onSubmit={onSubmit}>
         <div>
-          <h1>PyPocket</h1>
+          <h1>PocketPy</h1>
           <p className="muted">Enter your password to start practising.</p>
         </div>
         <input

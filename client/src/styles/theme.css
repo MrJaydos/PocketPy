@@ -1,5 +1,5 @@
 /*
- * PyPocket global styles.
+ * PocketPy global styles.
  *
  * One stylesheet, plain CSS, mobile-first. We keep everything here (rather than
  * per-component CSS modules) so it's easy to read the whole design in one place
@@ -168,6 +168,10 @@ textarea {
 .app-header h1 {
   font-size: 1.05rem;
   margin: 0;
+}
+.app-header-title-link {
+  text-decoration: none;
+  color: inherit;
 }
 .app-main {
   flex: 1;

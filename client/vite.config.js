@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
-// Vite config for the PyPocket client.
+// Vite config for the PocketPy client.
 //
 // Two things worth understanding here:
 //  1. Dev proxy — in development the React app runs on Vite's dev server (5173)
@@ -41,8 +41,8 @@ export default defineConfig({
         ],
       },
       manifest: {
-        name: 'PyPocket — Python practice',
-        short_name: 'PyPocket',
+        name: 'PocketPy — Python practice',
+        short_name: 'PocketPy',
         description: 'Mobile-first Python practice with auto-graded challenges.',
         theme_color: '#0f172a',
         background_color: '#0f172a',
