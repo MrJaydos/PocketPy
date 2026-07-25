@@ -12,6 +12,7 @@ import Challenge from './pages/Challenge.jsx';
 import Review from './pages/Review.jsx';
 import AuthoredList from './pages/AuthoredList.jsx';
 import AuthoredEdit from './pages/AuthoredEdit.jsx';
+import Settings from './pages/Settings.jsx';
 
 export default function App() {
   const { status } = useAuth();
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/authored" element={<AuthoredList />} />
         <Route path="/authored/new" element={<AuthoredEdit />} />
         <Route path="/authored/:id/edit" element={<AuthoredEdit />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/challenge/:id" element={<Challenge />} />
         {/* Anything unknown goes home. */}
         <Route path="*" element={<Navigate to="/" replace />} />

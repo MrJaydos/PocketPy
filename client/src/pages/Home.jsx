@@ -84,6 +84,10 @@ export default function Home() {
             <Link to="/authored" style={{ textDecoration: 'none' }}>
               <button className="btn-ghost" style={{ width: '100%' }}>✎ My challenges</button>
             </Link>
+
+            <Link to="/settings" style={{ textDecoration: 'none' }}>
+              <button className="btn-ghost" style={{ width: '100%' }}>⚙ Backup &amp; restore</button>
+            </Link>
           </>
         )}
       </main>

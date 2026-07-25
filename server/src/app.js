@@ -23,6 +23,7 @@ import { challengeRoutes } from './routes/challenges.js';
 import { progressRoutes } from './routes/progress.js';
 import { reviewRoutes } from './routes/reviews.js';
 import { authoredRoutes } from './routes/authored.js';
+import { dataRoutes } from './routes/data.js';
 import { healthRoutes } from './routes/health.js';
 
 /**
@@ -129,6 +130,7 @@ export async function buildApp(overrides = {}) {
     await protectedScope.register(progressRoutes);
     await protectedScope.register(reviewRoutes);
     await protectedScope.register(authoredRoutes);
+    await protectedScope.register(dataRoutes);
   });
 
   // --- Serve the built client (production) -----------------------------------
