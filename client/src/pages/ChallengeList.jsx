@@ -99,8 +99,12 @@ export default function ChallengeList() {
                   {solved}/{total}
                 </span>
               </button>
-              {isOpen && (
-                <div id={panelId} className="topic-items">
+              <div
+                id={panelId}
+                className={`topic-items-wrap ${isOpen ? 'open' : ''}`}
+                inert={!isOpen}
+              >
+                <div className="topic-items">
                   {group.items.map((c) => (
                     <Link
                       key={c.id}
@@ -115,7 +119,7 @@ export default function ChallengeList() {
                     </Link>
                   ))}
                 </div>
-              )}
+              </div>
             </section>
           );
         })}

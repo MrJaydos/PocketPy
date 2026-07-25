@@ -90,13 +90,27 @@ button {
   color: var(--text);
   cursor: pointer;
   touch-action: manipulation; /* removes 300ms tap delay */
+  transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 button:active {
-  transform: translateY(1px);
+  transform: scale(0.97);
 }
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+/* Hover lift, but only on devices that actually have a hover-capable pointer —
+   otherwise touchscreens get a "stuck hover" after tapping. */
+@media (hover: hover) {
+  .card:hover,
+  .challenge-item:hover,
+  .topic-header:hover {
+    border-color: var(--accent);
+  }
+  button:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
 }
 .btn-primary {
   background: var(--accent-strong);
@@ -179,6 +193,18 @@ textarea {
   max-width: 900px;
   margin: 0 auto;
   padding: 14px;
+  /* Each page mounts a fresh .app-main node, so this replays on every navigation. */
+  animation: page-in 0.22s ease both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .stack {
   display: flex;
@@ -265,6 +291,16 @@ textarea {
 .topic-header .topic-count.done {
   color: var(--success);
   border-color: var(--success);
+}
+.topic-items-wrap {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+.topic-items-wrap.open {
+  /* Generous cap — real content is always shorter, so the eased transition
+     still looks smooth even though the duration doesn't scale with height. */
+  max-height: 2000px;
 }
 .topic-items {
   padding-top: 8px;
@@ -501,6 +537,17 @@ textarea {
   padding: 10px 18px;
   z-index: 50;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  animation: toast-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 /* ---------- Desktop enhancements ---------- */
@@ -529,6 +576,18 @@ textarea {
   }
   .pane {
     display: block !important;
+  }
+}
+
+/* Respect the OS-level "reduce motion" setting — collapse every animation and
+   transition to effectively instant rather than trying to disable them one by one. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
