@@ -74,6 +74,9 @@ export default function Challenge() {
   const [reviewPassed, setReviewPassed] = useState(false);
   const [grading, setGrading] = useState(false);
 
+  // "Next challenge" button state (disabled briefly while we fetch the pick).
+  const [loadingNext, setLoadingNext] = useState(false);
+
   // --- Load the challenge (and restore draft + previously revealed hints) --------
   useEffect(() => {
     let cancelled = false;
@@ -261,6 +264,27 @@ export default function Challenge() {
     api.saveDraft(id, starter).catch(() => {});
   }
 
+  // --- Next challenge -----------------------------------------------------------
+  // Jump to the easiest unsolved challenge, preferring this topic, picked at random
+  // within its difficulty tier (see services/nextChallenge.js). Null means there's
+  // nothing left to solve.
+  async function goNext() {
+    setLoadingNext(true);
+    try {
+      const { next } = await api.nextChallenge(id);
+      if (next) {
+        navigate(`/challenge/${next}`);
+      } else {
+        showToast('🎉 Nothing left unsolved — you got them all!');
+        navigate('/challenges');
+      }
+    } catch (err) {
+      if (!handleUnauthorized(err)) showToast('Could not load the next challenge.');
+    } finally {
+      setLoadingNext(false);
+    }
+  }
+
   if (loadError) {
     return (
       <>
@@ -388,7 +412,17 @@ export default function Challenge() {
 
   return (
     <>
-      <AppHeader title={challenge.title} back={isReview ? '/review' : '/challenges'} />
+      <AppHeader
+        title={challenge.title}
+        back={isReview ? '/review' : '/challenges'}
+        action={
+          !isReview ? (
+            <button className="btn-ghost" onClick={goNext} disabled={loadingNext} title="Next challenge">
+              Next ›
+            </button>
+          ) : null
+        }
+      />
       <main className="app-main stack">
         {isReview && (
           <div className="review-banner">

@@ -14,6 +14,7 @@ import {
   saveDraft,
 } from '../db/progressRepo.js';
 import { recordSolve } from '../services/progress.js';
+import { pickNextChallenge } from '../services/nextChallenge.js';
 
 /**
  * @param {import('fastify').FastifyInstance} fastify
@@ -34,6 +35,22 @@ export async function challengeRoutes(fastify) {
         solutionViewed: Boolean(row?.solution_viewed),
       };
     });
+  });
+
+  // Pick the next challenge for the "Next" button: the easiest unsolved one,
+  // preferring the current topic, chosen at random within that difficulty tier so it
+  // varies. `from` is the challenge the user is currently on (excluded). Returns
+  // { next: id | null } — null means everything is solved.
+  //
+  // Registered before the "/:id" route below; find-my-way prioritises this static
+  // path over the parametric one regardless, but keeping it above is clearer.
+  fastify.get('/api/next-challenge', async (request) => {
+    const from = typeof request.query?.from === 'string' ? request.query.from : undefined;
+    const progress = getAllProgress(db);
+    const solved = new Set(
+      [...progress.values()].filter((r) => r.status === 'solved').map((r) => r.challenge_id),
+    );
+    return { next: pickNextChallenge(store.list(), solved, from) };
   });
 
   // One challenge: everything needed to render + run it (includes tests, excludes
