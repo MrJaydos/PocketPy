@@ -38,3 +38,35 @@ CREATE TABLE IF NOT EXISTS meta (
   key   TEXT PRIMARY KEY,
   value TEXT
 );
+
+-- Spaced-repetition schedule: one row per solved challenge that has been queued for
+-- review. We store an SM-2-style triple (ease/interval/reps) plus the next due day,
+-- and recompute the schedule each time the user grades a review. A challenge lands
+-- here automatically the first time it's solved. Rows may outlive their challenge
+-- (e.g. an authored challenge is deleted), so nothing joins to this by foreign key;
+-- the read side simply skips ids the challenge store no longer knows.
+CREATE TABLE IF NOT EXISTS reviews (
+  challenge_id     TEXT PRIMARY KEY,
+  -- SM-2 ease factor; starts at 2.5 and drifts within [1.3, ~2.7].
+  ease             REAL    NOT NULL DEFAULT 2.5,
+  -- Days until the next review after the most recent grade.
+  interval_days    INTEGER NOT NULL DEFAULT 0,
+  -- How many successful reviews in a row (resets to 0 on a failed recall).
+  reps             INTEGER NOT NULL DEFAULT 0,
+  due_day          TEXT    NOT NULL, -- 'YYYY-MM-DD' in APP_TZ
+  last_reviewed_at TEXT,             -- ISO 8601 timestamp, null until first graded
+  updated_at       TEXT    NOT NULL  -- ISO 8601 timestamp
+);
+
+-- User-authored challenges. Unlike the repo's YAML challenges (the immutable seed
+-- loaded at boot), these are created in-app and live in the database, merged into the
+-- same challenge store at runtime. The full validated challenge is stored as JSON in
+-- `data` so we keep the exact same shape as a YAML challenge with no column drift; the
+-- in-memory store does all the sorting/filtering anyway. A malformed row here must
+-- never brick startup, so the loader validates and skips-with-log rather than aborting.
+CREATE TABLE IF NOT EXISTS authored_challenges (
+  id         TEXT PRIMARY KEY, -- the challenge slug (also the key in `data`)
+  data       TEXT NOT NULL,    -- JSON conforming to challengeSchema
+  created_at TEXT NOT NULL,    -- ISO 8601 timestamp
+  updated_at TEXT NOT NULL     -- ISO 8601 timestamp
+);

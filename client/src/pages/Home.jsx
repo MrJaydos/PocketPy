@@ -36,6 +36,15 @@ export default function Home() {
           <>
             <StreakFlame current={data.streak.current} longest={data.streak.longest} />
 
+            {/* Reviews due today (spaced repetition). Only shown when there's work. */}
+            {data.reviewsDue > 0 && (
+              <Link to="/review" style={{ textDecoration: 'none' }}>
+                <button className="btn-primary review-cta" style={{ width: '100%' }}>
+                  🧠 Review {data.reviewsDue} {data.reviewsDue === 1 ? 'challenge' : 'challenges'}
+                </button>
+              </Link>
+            )}
+
             {/* Continue where you left off */}
             {data.lastChallengeId ? (
               <Link to={`/challenge/${data.lastChallengeId}`} style={{ textDecoration: 'none' }}>
@@ -70,6 +79,14 @@ export default function Home() {
 
             <Link to="/challenges" style={{ textDecoration: 'none' }}>
               <button style={{ width: '100%' }}>Browse all challenges</button>
+            </Link>
+
+            <Link to="/authored" style={{ textDecoration: 'none' }}>
+              <button className="btn-ghost" style={{ width: '100%' }}>✎ My challenges</button>
+            </Link>
+
+            <Link to="/settings" style={{ textDecoration: 'none' }}>
+              <button className="btn-ghost" style={{ width: '100%' }}>⚙ Backup &amp; restore</button>
             </Link>
           </>
         )}

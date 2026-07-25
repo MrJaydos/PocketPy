@@ -5,9 +5,10 @@ curated auto-graded challenges, hints, a reference solution, and streak tracking
 designed to use on your phone. Python runs entirely in the browser via Pyodide
 (WebAssembly), so there's no server-side code execution to secure.
 
-> **Status:** Phase 1. Single-user, password-gated, deployable as one Docker
-> container. See [NOTES.md](./NOTES.md) for the design and [DEPLOY.md](./DEPLOY.md)
-> for hosting on Coolify behind a Cloudflare tunnel.
+> **Status:** Phase 3. Single-user, password-gated, deployable as one Docker
+> container, plus a sandboxed server-side runner and spaced-repetition review,
+> in-app authoring, and JSON backup/restore. See [NOTES.md](./NOTES.md) for the
+> design and [DEPLOY.md](./DEPLOY.md) for hosting on Coolify behind a Cloudflare tunnel.
 
 ## Features
 
@@ -80,5 +81,7 @@ See [`challenges/AUTHORING.md`](./challenges/AUTHORING.md). Add a YAML file, run
 - **Phase 2** — a sandboxed server-side runner (second container, internal network
   only) for challenges needing real packages, bigger programs, or genuinely hidden
   tests. The challenge schema already has a `runner: server` seam for it.
-- **Phase 3** — in-app challenge authoring, spaced-repetition review, import/export
-  progress as JSON.
+- **Phase 3** (done) — ✅ spaced-repetition review (solved challenges resurface on an
+  SM-2 schedule); ✅ in-app challenge authoring (create/edit challenges in the app;
+  stored in the DB and merged with the repo's YAML); ✅ import/export the whole dataset
+  as a versioned JSON backup (merge or replace).

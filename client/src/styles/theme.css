@@ -114,7 +114,9 @@ button:disabled {
 
 /* ---------- Form controls ---------- */
 input[type='password'],
-input[type='text'] {
+input[type='text'],
+select,
+textarea {
   width: 100%;
   min-height: var(--tap);
   padding: 0 14px;
@@ -122,6 +124,33 @@ input[type='text'] {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  font: inherit;
+}
+select {
+  padding: 0 10px;
+}
+textarea {
+  padding: 10px 14px;
+  line-height: 1.5;
+  resize: vertical;
+}
+/* Multi-line code/text fields in the authoring form. */
+.code-input {
+  font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  font-size: 13px;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
+/* A labelled form field: caption above the control. */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field > span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 /* ---------- Layout helpers ---------- */
@@ -366,6 +395,31 @@ input[type='text'] {
   background: var(--accent-strong);
   border-radius: 999px;
   transition: width 0.3s ease;
+}
+
+/* ---------- Spaced-repetition review ---------- */
+/* The "N challenges due" call-to-action on the home screen: amber so it reads as a
+   distinct prompt rather than a second "continue" button. */
+.review-cta {
+  background: var(--warning);
+  border-color: var(--warning);
+  color: #1a1204;
+}
+.review-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--warning);
+  border-radius: var(--radius);
+  color: var(--warning);
+  font-size: 0.9rem;
+}
+.grade-panel .grade-buttons {
+  gap: 8px;
+}
+.grade-panel .grade-buttons button {
+  flex: 1;
 }
 
 /* ---------- Markdown description ---------- */

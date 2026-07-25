@@ -87,4 +87,27 @@ export const api = {
     }),
 
   progress: () => apiFetch('/api/progress'),
+
+  // Spaced-repetition review: the due queue, and grading a review to reschedule it.
+  reviews: () => apiFetch('/api/reviews'),
+  gradeReview: (id, grade) =>
+    apiFetch(`/api/reviews/${encodeURIComponent(id)}/grade`, {
+      method: 'POST',
+      json: { grade },
+    }),
+
+  // In-app challenge authoring (CRUD over user-authored challenges).
+  listAuthored: () => apiFetch('/api/authored'),
+  getAuthored: (id) => apiFetch(`/api/authored/${encodeURIComponent(id)}`),
+  createAuthored: (challenge) =>
+    apiFetch('/api/authored', { method: 'POST', json: challenge }),
+  updateAuthored: (id, challenge) =>
+    apiFetch(`/api/authored/${encodeURIComponent(id)}`, { method: 'PUT', json: challenge }),
+  deleteAuthored: (id) =>
+    apiFetch(`/api/authored/${encodeURIComponent(id)}`, { method: 'DELETE' }),
+
+  // Import/export the whole dataset as a versioned JSON envelope.
+  exportData: () => apiFetch('/api/data/export'),
+  importData: (envelope, mode) =>
+    apiFetch(`/api/data/import?mode=${encodeURIComponent(mode)}`, { method: 'POST', json: envelope }),
 };

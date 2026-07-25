@@ -14,12 +14,17 @@ import fastifyStatic from '@fastify/static';
 
 import { config as defaultConfig } from './config.js';
 import { openDatabase } from './db/db.js';
-import { loadChallenges } from './challenges/loader.js';
+import { loadChallenges, ChallengeRegistry } from './challenges/loader.js';
+import { loadAuthored } from './challenges/authored.js';
+import { backfillReviews } from './services/review.js';
 import { requireAuth } from './auth/session.js';
 import { makeRunner } from './runner/serverRunner.js';
 import { authRoutes } from './auth/routes.js';
 import { challengeRoutes } from './routes/challenges.js';
 import { progressRoutes } from './routes/progress.js';
+import { reviewRoutes } from './routes/reviews.js';
+import { authoredRoutes } from './routes/authored.js';
+import { dataRoutes } from './routes/data.js';
 import { healthRoutes } from './routes/health.js';
 
 /**
@@ -52,7 +57,11 @@ function cacheControlFor(filePath) {
 export async function buildApp(overrides = {}) {
   const config = overrides.config ?? defaultConfig;
   const db = overrides.db ?? openDatabase(config.dbPath);
-  const store = overrides.store ?? loadChallenges(config.challengesDir);
+  // The repo's YAML challenges are the immutable seed; user-authored challenges from
+  // the database are merged on top via the registry, which routes mutate at runtime.
+  // A plain ChallengeStore override (used by tests) is wrapped the same way.
+  const base = overrides.store ?? loadChallenges(config.challengesDir);
+  const registry = base instanceof ChallengeRegistry ? base : new ChallengeRegistry(base.all());
   const runner = overrides.runner ?? makeRunner(config.runnerUrl);
   const serveClient = overrides.serveClient ?? config.isProduction;
 
@@ -68,10 +77,21 @@ export async function buildApp(overrides = {}) {
   // Make shared singletons available to every route as fastify.<name>.
   fastify.decorate('config', config);
   fastify.decorate('db', db);
-  fastify.decorate('store', store);
+  fastify.decorate('store', registry);
   fastify.decorate('runner', runner);
   // Close the DB cleanly when the server stops.
   fastify.addHook('onClose', async () => db.close());
+
+  // Merge any user-authored challenges from the database into the store. Done now
+  // that we have a logger: a corrupt authored row is logged and skipped, never fatal.
+  registry.rebuild(loadAuthored(db, fastify.log));
+
+  // One-time: enrol challenges solved before spaced-repetition existed, so the review
+  // queue isn't empty on the deploy that introduces it. Gated by a meta flag inside.
+  const backfill = backfillReviews(db, registry, config.appTz);
+  if (backfill.enrolled > 0) {
+    fastify.log.info(`Backfilled ${backfill.enrolled} solved challenge(s) into the review schedule.`);
+  }
 
   // --- Security + parsing plugins -------------------------------------------
   await fastify.register(helmet, {
@@ -116,6 +136,9 @@ export async function buildApp(overrides = {}) {
     protectedScope.addHook('onRequest', requireAuth);
     await protectedScope.register(challengeRoutes);
     await protectedScope.register(progressRoutes);
+    await protectedScope.register(reviewRoutes);
+    await protectedScope.register(authoredRoutes);
+    await protectedScope.register(dataRoutes);
   });
 
   // --- Serve the built client (production) -----------------------------------

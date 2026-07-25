@@ -13,32 +13,13 @@ import {
   getMeta,
   setMeta,
 } from '../db/progressRepo.js';
+import { ensureReview } from '../db/reviewsRepo.js';
+import { initialSchedule, countDueReviews } from './review.js';
+import { dayInTz, addDays } from './dates.js';
 
-/**
- * Which calendar day (YYYY-MM-DD) a given instant falls on, in a specific IANA
- * timezone. We use Intl rather than hand-rolling offset math so DST is handled
- * correctly. This is the single source of "what day is it" for streaks.
- * @param {Date} date
- * @param {string} timeZone  IANA name, e.g. "Europe/London".
- * @returns {string} 'YYYY-MM-DD'
- */
-export function dayInTz(date, timeZone) {
-  // en-CA formats as YYYY-MM-DD, which is exactly what we want to store/sort.
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(date);
-}
-
-/** Add `n` days to a 'YYYY-MM-DD' string, returning a new 'YYYY-MM-DD' string. */
-function addDays(day, n) {
-  // Parse at UTC noon to stay clear of any DST edge when only adding whole days.
-  const d = new Date(`${day}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() + n);
-  return d.toISOString().slice(0, 10);
-}
+// Re-exported so existing importers (tests, routes) can keep pulling these from the
+// progress service; the implementations now live in dates.js.
+export { dayInTz, addDays };
 
 /**
  * Compute current and longest streaks from the set of solve-days.
@@ -98,6 +79,9 @@ export function recordSolve(db, challengeId, timeZone, clock = () => new Date())
   const today = dayInTz(clock(), timeZone);
   if (firstSolve) {
     recordSolveDay(db, today);
+    // Enrol the challenge in the spaced-repetition rotation the first time it's
+    // solved. ensureReview is a no-op if it's somehow already scheduled.
+    ensureReview(db, challengeId, initialSchedule(today));
   }
   const { current, longest } = computeStreaks(getSolveDays(db), today);
   setMeta(db, 'longest_streak', longest);
@@ -162,5 +146,6 @@ export function buildDashboard(db, store, timeZone, clock = () => new Date()) {
     streak: { current, longest },
     perTopic,
     lastChallengeId,
+    reviewsDue: countDueReviews(db, store, timeZone, clock),
   };
 }
