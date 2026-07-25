@@ -35,15 +35,25 @@ export default function ChallengeList() {
   const { handleUnauthorized } = useAuth();
   const [challenges, setChallenges] = useState(null);
   const [error, setError] = useState('');
+  // Accordion: at most one topic open at a time. Defaults to the first topic
+  // once challenges load; opening another closes the previous one.
+  const [openTopic, setOpenTopic] = useState(null);
 
   useEffect(() => {
     api
       .listChallenges()
-      .then(setChallenges)
+      .then((data) => {
+        setChallenges(data);
+        setOpenTopic((prev) => prev ?? data[0]?.topic ?? null);
+      })
       .catch((err) => {
         if (!handleUnauthorized(err)) setError('Could not load challenges.');
       });
   }, [handleUnauthorized]);
+
+  function toggleTopic(topic) {
+    setOpenTopic((prev) => (prev === topic ? null : topic));
+  }
 
   // Preserve server order (already topic → order → difficulty) while grouping.
   const groups = [];
@@ -65,20 +75,50 @@ export default function ChallengeList() {
         {error && <p className="error-text">{error}</p>}
         {!challenges && !error && <p className="muted">Loading…</p>}
 
-        {groups.map((group) => (
-          <section className="topic-group" key={group.topic}>
-            <h2>{TOPIC_LABELS[group.topic] ?? group.topic}</h2>
-            {group.items.map((c) => (
-              <Link key={c.id} to={`/challenge/${c.id}`} style={{ textDecoration: 'none' }}>
-                <button className="card challenge-item">
-                  <span className={`status-dot ${c.status}`} aria-hidden="true" />
-                  <span className="title">{c.title}</span>
-                  <Difficulty level={c.difficulty} />
-                </button>
-              </Link>
-            ))}
-          </section>
-        ))}
+        {groups.map((group) => {
+          const total = group.items.length;
+          const solved = group.items.filter((c) => c.status === 'solved').length;
+          const isOpen = openTopic === group.topic;
+          const done = solved === total;
+          const panelId = `topic-${group.topic}`;
+          return (
+            <section className="topic-group" key={group.topic}>
+              <button
+                type="button"
+                className="topic-header"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggleTopic(group.topic)}
+              >
+                <span className={`chevron ${isOpen ? 'open' : ''}`} aria-hidden="true">
+                  ▸
+                </span>
+                <span className="topic-name">{TOPIC_LABELS[group.topic] ?? group.topic}</span>
+                <span className={`topic-count ${done ? 'done' : ''}`}>
+                  {done ? '✓ ' : ''}
+                  {solved}/{total}
+                </span>
+              </button>
+              {isOpen && (
+                <div id={panelId} className="topic-items">
+                  {group.items.map((c) => (
+                    <Link
+                      key={c.id}
+                      to={`/challenge/${c.id}`}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <button className="card challenge-item">
+                        <span className={`status-dot ${c.status}`} aria-hidden="true" />
+                        <span className="title">{c.title}</span>
+                        <Difficulty level={c.difficulty} />
+                      </button>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </section>
+          );
+        })}
       </main>
     </>
   );
