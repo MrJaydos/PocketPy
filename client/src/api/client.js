@@ -59,6 +59,10 @@ export const api = {
 
   listChallenges: () => apiFetch('/api/challenges'),
   getChallenge: (id) => apiFetch(`/api/challenges/${encodeURIComponent(id)}`),
+  // The next challenge to attempt: easiest unsolved, preferring the current topic.
+  // `from` is the challenge you're on now (excluded). Returns { next: id | null }.
+  nextChallenge: (from) =>
+    apiFetch(`/api/next-challenge${from ? `?from=${encodeURIComponent(from)}` : ''}`),
   saveDraft: (id, code) =>
     apiFetch(`/api/challenges/${encodeURIComponent(id)}/draft`, { method: 'PUT', json: { code } }),
   recordAttempt: (id) =>

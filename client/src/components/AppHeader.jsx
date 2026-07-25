@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../state/auth.jsx';
 
 /**
- * @param {{title: string, back?: string, showLogout?: boolean}} props
+ * @param {{title: string, back?: string, showLogout?: boolean, action?: React.ReactNode}} props
  *   back — a path to navigate to when the ‹ button is tapped (omit for no button).
+ *   action — optional element rendered on the right (e.g. a "Next" button).
  */
-export default function AppHeader({ title, back, showLogout }) {
+export default function AppHeader({ title, back, showLogout, action }) {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
@@ -20,6 +21,7 @@ export default function AppHeader({ title, back, showLogout }) {
       ) : null}
       <h1>{title}</h1>
       <div className="spacer" />
+      {action}
       {showLogout ? (
         <button className="btn-ghost" onClick={logout}>
           Log out
