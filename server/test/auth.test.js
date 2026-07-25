@@ -70,6 +70,20 @@ test('/api/auth/me reflects login state, logout clears it', async () => {
   await app.close();
 });
 
+test('login tolerates surrounding whitespace on the submitted password', async () => {
+  // A trailing newline/space (common from a phone paste) must not fail the login,
+  // since the configured password is trimmed the same way.
+  const { app } = await makeTestApp();
+  const res = await app.inject({
+    method: 'POST',
+    url: '/api/auth/login',
+    payload: { password: `  ${testConfig.password}\n` },
+  });
+  assert.equal(res.statusCode, 200);
+  assert.ok(cookieFrom(res), 'a session cookie is set');
+  await app.close();
+});
+
 test('a forged/tampered cookie is rejected', async () => {
   const { app } = await makeTestApp();
   const res = await app.inject({
