@@ -33,7 +33,11 @@ export async function authRoutes(fastify) {
       },
     },
     async (request, reply) => {
-      const password = request.body?.password;
+      const raw = request.body?.password;
+      // Trim the submitted value too: a phone keyboard or paste can tack on a
+      // trailing space/newline that would otherwise fail the exact-match compare.
+      // config.password is already trimmed, so both sides are normalised the same way.
+      const password = typeof raw === 'string' ? raw.trim() : raw;
       if (typeof password !== 'string' || !passwordMatches(password, config.password)) {
         // Deliberately vague message; don't reveal whether the password was close.
         return reply.code(401).send({ error: 'Incorrect password' });
