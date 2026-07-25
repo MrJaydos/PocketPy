@@ -40,10 +40,15 @@ export const config = {
 
   // Auth. In production we insist on real secrets; in development we fall back to
   // obvious placeholders so you can start the server without a .env file.
-  password: isProduction ? required('APP_PASSWORD') : process.env.APP_PASSWORD ?? 'dev',
-  sessionSecret: isProduction
+  //
+  // We .trim() both: pasting a value into a hosting UI (Coolify, etc.) very commonly
+  // picks up a trailing newline or stray spaces, which would otherwise become part of
+  // the password and make every "correct" login fail with no obvious reason.
+  password: (isProduction ? required('APP_PASSWORD') : process.env.APP_PASSWORD ?? 'dev').trim(),
+  sessionSecret: (isProduction
     ? required('SESSION_SECRET')
-    : process.env.SESSION_SECRET ?? 'dev-session-secret-not-for-production-use-only',
+    : process.env.SESSION_SECRET ?? 'dev-session-secret-not-for-production-use-only'
+  ).trim(),
 
   // Storage
   dbPath: process.env.DB_PATH ?? path.join(repoRoot, 'data', 'app.db'),

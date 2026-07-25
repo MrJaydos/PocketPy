@@ -19,6 +19,10 @@ async function main() {
   try {
     await app.listen({ port: config.port, host: config.host });
     app.log.info(`PyPocket listening on http://${config.host}:${config.port}`);
+    // Diagnostic (length only, never the value): if login fails despite entering the
+    // right password, this reveals a stored value that isn't what you think — e.g. a
+    // trailing newline makes this one longer than your actual password.
+    app.log.info(`Auth ready: APP_PASSWORD length = ${config.password.length}`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);
